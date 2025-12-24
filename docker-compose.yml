@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  vanish-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ./backend:/app
+      - model-cache:/root/.cache
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+
+volumes:
+  model-cache:
+
