@@ -1,0 +1,47 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Urban street scene -->
+  <rect width="800" height="600" fill="#F5F5F5"/>
+  
+  <defs>
+    <linearGradient id="buildingGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E0E0E0"/>
+      <stop offset="100%" stop-color="#C0C0C0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Sky -->
+  <rect width="800" height="300" fill="#87CEEB"/>
+  
+  <!-- Buildings -->
+  <rect x="50" y="200" width="120" height="300" fill="url(#buildingGrad)"/>
+  <rect x="200" y="150" width="100" height="350" fill="url(#buildingGrad)"/>
+  <rect x="350" y="100" width="150" height="400" fill="url(#buildingGrad)"/>
+  <rect x="550" y="180" width="120" height="320" fill="url(#buildingGrad)"/>
+  <rect x="700" y="220" width="80" height="280" fill="url(#buildingGrad)"/>
+  
+  <!-- Windows -->
+  <rect x="70" y="220" width="20" height="30" fill="#FFD700" opacity="0.7"/>
+  <rect x="100" y="220" width="20" height="30" fill="#FFD700" opacity="0.7"/>
+  <rect x="70" y="270" width="20" height="30" fill="#FFD700" opacity="0.7"/>
+  <rect x="100" y="270" width="20" height="30" fill="#FFD700" opacity="0.7"/>
+  
+  <rect x="220" y="170" width="20" height="30" fill="#FFD700" opacity="0.7"/>
+  <rect x="250" y="170" width="20" height="30" fill="#FFD700" opacity="0.7"/>
+  <rect x="280" y="170" width="20" height="30" fill="#FFD700" opacity="0.7"/>
+  
+  <!-- Street -->
+  <rect y="500" width="800" height="100" fill="#404040"/>
+  <rect y="520" width="800" height="4" fill="#FFFF00"/>
+  
+  <!-- Object to remove - Billboard -->
+  <rect x="300" y="250" width="200" height="120" rx="4" fill="#FFFFFF" stroke="#2F80FF" stroke-width="3"/>
+  <text x="400" y="300" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#2F80FF" text-anchor="middle">AD</text>
+  <text x="400" y="330" font-family="Arial, sans-serif" font-size="18" fill="#666666" text-anchor="middle">HERE</text>
+  <rect x="320" y="340" width="160" height="20" rx="2" fill="#2F80FF"/>
+  
+  <!-- Car -->
+  <rect x="100" y="480" width="80" height="40" rx="4" fill="#FF0000"/>
+  <circle cx="120" cy="520" r="12" fill="#000000"/>
+  <circle cx="160" cy="520" r="12" fill="#000000"/>
+</svg>
+

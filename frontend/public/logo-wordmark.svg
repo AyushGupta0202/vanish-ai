@@ -1,0 +1,25 @@
+<svg width="200" height="40" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- VANI -->
+  <text x="0" y="28" font-family="Inter, -apple-system, sans-serif" font-size="24" font-weight="600" fill="#FFFFFF" letter-spacing="-0.5">VANI</text>
+  
+  <!-- Disappearing "I" -->
+  <g>
+    <text x="60" y="28" font-family="Inter, -apple-system, sans-serif" font-size="24" font-weight="600" fill="#FFFFFF" letter-spacing="-0.5">I</text>
+    <!-- Fade overlay on bottom half -->
+    <rect x="60" y="16" width="8" height="12" fill="url(#fadeGradient)" opacity="0.6"/>
+  </g>
+  
+  <!-- SH -->
+  <text x="72" y="28" font-family="Inter, -apple-system, sans-serif" font-size="24" font-weight="600" fill="#FFFFFF" letter-spacing="-0.5">SH</text>
+  
+  <!-- AI -->
+  <text x="108" y="28" font-family="Inter, -apple-system, sans-serif" font-size="24" font-weight="600" fill="#2F80FF" letter-spacing="-0.5">AI</text>
+  
+  <defs>
+    <linearGradient id="fadeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>
+

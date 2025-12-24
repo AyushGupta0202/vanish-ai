@@ -1,0 +1,49 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background - Same realistic scene -->
+  <rect width="800" height="600" fill="#E8E8E8"/>
+  
+  <!-- Sky gradient -->
+  <defs>
+    <linearGradient id="skyGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#87CEEB"/>
+      <stop offset="100%" stop-color="#E8E8E8"/>
+    </linearGradient>
+    <linearGradient id="grassGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#90EE90"/>
+      <stop offset="100%" stop-color="#228B22"/>
+    </linearGradient>
+    <!-- Inpainted area gradient - matches grass gradient at logo position -->
+    <!-- Calculate exact gradient colors at logo position (y=450-530 in grass area y=400-600) -->
+    <!-- Grass gradient: #90EE90 (y=400) to #228B22 (y=600) -->
+    <!-- Logo top (y=450): 50/200 = 25% → #90EE90 + 25%*(#228B22 - #90EE90) = #75D575 -->
+    <!-- Logo bottom (y=530): 130/200 = 65% → #90EE90 + 65%*(#228B22 - #90EE90) = #49AE49 -->
+    <linearGradient id="grassGradInpaint" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#75D575"/>
+      <stop offset="100%" stop-color="#49AE49"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="400" fill="url(#skyGrad2)"/>
+  <rect y="400" width="800" height="200" fill="url(#grassGrad2)"/>
+  
+  <!-- Mountains in background -->
+  <polygon points="0,400 150,250 300,400" fill="#A0A0A0" opacity="0.6"/>
+  <polygon points="200,400 350,200 500,400" fill="#808080" opacity="0.7"/>
+  <polygon points="400,400 550,150 700,400" fill="#606060" opacity="0.8"/>
+  
+  <!-- Tree -->
+  <rect x="200" y="300" width="30" height="150" fill="#8B4513"/>
+  <circle cx="215" cy="300" r="60" fill="#228B22"/>
+  
+  <!-- Inpainted area where logo was removed - matches grass gradient exactly -->
+  <rect x="500" y="450" width="200" height="80" rx="8" fill="url(#grassGradInpaint)"/>
+  
+  <!-- Sun -->
+  <circle cx="650" cy="100" r="50" fill="#FFD700"/>
+  
+  <!-- Clouds -->
+  <ellipse cx="100" cy="80" rx="40" ry="25" fill="#FFFFFF" opacity="0.8"/>
+  <ellipse cx="120" cy="80" rx="35" ry="20" fill="#FFFFFF" opacity="0.8"/>
+  <ellipse cx="140" cy="80" rx="30" ry="25" fill="#FFFFFF" opacity="0.8"/>
+</svg>
+

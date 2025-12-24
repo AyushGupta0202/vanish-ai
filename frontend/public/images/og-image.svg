@@ -1,0 +1,30 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Open Graph / Social Media Preview Image -->
+  <rect width="1200" height="630" fill="#0B0B0D"/>
+  
+  <!-- Background pattern -->
+  <defs>
+    <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1E1E22" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  
+  <!-- Logo -->
+  <text x="600" y="200" font-family="Inter, sans-serif" font-size="80" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="-2">
+    VANI<span fill="#2F80FF">SH</span> <span fill="#2F80FF">AI</span>
+  </text>
+  
+  <!-- Tagline -->
+  <text x="600" y="280" font-family="Inter, sans-serif" font-size="36" font-weight="400" fill="#8A8A8F" text-anchor="middle">
+    Make anything vanish. Instantly.
+  </text>
+  
+  <!-- Void Mark Icon -->
+  <rect x="575" y="350" width="50" height="100" fill="#FFFFFF"/>
+  <rect x="575" y="400" width="50" height="50" fill="#FFFFFF" opacity="0.3"/>
+  
+  <!-- Accent line -->
+  <rect x="300" y="500" width="600" height="4" fill="#2F80FF"/>
+</svg>
+
