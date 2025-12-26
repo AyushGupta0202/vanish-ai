@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://github.com/ayushgupta0202/vanish-ai
+
+# Disallow admin and private areas (if any)
+Disallow: /api/
+Disallow: /admin/
+Disallow: /.env
+Disallow: /node_modules/
+Disallow: /venv/
+
+# Allow important paths
+Allow: /
+Allow: /docs
+Allow: /README.md
+
+# Crawl-delay
+Crawl-delay: 1
+

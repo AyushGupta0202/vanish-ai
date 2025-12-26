@@ -1,0 +1,81 @@
+name: Activity Boost
+
+on:
+  schedule:
+    - cron: '0 9 * * 1' # Every Monday at 9 AM
+  workflow_dispatch:
+
+jobs:
+  activity-signals:
+    name: Generate Activity Signals
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Generate activity report
+        run: |
+          echo "# 📊 Repository Activity Report" > activity-report.md
+          echo "" >> activity-report.md
+          echo "Generated: $(date)" >> activity-report.md
+          echo "" >> activity-report.md
+          
+          # Recent commits
+          echo "## Recent Commits (Last 7 Days)" >> activity-report.md
+          git log --since="7 days ago" --oneline --pretty=format:"- %h %s (%an)" >> activity-report.md || echo "- No commits in last 7 days" >> activity-report.md
+          echo "" >> activity-report.md
+          
+          # Branch activity
+          echo "## Active Branches" >> activity-report.md
+          git branch -r --sort=-committerdate | head -5 | sed 's/origin\///' | sed 's/^/- /' >> activity-report.md
+          echo "" >> activity-report.md
+          
+          # File changes
+          echo "## Recent File Changes" >> activity-report.md
+          git log --since="7 days ago" --name-only --pretty=format:"" | sort | uniq | grep -v "^$" | head -10 | sed 's/^/- /' >> activity-report.md || echo "- No file changes" >> activity-report.md
+          
+          cat activity-report.md
+      
+      - name: Check repository health
+        run: |
+          echo "🔍 Repository Health Check:"
+          
+          # Check for recent commits
+          COMMITS_7D=$(git log --since="7 days ago" --oneline | wc -l)
+          echo "Commits (7d): $COMMITS_7D"
+          
+          # Check for branches
+          BRANCHES=$(git branch -r | wc -l)
+          echo "Branches: $BRANCHES"
+          
+          # Check for tags
+          TAGS=$(git tag | wc -l)
+          echo "Tags: $TAGS"
+          
+          # Check README quality
+          README_LINES=$(wc -l < README.md)
+          echo "README lines: $README_LINES"
+          
+          # Health score
+          SCORE=0
+          if [ "$COMMITS_7D" -gt 0 ]; then SCORE=$((SCORE + 25)); fi
+          if [ "$BRANCHES" -gt 1 ]; then SCORE=$((SCORE + 25)); fi
+          if [ "$TAGS" -gt 0 ]; then SCORE=$((SCORE + 25)); fi
+          if [ "$README_LINES" -gt 100 ]; then SCORE=$((SCORE + 25)); fi
+          
+          echo "Health Score: $SCORE/100"
+          
+          if [ "$SCORE" -lt 50 ]; then
+            echo "⚠️  Low activity detected. Consider:"
+            echo "  - Making regular commits"
+            echo "  - Creating releases"
+            echo "  - Updating documentation"
+          else
+            echo "✅ Repository is active and healthy"
+          fi
+

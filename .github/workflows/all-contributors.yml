@@ -1,0 +1,28 @@
+name: All Contributors
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  update-contributors:
+    name: Update Contributors
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Run All Contributors
+        uses: all-contributors/all-contributors-action@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          config-file: '.all-contributorsrc'
+          files: 'README.md'
+          commit-message: 'docs: update contributors'
+          skip-ci: true
+

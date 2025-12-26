@@ -1,0 +1,37 @@
+backend:
+  - backend/**/*
+  - '**/*.py'
+  - requirements.txt
+
+frontend:
+  - frontend/**/*
+  - '**/*.ts'
+  - '**/*.tsx'
+  - '**/*.js'
+  - '**/*.jsx'
+  - package.json
+  - package-lock.json
+
+documentation:
+  - '**/*.md'
+  - '**/*.mdx'
+  - '**/docs/**/*'
+
+ci/cd:
+  - .github/workflows/**/*
+  - .github/**/*.yml
+  - .github/**/*.yaml
+
+docker:
+  - Dockerfile
+  - docker-compose.yml
+  - .dockerignore
+
+dependencies:
+  - requirements.txt
+  - package.json
+  - package-lock.json
+  - poetry.lock
+  - Pipfile
+  - Pipfile.lock
+

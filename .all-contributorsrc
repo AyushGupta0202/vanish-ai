@@ -1,0 +1,16 @@
+{
+  "projectName": "Vanish AI",
+  "projectOwner": "ayushgupta0202",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "angular",
+  "contributorsPerLine": 7,
+  "contributors": [],
+  "skipCi": true
+}
+

@@ -1,0 +1,48 @@
+# Repository Metadata Configuration
+# Auto-synced by GitHub Actions to maintain consistency
+
+description: "🎨 AI-Powered Image Inpainting | Remove Text, Logos & Graphics Seamlessly | 100% Local Processing | FastAPI + React + LaMa"
+
+topics:
+  - ai
+  - artificial-intelligence
+  - image-processing
+  - computer-vision
+  - inpainting
+  - image-editing
+  - remove-background
+  - remove-text
+  - remove-logo
+  - watermark-removal
+  - fastapi
+  - react
+  - typescript
+  - pytorch
+  - lama
+  - opencv
+  - web-app
+  - docker
+  - automation
+  - productivity
+  - open-source
+  - machine-learning
+  - deep-learning
+  - image-manipulation
+  - canvas
+  - fabricjs
+  - tailwindcss
+  - vite
+
+homepage: ""
+has_issues: true
+has_projects: false
+has_wiki: false
+has_downloads: true
+has_discussions: false
+is_template: false
+default_branch: "main"
+allow_squash_merge: true
+allow_merge_commit: true
+allow_rebase_merge: true
+delete_branch_on_merge: true
+

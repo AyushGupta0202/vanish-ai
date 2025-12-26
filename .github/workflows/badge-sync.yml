@@ -1,0 +1,55 @@
+name: Badge Sync
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/*.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0' # Weekly
+
+jobs:
+  update-badges:
+    name: Update README Badges
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Get repository info
+        id: repo
+        run: |
+          OWNER=$(echo "${{ github.repository }}" | cut -d'/' -f1)
+          REPO=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+          echo "owner=$OWNER" >> $GITHUB_OUTPUT
+          echo "repo=$REPO" >> $GITHUB_OUTPUT
+      
+      - name: Generate badge URLs
+        id: badges
+        run: |
+          OWNER="${{ steps.repo.outputs.owner }}"
+          REPO="${{ steps.repo.outputs.repo }}"
+          
+          echo "ci_badge=[![CI/CD](https://github.com/${OWNER}/${REPO}/workflows/CI/CD%20Pipeline/badge.svg)](https://github.com/${OWNER}/${REPO}/actions)" >> $GITHUB_OUTPUT
+          echo "release_badge=[![Release](https://github.com/${OWNER}/${REPO}/workflows/Automated%20Release/badge.svg)](https://github.com/${OWNER}/${REPO}/releases)" >> $GITHUB_OUTPUT
+          echo "codeql_badge=[![CodeQL](https://github.com/${OWNER}/${REPO}/workflows/CodeQL%20Analysis/badge.svg)](https://github.com/${OWNER}/${REPO}/security/code-scanning)" >> $GITHUB_OUTPUT
+          echo "license_badge=[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)" >> $GITHUB_OUTPUT
+      
+      - name: Check if badges need update
+        run: |
+          OWNER="${{ steps.repo.outputs.owner }}"
+          REPO="${{ steps.repo.outputs.repo }}"
+          
+          # Check if badges exist with correct format
+          if grep -q "github.com/${OWNER}/${REPO}/workflows" README.md; then
+            echo "✅ Badges are up to date"
+          else
+            echo "⚠️  Badges may need updating"
+            echo "Update README.md badges to use:"
+            echo "${{ steps.badges.outputs.ci_badge }}"
+            echo "${{ steps.badges.outputs.release_badge }}"
+            echo "${{ steps.badges.outputs.codeql_badge }}"
+          fi
+

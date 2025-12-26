@@ -1,0 +1,76 @@
+name: Auto Version Tag
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+      - '.github/**'
+
+jobs:
+  auto-tag:
+    name: Auto Version Tag
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Get latest tag
+        id: get_tag
+        run: |
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "latest_tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+          echo "Latest tag: $LATEST_TAG"
+      
+      - name: Calculate next version
+        id: next_version
+        run: |
+          LATEST_TAG=${{ steps.get_tag.outputs.latest_tag }}
+          VERSION=${LATEST_TAG#v}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+          
+          # Determine version bump based on commit messages
+          COMMITS=$(git log ${LATEST_TAG}..HEAD --oneline)
+          
+          if echo "$COMMITS" | grep -qE "^(feat|feature)"; then
+            # Minor bump for new features
+            MINOR=$((MINOR + 1))
+            PATCH=0
+            BUMP_TYPE="minor"
+          elif echo "$COMMITS" | grep -qE "^(fix|bugfix)"; then
+            # Patch bump for bug fixes
+            PATCH=$((PATCH + 1))
+            BUMP_TYPE="patch"
+          elif echo "$COMMITS" | grep -qE "^(breaking|BREAKING)"; then
+            # Major bump for breaking changes
+            MAJOR=$((MAJOR + 1))
+            MINOR=0
+            PATCH=0
+            BUMP_TYPE="major"
+          else
+            # Default to patch
+            PATCH=$((PATCH + 1))
+            BUMP_TYPE="patch"
+          fi
+          
+          NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}"
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "bump_type=$BUMP_TYPE" >> $GITHUB_OUTPUT
+          echo "New version: $NEW_VERSION ($BUMP_TYPE)"
+      
+      - name: Create tag
+        if: steps.get_tag.outputs.latest_tag != steps.next_version.outputs.version
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "${{ steps.next_version.outputs.version }}" -m "Release ${{ steps.next_version.outputs.version }}"
+          git push origin "${{ steps.next_version.outputs.version }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

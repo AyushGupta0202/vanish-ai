@@ -1,0 +1,111 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+
+categories:
+  - title: '🚀 Exciting New Features'
+    labels:
+      - 'enhancement'
+      - 'feature'
+      - 'feat'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'bug'
+      - 'fix'
+      - 'bugfix'
+  - title: '⚡ Performance Improvements'
+    labels:
+      - 'performance'
+      - 'perf'
+  - title: '🔧 Refactoring'
+    labels:
+      - 'refactor'
+  - title: '📚 Documentation'
+    labels:
+      - 'documentation'
+      - 'docs'
+  - title: '🎨 Style & UI'
+    labels:
+      - 'style'
+      - 'ui'
+  - title: '🧪 Tests'
+    labels:
+      - 'test'
+      - 'tests'
+  - title: '🔒 Security'
+    labels:
+      - 'security'
+  - title: '🚨 Breaking Changes'
+    labels:
+      - 'breaking'
+      - 'breaking-change'
+      - 'BREAKING CHANGE'
+  - title: '🔨 Maintenance'
+    labels:
+      - 'chore'
+      - 'maintenance'
+      - 'ci'
+      - 'build'
+
+change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+change-title-escapes: '\<*_&'
+
+version-resolver:
+  major:
+    labels:
+      - 'breaking'
+      - 'breaking-change'
+      - 'BREAKING CHANGE'
+  minor:
+    labels:
+      - 'enhancement'
+      - 'feature'
+      - 'feat'
+  patch:
+    labels:
+      - 'bug'
+      - 'fix'
+      - 'bugfix'
+      - 'performance'
+      - 'perf'
+      - 'refactor'
+      - 'documentation'
+      - 'docs'
+      - 'style'
+      - 'ui'
+      - 'test'
+      - 'tests'
+      - 'security'
+      - 'chore'
+      - 'maintenance'
+      - 'ci'
+      - 'build'
+
+template: |
+  ## 🎉 Release v$RESOLVED_VERSION
+
+  $CHANGES
+
+  **Full Changelog**: $PREVIOUS_TAG..$RESOLVED_VERSION
+
+  ---
+
+  ### 📦 Installation
+
+  ```bash
+  # Docker
+  docker pull ghcr.io/$OWNER/$REPOSITORY:v$RESOLVED_VERSION
+
+  # Source
+  git clone https://github.com/$OWNER/$REPOSITORY.git
+  cd $REPOSITORY
+  git checkout v$RESOLVED_VERSION
+  ```
+
+  ### 🚀 Quick Start
+
+  See [README.md](https://github.com/$OWNER/$REPOSITORY#installation) for installation instructions.
+
+  ---
+
+  **Thank you to all contributors!** 🙏
+

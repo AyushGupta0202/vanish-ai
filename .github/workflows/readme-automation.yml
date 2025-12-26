@@ -1,0 +1,119 @@
+name: README Automation
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'README.md'
+      - 'package.json'
+      - 'frontend/package.json'
+      - 'backend/requirements.txt'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0' # Weekly
+
+jobs:
+  readme-quality:
+    name: README Quality Check & Auto-Fix
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Read package versions
+        id: versions
+        run: |
+          if [ -f "frontend/package.json" ]; then
+            NODE_VERSION=$(node -p "require('./frontend/package.json').engines?.node || '18'")
+            echo "node_version=$NODE_VERSION" >> $GITHUB_OUTPUT
+          fi
+          
+          if [ -f "backend/requirements.txt" ]; then
+            PYTHON_VERSION=$(grep -i "python" backend/requirements.txt | head -1 || echo "3.11")
+            echo "python_version=$PYTHON_VERSION" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Validate README structure
+        run: |
+          echo "Checking README.md structure..."
+          
+          # Check for required sections
+          REQUIRED_SECTIONS=("Features" "Installation" "Usage" "Tech Stack" "License")
+          MISSING_SECTIONS=()
+          
+          for section in "${REQUIRED_SECTIONS[@]}"; do
+            if ! grep -qi "$section" README.md; then
+              MISSING_SECTIONS+=("$section")
+            fi
+          done
+          
+          if [ ${#MISSING_SECTIONS[@]} -gt 0 ]; then
+            echo "⚠️  Missing sections: ${MISSING_SECTIONS[*]}"
+            exit 1
+          fi
+          
+          echo "✅ All required sections present"
+      
+      - name: Check README badges
+        run: |
+          BADGE_COUNT=$(grep -c "badge\|shield" README.md || echo "0")
+          if [ "$BADGE_COUNT" -lt 5 ]; then
+            echo "⚠️  Warning: README has fewer than 5 badges"
+          else
+            echo "✅ README has $BADGE_COUNT badges"
+          fi
+      
+      - name: Validate markdown
+        uses: DavidAnson/markdownlint-cli2-action@v15
+        with:
+          globs: 'README.md'
+        continue-on-error: true
+      
+      - name: Check README length
+        run: |
+          LINES=$(wc -l < README.md)
+          if [ "$LINES" -lt 100 ]; then
+            echo "⚠️  Warning: README is short ($LINES lines). Consider adding more content."
+          else
+            echo "✅ README length: $LINES lines"
+          fi
+      
+      - name: Extract keywords
+        run: |
+          echo "📊 README Keywords Analysis:"
+          grep -oE '\b[A-Z][a-z]+\b' README.md | sort | uniq -c | sort -rn | head -10
+      
+      - name: Check for SEO elements
+        run: |
+          echo "🔍 SEO Check:"
+          
+          # Check for title
+          if grep -q "^#.*Vanish AI" README.md; then
+            echo "✅ Main title present"
+          else
+            echo "❌ Main title missing"
+            exit 1
+          fi
+          
+          # Check for description
+          if grep -qi "description\|overview\|about" README.md; then
+            echo "✅ Description section present"
+          else
+            echo "❌ Description section missing"
+            exit 1
+          fi
+          
+          # Check for keywords
+          KEYWORDS=("AI" "image" "inpainting" "remove" "text" "logo" "FastAPI" "React")
+          for keyword in "${KEYWORDS[@]}"; do
+            if grep -qi "$keyword" README.md; then
+              echo "✅ Keyword '$keyword' found"
+            else
+              echo "⚠️  Keyword '$keyword' not found"
+            fi
+          done
+

@@ -1,0 +1,83 @@
+name: Repo Metadata Sync
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/repo-metadata.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0' # Weekly sync
+
+jobs:
+  sync-metadata:
+    name: Sync Repository Metadata
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      metadata: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Read metadata configuration
+        id: metadata
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const yaml = require('js-yaml');
+            
+            const metadataFile = fs.readFileSync('.github/repo-metadata.yml', 'utf8');
+            const config = yaml.load(metadataFile);
+            
+            return {
+              description: config.description,
+              topics: config.topics,
+              homepage: config.homepage || '',
+              has_issues: config.has_issues !== false,
+              has_projects: config.has_projects === true,
+              has_wiki: config.has_wiki === true,
+              has_downloads: config.has_downloads !== false,
+              has_discussions: config.has_discussions === true,
+              is_template: config.is_template === true,
+              default_branch: config.default_branch || 'main',
+              allow_squash_merge: config.allow_squash_merge !== false,
+              allow_merge_commit: config.allow_merge_commit !== false,
+              allow_rebase_merge: config.allow_rebase_merge !== false,
+              delete_branch_on_merge: config.delete_branch_on_merge === true
+            };
+      
+      - name: Update repository metadata
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const yaml = require('js-yaml');
+            
+            const metadataFile = fs.readFileSync('.github/repo-metadata.yml', 'utf8');
+            const config = yaml.load(metadataFile);
+            
+            await github.rest.repos.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              description: config.description,
+              topics: config.topics,
+              homepage: config.homepage || null,
+              has_issues: config.has_issues !== false,
+              has_projects: config.has_projects === true,
+              has_wiki: config.has_wiki === true,
+              has_downloads: config.has_downloads !== false,
+              has_discussions: config.has_discussions === true,
+              is_template: config.is_template === true,
+              default_branch: config.default_branch || 'main',
+              allow_squash_merge: config.allow_squash_merge !== false,
+              allow_merge_commit: config.allow_merge_commit !== false,
+              allow_rebase_merge: config.allow_rebase_merge !== false,
+              delete_branch_on_merge: config.delete_branch_on_merge === true
+            });
+            
+            console.log('✅ Repository metadata updated successfully');
+            console.log(`📝 Description: ${config.description}`);
+            console.log(`🏷️  Topics: ${config.topics.join(', ')}`);
+

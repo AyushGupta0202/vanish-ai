@@ -1,0 +1,26 @@
+# Code owners for Vanish AI
+# This file defines who owns different parts of the codebase
+
+# Global owners
+* @ayushgupta0202
+
+# Backend
+/backend/ @ayushgupta0202
+
+# Frontend
+/frontend/ @ayushgupta0202
+
+# Documentation
+*.md @ayushgupta0202
+/docs/ @ayushgupta0202
+
+# CI/CD
+/.github/ @ayushgupta0202
+
+# Docker
+/Dockerfile @ayushgupta0202
+/docker-compose.yml @ayushgupta0202
+
+# Scripts
+/scripts/ @ayushgupta0202
+

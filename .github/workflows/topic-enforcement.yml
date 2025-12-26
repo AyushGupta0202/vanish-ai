@@ -1,0 +1,107 @@
+name: Topic Enforcement
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/repo-metadata.yml'
+  pull_request:
+    types: [opened, synchronize]
+  workflow_dispatch:
+
+jobs:
+  enforce-topics:
+    name: Enforce Repository Topics
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      metadata: read
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Read canonical topics
+        id: topics
+        run: |
+          if [ -f ".github/repo-metadata.yml" ]; then
+            # Extract topics from YAML
+            TOPICS=$(grep -A 100 "^topics:" .github/repo-metadata.yml | grep "^-" | sed 's/^- //' | tr '\n' ',' | sed 's/,$//')
+            echo "canonical_topics=$TOPICS" >> $GITHUB_OUTPUT
+            echo "📋 Canonical topics: $TOPICS"
+          else
+            echo "❌ .github/repo-metadata.yml not found"
+            exit 1
+          fi
+      
+      - name: Get current repository topics
+        id: current
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data } = await github.rest.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            
+            const currentTopics = data.topics || [];
+            core.setOutput('current_topics', currentTopics.join(','));
+            console.log('📌 Current topics:', currentTopics.join(', '));
+            return currentTopics;
+      
+      - name: Validate topics match
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const yaml = require('js-yaml');
+            
+            const metadataFile = fs.readFileSync('.github/repo-metadata.yml', 'utf8');
+            const config = yaml.load(metadataFile);
+            const canonicalTopics = config.topics || [];
+            
+            const { data } = await github.rest.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            
+            const currentTopics = data.topics || [];
+            const missingTopics = canonicalTopics.filter(t => !currentTopics.includes(t));
+            const extraTopics = currentTopics.filter(t => !canonicalTopics.includes(t));
+            
+            if (missingTopics.length > 0 || extraTopics.length > 0) {
+              console.log('⚠️  Topic mismatch detected!');
+              if (missingTopics.length > 0) {
+                console.log('Missing topics:', missingTopics.join(', '));
+              }
+              if (extraTopics.length > 0) {
+                console.log('Extra topics:', extraTopics.join(', '));
+              }
+              
+              // Only fail on PR, allow auto-fix on push
+              if (context.eventName === 'pull_request') {
+                core.setFailed('Repository topics do not match canonical topics. Please sync topics.');
+              }
+            } else {
+              console.log('✅ Topics match canonical configuration');
+            }
+      
+      - name: Auto-sync topics on main branch
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const yaml = require('js-yaml');
+            
+            const metadataFile = fs.readFileSync('.github/repo-metadata.yml', 'utf8');
+            const config = yaml.load(metadataFile);
+            const canonicalTopics = config.topics || [];
+            
+            await github.rest.repos.replaceAllTopics({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              names: canonicalTopics
+            });
+            
+            console.log('✅ Topics synced:', canonicalTopics.join(', '));
+

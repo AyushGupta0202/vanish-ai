@@ -1,0 +1,47 @@
+name: SEO Optimization
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'README.md'
+      - '**.md'
+  workflow_dispatch:
+
+jobs:
+  seo-check:
+    name: SEO Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check README for SEO elements
+        run: |
+          echo "Checking README.md for SEO elements..."
+          
+          # Check for title
+          if ! grep -q "#.*Vanish AI" README.md; then
+            echo "⚠️  Warning: Main title might be missing"
+          fi
+          
+          # Check for description
+          if ! grep -q "description\|overview\|about" README.md -i; then
+            echo "⚠️  Warning: Description section might be missing"
+          fi
+          
+          # Check for keywords
+          KEYWORDS=("AI" "image" "inpainting" "remove" "text" "logo")
+          for keyword in "${KEYWORDS[@]}"; do
+            if ! grep -q "$keyword" README.md -i; then
+              echo "⚠️  Warning: Keyword '$keyword' not found"
+            fi
+          done
+          
+          # Check for badges
+          if ! grep -q "badge\|shield" README.md -i; then
+            echo "⚠️  Warning: Badges might be missing"
+          fi
+          
+          echo "✅ SEO check complete"
+        continue-on-error: true
+
