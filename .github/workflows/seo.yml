@@ -13,7 +13,7 @@ jobs:
     name: SEO Validation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       
       - name: Check README for SEO elements
         run: |
