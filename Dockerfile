@@ -1,7 +1,7 @@
 # Multi-stage build for Vanish AI
 
 # Stage 1: Backend
-FROM python:3.11-slim as backend
+FROM python:3.14-slim as backend
 
 WORKDIR /app
 
@@ -43,7 +43,7 @@ COPY frontend/ .
 RUN npm run build
 
 # Stage 3: Production
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 WORKDIR /app
 
