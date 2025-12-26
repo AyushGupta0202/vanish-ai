@@ -14,19 +14,19 @@ export default function Header({ showEditorActions = false, onExport }: HeaderPr
 
   return (
     <header className="border-b border-graphite bg-void-black sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="w-full max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <VanishLogo variant="light" size="md" />
         <nav className="flex items-center gap-4">
           {showEditorActions ? (
             <>
               <Button 
                 variant="outline" 
-                className="border-graphite text-white hover:bg-graphite"
+                className="border-graphite bg-transparent text-white hover:bg-graphite hover:text-white"
                 onClick={onExport}
               >
                 Export
               </Button>
-              <Button variant="ghost" className="text-white hover:text-electric-blue">
+              <Button variant="ghost" className="text-white hover:text-white hover:bg-graphite/50">
                 Account
               </Button>
             </>

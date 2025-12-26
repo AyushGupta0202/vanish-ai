@@ -3,9 +3,10 @@ import { Button } from '@/components/ui/button'
 
 interface ImageUploaderProps {
   onUpload: (file: File) => void
+  isUploading?: boolean
 }
 
-export default function ImageUploader({ onUpload }: ImageUploaderProps) {
+export default function ImageUploader({ onUpload, isUploading = false }: ImageUploaderProps) {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,16 +43,33 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps) {
         className="hidden"
       />
       <div className="space-y-4">
-        <div className="text-6xl">📸</div>
-        <h3 className="text-2xl font-semibold text-white">
-          Upload an image
-        </h3>
-        <p className="text-muted-gray">
-          Drag and drop or click to select
-        </p>
-        <Button className="bg-electric-blue hover:bg-electric-blue/90 text-white mt-4">
-          Select Image
-        </Button>
+        {isUploading ? (
+          <>
+            <div className="text-6xl animate-pulse">⏳</div>
+            <h3 className="text-2xl font-semibold text-white">
+              Uploading image...
+            </h3>
+            <p className="text-muted-gray">
+              Please wait while we process your image
+            </p>
+            <div className="w-full bg-graphite rounded-full h-2.5 mt-4">
+              <div className="bg-electric-blue h-2.5 rounded-full animate-pulse" style={{ width: '60%' }}></div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="text-6xl">📸</div>
+            <h3 className="text-2xl font-semibold text-white">
+              Upload an image
+            </h3>
+            <p className="text-muted-gray">
+              Drag and drop or click to select (Max 50MB)
+            </p>
+            <Button className="bg-electric-blue hover:bg-electric-blue/90 text-white mt-4" disabled={isUploading}>
+              Select Image
+            </Button>
+          </>
+        )}
       </div>
     </div>
   )

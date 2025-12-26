@@ -46,6 +46,7 @@ function App() {
   const [autoMask, setAutoMask] = useState<string | null>(null)
   const [confidenceThreshold, setConfidenceThreshold] = useState(0.5)
   const [expandPixels, setExpandPixels] = useState(5)
+  const [toolMode, setToolMode] = useState<'brush' | 'hand'>('brush')
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   // Sync with history store
@@ -305,8 +306,11 @@ function App() {
 
   useEffect(() => {
     if (canvasRef.current && image) {
-      // Create canvas with viewport size
-      const maxViewportWidth = 1200
+      // Create canvas with viewport size - ensure it fits within container
+      // Calculate available width: max-w-7xl container - sidebar (220px) - gap (24px) - padding (32px) - card padding (48px)
+      // = ~1200px max container - 220px sidebar - 24px gap - 32px container padding - 48px card padding = ~876px
+      // Use a safe maximum that fits in most screens
+      const maxViewportWidth = 1000 // Reduced from 1200 to prevent overflow
       const maxViewportHeight = 800
       
       const fabricCanvas = new fabric.Canvas(canvasRef.current, {
@@ -321,27 +325,32 @@ function App() {
         const origHeight = img.height!
         setOriginalDimensions({ width: origWidth, height: origHeight })
         
-        // Calculate scale to fit image in viewport (centered) - scale to fit, can scale up or down
+        // Calculate scale to fit image exactly inside viewport (centered)
+        // Scale to fit: use the smaller ratio to ensure image fits completely
         const scaleX = maxViewportWidth / origWidth
         const scaleY = maxViewportHeight / origHeight
-        const scale = Math.min(scaleX, scaleY) // Scale to fit (can scale up if image is smaller)
+        const scale = Math.min(scaleX, scaleY) // Ensures image fits completely
         
         // Set canvas to viewport size
         fabricCanvas.setWidth(maxViewportWidth)
         fabricCanvas.setHeight(maxViewportHeight)
         
-        // Calculate centered position
+        // Calculate centered position for scaled image
         const scaledWidth = origWidth * scale
         const scaledHeight = origHeight * scale
         const left = (maxViewportWidth - scaledWidth) / 2
         const top = (maxViewportHeight - scaledHeight) / 2
         
-        // Set image as background, centered and scaled to fit
+        // Ensure image is perfectly centered
+        const centeredLeft = Math.round(left)
+        const centeredTop = Math.round(top)
+        
+        // Set image as background, centered and scaled to fit exactly
         img.set({
           scaleX: scale,
           scaleY: scale,
-          left: left,
-          top: top,
+          left: centeredLeft,
+          top: centeredTop,
           originX: 'left',
           originY: 'top',
         })
@@ -351,8 +360,8 @@ function App() {
         }, {
           scaleX: scale,
           scaleY: scale,
-          left: left,
-          top: top,
+          left: centeredLeft,
+          top: centeredTop,
         })
         
         // Set initial zoom to 1 (no zoom) - image is already scaled to fit
@@ -375,31 +384,105 @@ function App() {
       // Configure brush for drawing mask
       fabricCanvas.freeDrawingBrush.width = brushSize
       fabricCanvas.freeDrawingBrush.color = 'rgba(255, 0, 0, 0.8)'
-      fabricCanvas.isDrawingMode = true
+      fabricCanvas.isDrawingMode = toolMode === 'brush'
       
       // Enable canvas scrolling
       fabricCanvas.allowTouchScrolling = true
+      
+      // Set default cursor based on tool mode
+      fabricCanvas.defaultCursor = toolMode === 'brush' ? 'crosshair' : 'move'
+      
+      // Pan handlers will be set up in the tool mode useEffect
 
       return () => {
         fabricCanvas.dispose()
       }
     }
-  }, [image, brushSize])
+  }, [image, toolMode]) // Added toolMode to dependencies
   
-  // Update brush size when it changes
+  // Update brush size and tool mode when they change
   useEffect(() => {
     if (canvas) {
       canvas.freeDrawingBrush.width = brushSize
+      canvas.isDrawingMode = toolMode === 'brush'
+      canvas.defaultCursor = toolMode === 'brush' ? 'crosshair' : 'grab'
+      canvas.selection = toolMode === 'hand' ? false : true
+      
+      // Remove existing pan handlers
+      canvas.off('mouse:down')
+      canvas.off('mouse:move')
+      canvas.off('mouse:up')
+      
+      if (toolMode === 'hand') {
+        // Enable panning in hand mode
+        let isDragging = false
+        let lastPosX = 0
+        let lastPosY = 0
+        
+        canvas.on('mouse:down', (opt) => {
+          const evt = opt.e
+          isDragging = true
+          canvas.selection = false
+          lastPosX = evt.clientX
+          lastPosY = evt.clientY
+          canvas.defaultCursor = 'grabbing'
+        })
+        
+        canvas.on('mouse:move', (opt) => {
+          if (isDragging) {
+            const e = opt.e
+            const vpt = canvas.viewportTransform!
+            vpt[4] += e.clientX - lastPosX
+            vpt[5] += e.clientY - lastPosY
+            canvas.requestRenderAll()
+            lastPosX = e.clientX
+            lastPosY = e.clientY
+          }
+        })
+        
+        canvas.on('mouse:up', () => {
+          canvas.setViewportTransform(canvas.viewportTransform!)
+          isDragging = false
+          canvas.defaultCursor = 'grab'
+        })
+      }
+      
+      canvas.renderAll()
     }
-  }, [brushSize, canvas])
+  }, [brushSize, toolMode, canvas])
+
+  const [isUploading, setIsUploading] = useState(false)
 
   const handleImageUpload = async (file: File) => {
+    // Validate file size (50MB limit)
+    const MAX_FILE_SIZE = 50 * 1024 * 1024 // 50MB
+    if (file.size > MAX_FILE_SIZE) {
+      alert(`File too large. Maximum size is ${MAX_FILE_SIZE / (1024 * 1024)}MB`)
+      return
+    }
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      alert('Please upload a valid image file')
+      return
+    }
+
+    setIsUploading(true)
     const formData = new FormData()
     formData.append('file', file)
 
     try {
       const response = await axios.post(`${API_URL}/api/upload`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        // Don't set Content-Type header - let axios set it automatically with boundary
+        timeout: 60000, // 60 second timeout
+        maxContentLength: 100 * 1024 * 1024, // 100MB max response size
+        maxBodyLength: 100 * 1024 * 1024, // 100MB max request size
+        onUploadProgress: (progressEvent) => {
+          if (progressEvent.total) {
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            console.log(`Upload progress: ${percentCompleted}%`)
+          }
+        },
       })
       const newImage = response.data.image
       setImage(newImage)
@@ -411,9 +494,30 @@ function App() {
       setAutoMask(null)
       resetHistory()
       saveState()
-    } catch (error) {
+    } catch (error: any) {
       console.error('Upload error:', error)
-      alert('Failed to upload image')
+      console.error('Error details:', {
+        message: error.message,
+        code: error.code,
+        response: error.response?.data,
+        status: error.response?.status
+      })
+      
+      if (error.code === 'ECONNABORTED') {
+        alert('Upload timeout. Please try again with a smaller image.')
+      } else if (error.response?.status === 400) {
+        const errorMsg = error.response?.data?.detail || error.response?.data?.message || 'Invalid file. Please upload a valid image.'
+        alert(errorMsg)
+      } else if (error.response?.status === 500) {
+        const errorMsg = error.response?.data?.detail || 'Server error. Please try again.'
+        alert(`Upload failed: ${errorMsg}`)
+      } else if (error.message) {
+        alert(`Upload failed: ${error.message}`)
+      } else {
+        alert('Failed to upload image. Please check the console for details and try again.')
+      }
+    } finally {
+      setIsUploading(false)
     }
   }
 
@@ -675,7 +779,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-void-black text-white">
+    <div className="min-h-screen bg-void-black text-white w-full overflow-x-hidden">
       <Header showEditorActions={!!image} onExport={handleDownload} />
       
       {!image ? (
@@ -691,6 +795,7 @@ function App() {
               processedImage={processedImage}
               onProcess={handleProcess}
               isProcessing={isProcessing}
+              isUploading={isUploading}
             />
           </div>
           <CTASection onStartClick={handleStartClick} />
@@ -699,9 +804,9 @@ function App() {
       ) : (
         <>
           {/* Editor View */}
-          <div className="flex justify-center items-start min-h-[calc(100vh-64px)] py-8">
+          <div className="w-full min-h-[calc(100vh-64px)] py-8">
             <div className="w-full max-w-7xl mx-auto px-4">
-              <div className="grid md:grid-cols-[220px_1fr] gap-6">
+              <div className="grid md:grid-cols-[220px_1fr] gap-6 items-start w-full">
               {/* Tools Sidebar */}
               <div className="space-y-4">
                 <div className="bg-graphite rounded-xl p-4 border border-electric-blue/20">
@@ -709,24 +814,41 @@ function App() {
                   <div className="space-y-2">
                     <Button
                       variant="ghost"
-                      className="w-full justify-start text-white hover:bg-electric-blue/20"
+                      className={`w-full justify-start text-white hover:bg-electric-blue/20 ${
+                        toolMode === 'brush' ? 'bg-electric-blue/20' : ''
+                      }`}
                       title="Brush Tool"
+                      onClick={() => setToolMode('brush')}
                     >
                       🖊 Brush
                     </Button>
                     <Button
                       variant="ghost"
-                      className="w-full justify-start text-white hover:bg-electric-blue/20"
-                      title="Rectangle Select"
+                      className={`w-full justify-start text-white hover:bg-electric-blue/20 ${
+                        toolMode === 'hand' ? 'bg-electric-blue/20' : ''
+                      }`}
+                      title="Hand Tool - Drag/Pan"
+                      onClick={() => setToolMode('hand')}
                     >
-                      ▢ Rectangle
+                      ✋ Hand
                     </Button>
                     <Button
                       variant="ghost"
-                      className="w-full justify-start text-white hover:bg-electric-blue/20"
-                      title="Lasso Tool"
+                      className="w-full justify-between text-white hover:bg-electric-blue/20 disabled:opacity-50"
+                      title="Rectangle Select"
+                      disabled
                     >
-                      ✂ Lasso
+                      <span>▢ Rectangle</span>
+                      <span className="text-xs text-muted-gray">Coming Soon</span>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-between text-white hover:bg-electric-blue/20 disabled:opacity-50"
+                      title="Lasso Tool"
+                      disabled
+                    >
+                      <span>✂ Lasso</span>
+                      <span className="text-xs text-muted-gray">Coming Soon</span>
                     </Button>
                     <HistoryControls />
                   </div>
@@ -743,8 +865,8 @@ function App() {
               </div>
 
               {/* Main Canvas Area */}
-              <div className="space-y-6 flex flex-col">
-                <div className="bg-graphite rounded-xl shadow-lg p-6 border border-electric-blue/20">
+              <div className="space-y-6 flex flex-col min-w-0 w-full">
+                <div className="bg-graphite rounded-xl shadow-lg p-6 border border-electric-blue/20 w-full min-w-0">
                   <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-semibold text-white">Select. Vanish.</h2>
                     <div className="flex gap-2 items-center">
@@ -755,17 +877,21 @@ function App() {
                       />
                       <Button
                         onClick={() => {
-                          setImage(null)
-                          setHistoryImage(null)
-                          setProcessedImage(null)
-                          setHistoryProcessedImage(null)
-                          setCanvas(null)
-                          setDetectedRegions([])
-                          setAutoMask(null)
-                          resetHistory()
+                          // Trigger file input click
+                          const fileInput = document.createElement('input')
+                          fileInput.type = 'file'
+                          fileInput.accept = 'image/*'
+                          fileInput.onchange = (e: Event) => {
+                            const target = e.target as HTMLInputElement
+                            const file = target.files?.[0]
+                            if (file) {
+                              handleImageUpload(file)
+                            }
+                          }
+                          fileInput.click()
                         }}
                         variant="outline"
-                        className="border-graphite text-white hover:bg-graphite"
+                        className="border-graphite bg-transparent text-white hover:bg-graphite hover:text-white hover:border-electric-blue/50 transition-all hover:scale-105 active:scale-95"
                       >
                         New Image
                       </Button>

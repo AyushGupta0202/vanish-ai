@@ -18,7 +18,7 @@ export default function DetectionSettings({
     <Card className="mb-4 bg-graphite border-graphite">
       <CardHeader>
         <CardTitle className="text-lg text-white">Detection Settings</CardTitle>
-        <CardDescription className="text-muted-gray">Configure text detection parameters</CardDescription>
+        <CardDescription className="text-white/80">Configure text detection parameters</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-2">
@@ -35,7 +35,7 @@ export default function DetectionSettings({
             step={0.05}
             className="w-full"
           />
-          <p className="text-xs text-muted-gray">
+          <p className="text-xs text-white/80">
             Higher values = more confident detections only
           </p>
         </div>
@@ -54,7 +54,7 @@ export default function DetectionSettings({
             step={1}
             className="w-full"
           />
-          <p className="text-xs text-muted-gray">
+          <p className="text-xs text-white/80">
             Pixels to expand mask around detected text
           </p>
         </div>

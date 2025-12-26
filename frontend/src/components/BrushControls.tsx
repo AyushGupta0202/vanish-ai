@@ -11,7 +11,7 @@ export default function BrushControls({ brushSize, onBrushSizeChange }: BrushCon
     <Card className="mb-4 bg-graphite border-graphite">
       <CardHeader>
         <CardTitle className="text-lg text-white">Brush Size</CardTitle>
-        <CardDescription className="text-muted-gray">Adjust the size of the eraser brush</CardDescription>
+        <CardDescription className="text-white/80">Adjust the size of the eraser brush</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">

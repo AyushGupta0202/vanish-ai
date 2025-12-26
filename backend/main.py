@@ -26,7 +26,14 @@ app = FastAPI(title="Vanish AI API", version="2.0.0")
 # CORS middleware for frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:3000",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
+        "http://127.0.0.1:3000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -147,31 +154,86 @@ async def process_image(request: ProcessRequest):
 @app.post("/api/upload")
 async def upload_image(file: UploadFile = File(...)):
     """
-    Upload and validate image
+    Upload and validate image with optimization
     """
     try:
+        print(f"Upload request received: {file.filename}, content_type: {file.content_type}")
+        
         # Validate file type
-        if not file.content_type.startswith('image/'):
+        if not file.content_type or not file.content_type.startswith('image/'):
+            print(f"Invalid content type: {file.content_type}")
             raise HTTPException(status_code=400, detail="File must be an image")
         
-        # Read file
-        contents = await file.read()
-        image = Image.open(io.BytesIO(contents)).convert('RGB')
+        # Read file with size limit (50MB)
+        MAX_FILE_SIZE = 50 * 1024 * 1024  # 50MB
         
-        # Convert to base64 for frontend
+        # Read file contents into memory
+        contents = await file.read()
+        print(f"File size: {len(contents)} bytes, content_type: {file.content_type}")
+        
+        if len(contents) > MAX_FILE_SIZE:
+            raise HTTPException(status_code=400, detail=f"File too large. Maximum size is {MAX_FILE_SIZE // (1024*1024)}MB")
+        
+        if len(contents) == 0:
+            raise HTTPException(status_code=400, detail="File is empty")
+        
+        # Create a new BytesIO object from the contents
+        image_bytes = io.BytesIO(contents)
+        
+        # Open and validate image
+        try:
+            # Try to open the image
+            image = Image.open(image_bytes)
+            print(f"Image format detected: {image.format}, size: {image.width}x{image.height}, mode: {image.mode}")
+            
+            # Convert to RGB (handles RGBA, P, etc.)
+            if image.mode != 'RGB':
+                image = image.convert('RGB')
+            print(f"Image converted to RGB: {image.width}x{image.height}")
+        except Exception as img_error:
+            import traceback
+            error_details = traceback.format_exc()
+            print(f"Error opening image: {str(img_error)}")
+            print(f"Traceback: {error_details}")
+            raise HTTPException(status_code=400, detail=f"Invalid image file. Please ensure it's a valid image format (JPEG, PNG, etc.). Error: {str(img_error)}")
+        
+        # Optimize: Resize if image is too large (max 4096px on longest side)
+        MAX_DIMENSION = 4096
+        original_size = (image.width, image.height)
+        if max(image.width, image.height) > MAX_DIMENSION:
+            ratio = MAX_DIMENSION / max(image.width, image.height)
+            new_width = int(image.width * ratio)
+            new_height = int(image.height * ratio)
+            print(f"Resizing from {original_size} to ({new_width}, {new_height})")
+            image = image.resize((new_width, new_height), Image.LANCZOS)
+        
+        # Convert to base64 with optimization
         buffered = io.BytesIO()
-        image.save(buffered, format="PNG")
-        img_base64 = base64.b64encode(buffered.getvalue()).decode()
+        
+        try:
+            # Use JPEG for better compression, quality 85 is a good balance
+            image.save(buffered, format="JPEG", quality=85, optimize=True)
+            img_base64 = base64.b64encode(buffered.getvalue()).decode()
+            print(f"Image converted to base64, size: {len(img_base64)} chars")
+        except Exception as save_error:
+            print(f"Error saving image: {str(save_error)}")
+            raise HTTPException(status_code=500, detail=f"Failed to process image: {str(save_error)}")
         
         return {
             "success": True,
-            "image": f"data:image/png;base64,{img_base64}",
+            "image": f"data:image/jpeg;base64,{img_base64}",
             "width": image.width,
             "height": image.height
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        import traceback
+        error_trace = traceback.format_exc()
+        print(f"Unexpected error in upload: {str(e)}")
+        print(f"Traceback: {error_trace}")
+        raise HTTPException(status_code=500, detail=f"Failed to process image: {str(e)}")
 
 @app.post("/api/detect-text")
 async def detect_text(request: DetectTextRequest):

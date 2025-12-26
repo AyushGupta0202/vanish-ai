@@ -7,9 +7,10 @@ interface LiveDemoProps {
   processedImage: string | null
   onProcess: () => void
   isProcessing: boolean
+  isUploading?: boolean
 }
 
-export default function LiveDemo({ onUpload, image, processedImage, onProcess, isProcessing }: LiveDemoProps) {
+export default function LiveDemo({ onUpload, image, processedImage, onProcess, isProcessing, isUploading = false }: LiveDemoProps) {
   return (
     <section id="live-demo" className="py-20 px-4 bg-graphite">
       <div className="container mx-auto max-w-6xl">
@@ -17,7 +18,7 @@ export default function LiveDemo({ onUpload, image, processedImage, onProcess, i
         
         {!image ? (
           <div className="max-w-2xl mx-auto">
-            <ImageUploader onUpload={onUpload} />
+            <ImageUploader onUpload={onUpload} isUploading={isUploading} />
           </div>
         ) : (
           <div className="space-y-6">
