@@ -7,12 +7,9 @@ from PIL import Image
 import cv2
 from typing import List, Dict, Tuple, Optional
 
-try:
-    from paddleocr import PaddleOCR
-    PADDLEOCR_AVAILABLE = True
-except ImportError:
-    PADDLEOCR_AVAILABLE = False
-    print("Warning: PaddleOCR not available. Install with: pip install paddleocr")
+# Lazy import - don't import PaddleOCR at module level to avoid blocking
+PADDLEOCR_AVAILABLE = None  # Will be checked lazily
+PaddleOCR = None  # Will be imported when needed
 
 class TextDetectionService:
     """
@@ -24,9 +21,24 @@ class TextDetectionService:
         self.initialized = False
         self._initialize()
     
+    def _check_paddleocr_available(self):
+        """Check if PaddleOCR is available (lazy check)"""
+        global PADDLEOCR_AVAILABLE, PaddleOCR
+        if PADDLEOCR_AVAILABLE is None:
+            import os
+            os.environ['DISABLE_MODEL_SOURCE_CHECK'] = 'True'
+            try:
+                from paddleocr import PaddleOCR as _PaddleOCR
+                PaddleOCR = _PaddleOCR
+                PADDLEOCR_AVAILABLE = True
+            except ImportError:
+                PADDLEOCR_AVAILABLE = False
+                print("Warning: PaddleOCR not available. Install with: pip install paddleocr")
+        return PADDLEOCR_AVAILABLE
+    
     def _initialize(self):
         """Initialize PaddleOCR with robust error handling"""
-        if PADDLEOCR_AVAILABLE:
+        if not self._check_paddleocr_available():
             try:
                 print("Initializing PaddleOCR...")
                 import os
@@ -99,6 +111,9 @@ class TextDetectionService:
             List of detected text regions with bbox, text, and confidence
         """
         if not self.initialized or self.ocr is None:
+            return []
+        
+        if not self._check_paddleocr_available() or self.ocr is None:
             return []
         
         try:
@@ -212,7 +227,7 @@ class TextDetectionService:
         Returns:
             Tuple of (text_regions, mask_image)
         """
-        if not self.initialized or self.ocr is None:
+        if not self._check_paddleocr_available() or not self.initialized or self.ocr is None:
             return [], Image.new('L', image.size, 0)
         
         try:

@@ -173,7 +173,7 @@ class InpaintingService:
             self.model_loaded = False
     
     def _prepare_mask_ultimate(self, mask: Image.Image, image_size: tuple, image: np.ndarray) -> np.ndarray:
-        """Ultimate mask preparation with edge detection and refinement"""
+        """Clean mask preparation without aggressive refinement"""
         # Resize mask to match image size if needed
         if mask.size != image_size:
             mask = mask.resize(image_size, Image.LANCZOS)
@@ -190,36 +190,14 @@ class InpaintingService:
         # Ensure binary mask (0 or 255)
         mask_binary = (mask_array > 127).astype(np.uint8) * 255
         
-        # Advanced morphological operations for cleaner mask
-        kernel_ellipse = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        # Light morphological operations to clean edges
+        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
         
-        # Close small gaps
-        mask_cleaned = cv2.morphologyEx(mask_binary, cv2.MORPH_CLOSE, kernel_ellipse, iterations=2)
+        # Close tiny gaps
+        mask_cleaned = cv2.morphologyEx(mask_binary, cv2.MORPH_CLOSE, kernel, iterations=1)
         
-        # Remove small noise
-        mask_cleaned = cv2.morphologyEx(mask_cleaned, cv2.MORPH_OPEN, kernel_ellipse, iterations=1)
-        
-        # Edge-aware mask refinement
-        # Detect edges in original image
-        if len(image.shape) == 3:
-            gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-        else:
-            gray = image
-        
-        # Use Canny edge detection
-        edges = cv2.Canny(gray, 50, 150)
-        
-        # Dilate edges slightly
-        edge_kernel = np.ones((3, 3), np.uint8)
-        edges_dilated = cv2.dilate(edges, edge_kernel, iterations=1)
-        
-        # Refine mask near edges for better quality
-        edge_mask = (edges_dilated > 0).astype(np.float32)
-        mask_refined = mask_cleaned.astype(np.float32) * (1.0 + 0.2 * edge_mask)
-        mask_refined = np.clip(mask_refined, 0, 255).astype(np.uint8)
-        
-        # Final smoothing for seamless blending
-        mask_final = cv2.GaussianBlur(mask_refined.astype(np.float32), (5, 5), 1.5)
+        # Light smoothing
+        mask_final = cv2.GaussianBlur(mask_cleaned.astype(np.float32), (3, 3), 0.5)
         mask_final = (mask_final > 127).astype(np.uint8) * 255
         
         return mask_final
@@ -423,6 +401,9 @@ class InpaintingService:
                 
                 print("✅ LaMa inpainting completed")
                 
+                # Return LaMa result directly without excessive post-processing
+                return result_pil
+                
             except Exception as e:
                 print(f"LaMa processing error: {e}")
                 print("Falling back to ultimate OpenCV algorithm...")
@@ -431,28 +412,30 @@ class InpaintingService:
             print("Using ultimate quality OpenCV inpainting")
             result = self._ultimate_opencv_inpainting(img_array, mask_array)
         
-        # Ultimate post-processing: seamless boundary blending
-        # Create sophisticated blending mask
-        mask_blur = cv2.GaussianBlur(mask_array.astype(np.float32), (15, 15), 4) / 255.0
+        # Minimal post-processing for clean results
+        # Only apply if result dimensions match (avoid degradation from resizing)
+        if result.shape == img_array.shape:
+            # Light edge blending only at mask boundaries
+            mask_blur = cv2.GaussianBlur(mask_array.astype(np.float32), (5, 5), 1.5) / 255.0
+            
+            if len(result.shape) == 3:
+                mask_blur_3d = np.stack([mask_blur] * 3, axis=2)
+            else:
+                mask_blur_3d = mask_blur
+            
+            # Gentle blending only at edges
+            result = (mask_blur_3d * result.astype(np.float32) + 
+                     (1 - mask_blur_3d) * img_array.astype(np.float32)).astype(np.uint8)
+        elif result.shape != img_array.shape:
+            # Resize to match if needed
+            print(f"Resizing result from {result.shape} to {img_array.shape}")
+            result = cv2.resize(result, (img_array.shape[1], img_array.shape[0]), interpolation=cv2.INTER_LANCZOS4)
         
-        # Apply distance-based weighting
-        dist_from_boundary = cv2.distanceTransform((mask_array == 0).astype(np.uint8), cv2.DIST_L2, 5)
-        if dist_from_boundary.max() > 0:
-            dist_norm = dist_from_boundary / dist_from_boundary.max()
-            # Blend more aggressively near boundaries
-            mask_blur = mask_blur * (0.5 + 0.5 * (1 - dist_norm))
+        # Convert result to PIL and return (skip aggressive post-processing)
+        result_image = Image.fromarray(result)
+        return result_image
         
-        if len(result.shape) == 3:
-            mask_blur_3d = np.stack([mask_blur] * 3, axis=2)
-        else:
-            mask_blur_3d = mask_blur
-        
-        # Sophisticated blending
-        result = (mask_blur_3d * result.astype(np.float32) + 
-                 (1 - mask_blur_3d) * img_array.astype(np.float32)).astype(np.uint8)
-        
-        # Final quality enhancement pipeline with advanced AI techniques
-        
+        # OLD: Aggressive post-processing disabled (was causing artifacts)
         # Step 1: Structure-aware processing
         # Detect and preserve structural elements (edges, lines, textures)
         if len(result.shape) == 3:

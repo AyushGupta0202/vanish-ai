@@ -39,11 +39,51 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize services
-inpainting_service = InpaintingService()
-text_detection_service = TextDetectionService()
-background_analysis_service = BackgroundAnalysisService()
-smart_mask_service = SmartMaskService()
+# Initialize services (lazy initialization for heavy services)
+inpainting_service = None
+text_detection_service = None
+background_analysis_service = None
+smart_mask_service = None
+
+def get_inpainting_service():
+    """Lazy initialization of inpainting service"""
+    global inpainting_service
+    if inpainting_service is None:
+        inpainting_service = InpaintingService()
+    return inpainting_service
+
+def get_text_detection_service():
+    """Lazy initialization of text detection service"""
+    global text_detection_service
+    if text_detection_service is None:
+        text_detection_service = TextDetectionService()
+    return text_detection_service
+
+def get_background_analysis_service():
+    """Lazy initialization of background analysis service"""
+    global background_analysis_service
+    if background_analysis_service is None:
+        background_analysis_service = BackgroundAnalysisService()
+    return background_analysis_service
+
+def get_smart_mask_service():
+    """Lazy initialization of smart mask service"""
+    global smart_mask_service
+    if smart_mask_service is None:
+        smart_mask_service = SmartMaskService()
+    return smart_mask_service
+
+@app.on_event("startup")
+async def startup_event():
+    """Initialize services in background after server starts"""
+    import asyncio
+    async def init_services():
+        print("Initializing services in background...")
+        get_inpainting_service()
+        get_background_analysis_service()
+        get_smart_mask_service()
+        print("Services initialized")
+    asyncio.create_task(init_services())
 
 class ProcessRequest(BaseModel):
     image_base64: str
@@ -72,11 +112,13 @@ async def root():
 
 @app.get("/health")
 async def health():
+    inpainting = get_inpainting_service()
+    text_service = get_text_detection_service()
     return {
         "status": "healthy",
-        "model_loaded": inpainting_service.model_loaded,
-        "device": str(inpainting_service.device),
-        "text_detection_available": text_detection_service.initialized
+        "model_loaded": inpainting.model_loaded,
+        "device": str(inpainting.device),
+        "text_detection_available": text_service.initialized
     }
 
 @app.post("/api/process")
@@ -95,6 +137,10 @@ async def process_image(request: ProcessRequest):
         
         # Convert mask to numpy to find bounding box
         mask_array = np.array(mask)
+        
+        # Log basic mask info
+        black_pixels = np.sum(mask_array < 128)
+        print(f"Processing: {black_pixels} pixels to inpaint")
         
         # Find bounding box of mask (where mask is non-zero/black)
         # In mask: black (0) = area to inpaint, white (255) = keep
@@ -130,8 +176,17 @@ async def process_image(request: ProcessRequest):
         cropped_image = image.crop((x_min, y_min, x_max, y_max))
         cropped_mask = mask.crop((x_min, y_min, x_max, y_max))
         
+        # Store original cropped size
+        cropped_width = cropped_image.width
+        cropped_height = cropped_image.height
+        
         # Process only the cropped region
-        result_cropped = await inpainting_service.process(cropped_image, cropped_mask)
+        inpainting = get_inpainting_service()
+        result_cropped = await inpainting.process(cropped_image, cropped_mask)
+        
+        # Ensure result matches cropped size (inpainting might change dimensions)
+        if result_cropped.size != (cropped_width, cropped_height):
+            result_cropped = result_cropped.resize((cropped_width, cropped_height), Image.LANCZOS)
         
         # Paste result back into original image
         result_image = image.copy()
@@ -253,7 +308,8 @@ async def detect_text(request: DetectTextRequest):
         
         # Detect text only in selected area
         if selected_mask:
-            text_regions, mask = text_detection_service.detect_and_mask_in_region(
+            text_service = get_text_detection_service()
+            text_regions, mask = text_service.detect_and_mask_in_region(
                 image,
                 selected_mask,
                 confidence_threshold=request.confidence_threshold,
@@ -301,10 +357,11 @@ async def analyze_background(request: AnalyzeBackgroundRequest):
         mask_array = np.array(mask)
         
         # Analyze background
-        analysis = background_analysis_service.analyze_background(image, mask_array)
+        bg_service = get_background_analysis_service()
+        analysis = bg_service.analyze_background(image, mask_array)
         
         # Get expansion suggestion
-        expansion = background_analysis_service.suggest_mask_expansion(
+        expansion = bg_service.suggest_mask_expansion(
             mask_array, analysis['background_type']
         )
         
@@ -333,7 +390,8 @@ async def generate_smart_mask(request: GenerateSmartMaskRequest):
         
         # Auto-detect text if requested
         if request.detection_type in ["text", "both"]:
-            text_regions, text_mask = text_detection_service.detect_and_mask(
+            text_service = get_text_detection_service()
+            text_regions, text_mask = text_service.detect_and_mask(
                 image,
                 confidence_threshold=request.confidence_threshold,
                 expand_pixels=request.expand_pixels
@@ -351,22 +409,23 @@ async def generate_smart_mask(request: GenerateSmartMaskRequest):
             raise HTTPException(status_code=400, detail="No mask generated")
         
         # Fuse masks
+        mask_service = get_smart_mask_service()
         if len(masks) > 1:
-            fused_mask = smart_mask_service.fuse_masks(masks)
+            fused_mask = mask_service.fuse_masks(masks)
         else:
             fused_mask = masks[0]
         
         # Expand intelligently
         img_array = np.array(image)
-        expanded_mask = smart_mask_service.expand_mask_intelligently(
+        expanded_mask = mask_service.expand_mask_intelligently(
             fused_mask, img_array, request.expand_pixels
         )
         
         # Refine mask
-        refined_mask = smart_mask_service.refine_mask(expanded_mask, img_array)
+        refined_mask = mask_service.refine_mask(expanded_mask, img_array)
         
         # Validate mask
-        validation = smart_mask_service.validate_mask(refined_mask, img_array)
+        validation = mask_service.validate_mask(refined_mask, img_array)
         
         # Convert to PIL and base64
         mask_pil = Image.fromarray(refined_mask, mode='L')
