@@ -659,7 +659,7 @@ function App() {
       
       // Get canvas transform info
       const bgImage = canvas.backgroundImage as fabric.Image
-      const canvasScale = (canvas as any).initialScale || 1
+      const canvasScale = bgImage?.scaleX || 1
       const canvasLeft = bgImage?.left || 0
       const canvasTop = bgImage?.top || 0
       
