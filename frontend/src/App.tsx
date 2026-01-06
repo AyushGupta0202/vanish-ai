@@ -116,14 +116,12 @@ function App() {
     
     // Handle trackpad pinch zoom
     let lastWheelTime = 0
-    let wheelEventCount = 0
     let wheelEventBuffer: Array<{deltaX: number, deltaY: number, time: number}> = []
     
     const wheelHandler = (opt: any) => {
       const e = opt.e
       
       const now = Date.now()
-      const timeDelta = now - lastWheelTime
       lastWheelTime = now
       
       // Track wheel events for pattern detection
@@ -180,7 +178,6 @@ function App() {
         e.stopPropagation()
         
         // Use combined delta for zoom
-        const combinedDelta = Math.sqrt(absDeltaX * absDeltaX + absDeltaY * absDeltaY)
         const delta = e.deltaY || e.deltaX || 0
         const currentZoom = fabricCanvas.getZoom()
         

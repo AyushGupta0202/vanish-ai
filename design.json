@@ -1,0 +1,562 @@
+{
+  "meta": {
+    "name": "Aurora Glass (Space-Glow) Design System",
+    "goal": "Provide high-level design-system guidance that lets an AI replicate the attached screenshot’s look (dark cosmic background, glassmorphism surfaces, neon cyan/violet glow accents, Helvetica-led typography) consistently across the app.",
+    "appliesTo": [
+      "marketing landing",
+      "authenticated app shell",
+      "dashboard/editor surfaces",
+      "forms and data display"
+    ],
+    "doNotDo": [
+      "Do not use flat light backgrounds.",
+      "Do not use heavy skeuomorphic shadows.",
+      "Do not use many accent colors at once; keep accents sparse and intentional.",
+      "Do not mix more than 2 font families; prefer one family with 2–3 weights.",
+      "Do not use sharp corners; everything should feel engineered but soft."
+    ]
+  },
+  "designDNA": {
+    "adjectives": [
+      "cosmic",
+      "precision",
+      "glass",
+      "neon",
+      "quiet-luxury",
+      "high-contrast",
+      "minimal"
+    ],
+    "visualMotifs": [
+      "planet/arc horizon glow",
+      "concentric orbital rings",
+      "pill controls",
+      "soft inner borders",
+      "edge-lit outlines",
+      "subtle bloom around key accents"
+    ],
+    "corePrinciples": [
+      "Hierarchy by scale first, then contrast, then glow (in that order).",
+      "Surfaces are glass: translucent fill + blur + thin border + gentle inner highlight.",
+      "Accents are emissive light sources, not paint. Use gradients and bloom.",
+      "Spacing is generous; UI should breathe with large margins and controlled density.",
+      "Text is crisp. Avoid noisy decoration behind body copy."
+    ],
+    "compositionRules": [
+      "Always use a layered background system: base → atmosphere gradient → orbital rings → horizon glow → (optional) noise.",
+      "Primary CTA lives on the brightest local background region (usually near the horizon glow).",
+      "Cards and nav elements should float above the background via blur + border, not by big shadows.",
+      "Use pills for navigation states and compact filters; reserve hard rectangles for data grids only."
+    ]
+  },
+  "layout": {
+    "grid": {
+      "type": "12-col",
+      "containerMaxWidthPx": 1200,
+      "gutterPx": 24,
+      "outerPaddingPx": {
+        "mobile": 20,
+        "tablet": 28,
+        "desktop": 32
+      }
+    },
+    "spacingScalePx": [0, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128],
+    "sectionRhythm": {
+      "marketingSectionPaddingY": {
+        "mobile": 56,
+        "desktop": 96
+      },
+      "dashboardDensity": "medium",
+      "cardPadding": {
+        "sm": 16,
+        "md": 20,
+        "lg": 24
+      },
+      "stackGap": {
+        "tight": 8,
+        "default": 12,
+        "loose": 16,
+        "xl": 24
+      }
+    },
+    "alignment": {
+      "default": "left",
+      "hero": "center-left",
+      "dataViews": "left",
+      "numbers": "right"
+    }
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": {
+        "name": "Helvetica",
+        "fallbacks": [
+          "Helvetica Neue",
+          "Arial",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "sans-serif"
+        ]
+      }
+    },
+    "weights": {
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600
+    },
+    "letterSpacing": {
+      "display": -0.03,
+      "title": -0.015,
+      "body": 0,
+      "capsUI": 0.08
+    },
+    "typeScalePx": {
+      "displayXL": 96,
+      "displayLG": 72,
+      "displayMD": 56,
+      "h1": 44,
+      "h2": 32,
+      "h3": 24,
+      "bodyLG": 18,
+      "bodyMD": 16,
+      "bodySM": 14,
+      "caption": 12,
+      "micro": 11
+    },
+    "lineHeights": {
+      "display": 1.05,
+      "title": 1.15,
+      "body": 1.5,
+      "ui": 1.2
+    },
+    "stylingRules": [
+      "Headlines are large and confident; prefer all-caps or near-caps for hero phrases, with generous tracking only when all-caps.",
+      "Body copy is muted gray on dark, never pure white unless extremely short.",
+      "Buttons and nav labels use medium weight; avoid mixing weights inside one small control.",
+      "Avoid italics. Use weight and opacity for emphasis."
+    ]
+  },
+  "color": {
+    "palette": {
+      "ink": {
+        "base": "#060B0D",
+        "raised": "#0B1115",
+        "overlay": "#0E151B"
+      },
+      "neutral": {
+        "white": "#FFFFFF",
+        "textPrimary": "rgba(255,255,255,0.92)",
+        "textSecondary": "rgba(255,255,255,0.72)",
+        "textTertiary": "rgba(255,255,255,0.52)",
+        "strokeSubtle": "rgba(255,255,255,0.10)",
+        "strokeDefault": "rgba(255,255,255,0.14)",
+        "strokeStrong": "rgba(255,255,255,0.22)"
+      },
+      "accent": {
+        "cyan": "#3BD6FF",
+        "violet": "#9B6DFF",
+        "green": "#3FE264"
+      },
+      "status": {
+        "success": "#3FE264",
+        "warning": "#FFC542",
+        "danger": "#FF4D4D",
+        "info": "#3BD6FF"
+      }
+    },
+    "semanticTokens": {
+      "background": {
+        "page": "#060B0D",
+        "pageAtmosphereTop": "rgba(7,16,24,1.0)",
+        "pageAtmosphereBottom": "rgba(6,11,13,1.0)"
+      },
+      "surface": {
+        "glassFill": "rgba(255,255,255,0.06)",
+        "glassFillStrong": "rgba(255,255,255,0.09)",
+        "glassHover": "rgba(255,255,255,0.10)",
+        "glassPressed": "rgba(255,255,255,0.05)",
+        "glassBorder": "rgba(255,255,255,0.14)",
+        "glassInnerHighlight": "rgba(255,255,255,0.10)"
+      },
+      "focus": {
+        "ring": "rgba(59,214,255,0.55)",
+        "ringInner": "rgba(255,255,255,0.18)"
+      },
+      "cta": {
+        "primaryFill": "rgba(255,255,255,0.92)",
+        "primaryText": "#060B0D",
+        "primaryHoverFill": "#FFFFFF",
+        "primaryGlow": "rgba(59,214,255,0.45)",
+        "secondaryFill": "rgba(255,255,255,0.08)",
+        "secondaryText": "rgba(255,255,255,0.90)",
+        "secondaryBorder": "rgba(255,255,255,0.18)"
+      }
+    },
+    "gradientRecipes": {
+      "horizonGlow": {
+        "description": "Planet horizon / atmosphere glow used behind hero and large panels.",
+        "cssLike": "radial-gradient(1200px 600px at 50% 35%, rgba(59,214,255,0.40) 0%, rgba(59,214,255,0.18) 28%, rgba(155,109,255,0.10) 48%, rgba(6,11,13,0.00) 72%)"
+      },
+      "orbitalRings": {
+        "description": "Concentric arcs/rings, very subtle, used as linework overlay.",
+        "cssLike": "radial-gradient(circle at 50% 45%, rgba(255,255,255,0.14) 0 1px, transparent 1px 120px) repeated with decreasing opacity"
+      },
+      "accentBloomCyan": {
+        "description": "Bloom for cyan accents (icons, primary highlights).",
+        "cssLike": "radial-gradient(circle at 50% 50%, rgba(59,214,255,0.55) 0%, rgba(59,214,255,0.18) 38%, rgba(59,214,255,0.00) 70%)"
+      },
+      "accentBloomViolet": {
+        "description": "Bloom for violet accents (secondary highlights).",
+        "cssLike": "radial-gradient(circle at 50% 50%, rgba(155,109,255,0.45) 0%, rgba(155,109,255,0.12) 42%, rgba(155,109,255,0.00) 72%)"
+      }
+    },
+    "usageRules": [
+      "Default text is off-white (0.9–0.7 opacity), not pure white.",
+      "Borders are white at 0.10–0.18 opacity; never use solid gray borders.",
+      "Neon accents are limited to 1–2 elements per viewport segment.",
+      "Green is status-only (success/online), not a decorative brand color."
+    ]
+  },
+  "shape": {
+    "radiiPx": {
+      "xs": 8,
+      "sm": 12,
+      "md": 16,
+      "lg": 20,
+      "xl": 24,
+      "pill": 9999
+    },
+    "strokeWidthsPx": {
+      "hairline": 1,
+      "default": 1,
+      "emphasis": 2
+    }
+  },
+  "effects": {
+    "glassmorphism": {
+      "backdropBlurPx": {
+        "sm": 10,
+        "md": 16,
+        "lg": 24
+      },
+      "shadowRecipes": {
+        "softLift": "0 24px 80px rgba(0,0,0,0.55)",
+        "edgeDefinition": "0 0 0 1px rgba(255,255,255,0.12)",
+        "innerHighlight": "inset 0 1px 0 rgba(255,255,255,0.10)"
+      },
+      "glowRecipes": {
+        "cyanOuter": "0 0 0 1px rgba(59,214,255,0.22), 0 0 32px rgba(59,214,255,0.22)",
+        "violetOuter": "0 0 0 1px rgba(155,109,255,0.18), 0 0 28px rgba(155,109,255,0.18)"
+      }
+    },
+    "noise": {
+      "enabled": true,
+      "intensity": "low",
+      "rule": "Noise is a barely-there texture layer to prevent banding in gradients. Never let it reduce text readability."
+    },
+    "motion": {
+      "durationsMs": {
+        "fast": 120,
+        "normal": 180,
+        "slow": 260
+      },
+      "easing": {
+        "standard": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+        "emphasis": "cubic-bezier(0.16, 1, 0.3, 1)"
+      },
+      "interactionRules": [
+        "Hover: slight brightness + border opacity increase; avoid big scale bounces.",
+        "Press: reduce opacity slightly and compress glow.",
+        "Focus: cyan ring (outer) + subtle inner ring."
+      ]
+    }
+  },
+  "iconography": {
+    "style": [
+      "thin to medium stroke",
+      "simple geometric shapes",
+      "rounded stroke caps",
+      "minimal detail",
+      "monochrome by default with optional cyan glow on hover/active"
+    ],
+    "sizesPx": {
+      "sm": 16,
+      "md": 20,
+      "lg": 24
+    }
+  },
+  "components": {
+    "foundation": {
+      "componentPhilosophy": [
+        "Everything is either a glass surface or text on the atmospheric background.",
+        "Each component must define: default, hover, active, disabled, focus, loading (where applicable).",
+        "States are communicated via opacity, border intensity, and glow—not via heavy shadows."
+      ]
+    },
+    "appShell": {
+      "headerTopBar": {
+        "anatomy": ["logo", "primaryNav", "utilityNav", "primaryCTA(optional)"],
+        "style": {
+          "background": "transparent or very subtle glassFill",
+          "heightPx": 72,
+          "paddingX": 24,
+          "borderBottom": "strokeSubtle",
+          "logoTreatment": "wordmark in off-white; optional tiny cyan spark icon"
+        },
+        "navItem": {
+          "default": "textSecondary",
+          "hover": "textPrimary with subtle cyan glow",
+          "active": "pill background glassFillStrong + textPrimary + thin border"
+        }
+      },
+      "sidebar": {
+        "anatomy": ["brand", "primaryLinks", "secondaryLinks", "profile"],
+        "style": {
+          "widthPx": 280,
+          "surface": "glassFillStrong",
+          "border": "glassBorder",
+          "radius": "xl",
+          "padding": 16
+        },
+        "link": {
+          "shape": "pill",
+          "default": "textSecondary",
+          "hover": "glassHover + textPrimary",
+          "active": "glassFillStrong + textPrimary + cyan outer glow (very subtle)"
+        }
+      }
+    },
+    "hero": {
+      "headline": {
+        "style": {
+          "case": "uppercase preferred",
+          "weight": "semibold",
+          "tracking": "display",
+          "color": "textPrimary",
+          "maxWidthPx": 900
+        }
+      },
+      "subcopy": {
+        "style": {
+          "size": "bodyMD",
+          "color": "textSecondary",
+          "maxWidthPx": 720
+        }
+      },
+      "heroBackgroundSystem": {
+        "layers": [
+          "base ink gradient (top slightly brighter than bottom)",
+          "orbital rings overlay (very subtle)",
+          "horizon glow (cyan dominant, violet secondary)",
+          "vignette at edges"
+        ],
+        "rule": "Keep center clear enough for large headline readability."
+      }
+    },
+    "button": {
+      "shape": "pill",
+      "sizes": {
+        "sm": { "heightPx": 36, "paddingX": 14, "text": "bodySM" },
+        "md": { "heightPx": 44, "paddingX": 18, "text": "bodySM" },
+        "lg": { "heightPx": 52, "paddingX": 22, "text": "bodyMD" }
+      },
+      "variants": {
+        "primary": {
+          "fill": "cta.primaryFill",
+          "text": "cta.primaryText",
+          "border": "transparent",
+          "shadow": "softLift",
+          "hover": "slightly brighter fill + subtle cyan bloom behind button",
+          "focus": "cyan focus ring",
+          "disabled": "opacity 0.45; remove glow; keep readable"
+        },
+        "secondary": {
+          "fill": "cta.secondaryFill",
+          "text": "cta.secondaryText",
+          "border": "cta.secondaryBorder",
+          "hover": "increase fill opacity + border opacity",
+          "focus": "cyan focus ring",
+          "disabled": "opacity 0.45"
+        },
+        "ghost": {
+          "fill": "transparent",
+          "text": "textSecondary",
+          "hover": "glassFill (subtle) + textPrimary",
+          "focus": "cyan focus ring"
+        },
+        "icon": {
+          "shape": "pill",
+          "sizePx": 40,
+          "fill": "glassFill",
+          "border": "strokeSubtle",
+          "hover": "glassHover + cyan micro-glow"
+        }
+      },
+      "rules": [
+        "Primary buttons are light (white-ish) on dark, as in the screenshot.",
+        "Use cyan glow sparingly: only on hover/focus or for the single primary action."
+      ]
+    },
+    "input": {
+      "shape": "pill",
+      "heightPx": 44,
+      "paddingX": 18,
+      "surface": "glassFill",
+      "border": "glassBorder",
+      "text": "textPrimary",
+      "placeholder": "textTertiary",
+      "focus": "cyan ring + slightly stronger border",
+      "disabled": "opacity 0.45",
+      "withButtonPattern": {
+        "description": "Email/input + CTA button in same row, matching screenshot.",
+        "rule": "Input takes ~65–75% width, CTA takes remaining; align heights; keep 8–12px gap or shared container with internal divider."
+      }
+    },
+    "chip": {
+      "shape": "pill",
+      "fill": "glassFill",
+      "border": "strokeSubtle",
+      "text": "textSecondary",
+      "padding": { "x": 12, "y": 8 },
+      "states": {
+        "default": "muted",
+        "hover": "glassHover + textPrimary",
+        "active": "glassFillStrong + textPrimary + subtle cyan edge"
+      },
+      "useCases": ["nav active state", "filters", "tags", "status capsules"]
+    },
+    "badge": {
+      "shape": "pill",
+      "size": "compact",
+      "fill": "rgba(255,255,255,0.10)",
+      "border": "rgba(255,255,255,0.14)",
+      "text": "rgba(255,255,255,0.80)",
+      "statusColors": {
+        "success": "rgba(63,226,100,0.18)",
+        "info": "rgba(59,214,255,0.18)",
+        "warning": "rgba(255,197,66,0.20)",
+        "danger": "rgba(255,77,77,0.18)"
+      }
+    },
+    "card": {
+      "shape": "rounded-xl",
+      "surface": "glassFillStrong",
+      "border": "glassBorder",
+      "innerHighlight": "glassInnerHighlight",
+      "shadow": "softLift (low intensity)",
+      "padding": "cardPadding.md",
+      "header": {
+        "title": "textPrimary + semibold",
+        "subtitle": "textSecondary"
+      },
+      "rules": [
+        "Cards should feel like windows: blur + subtle reflections.",
+        "Use a thin border; avoid thick dividers."
+      ]
+    },
+    "table": {
+      "container": "card/glass surface",
+      "row": {
+        "default": "transparent",
+        "hover": "glassHover",
+        "selected": "glassFillStrong + subtle cyan edge",
+        "divider": "strokeSubtle"
+      },
+      "cells": {
+        "text": "textSecondary",
+        "emphasis": "textPrimary",
+        "numericAlignment": "right"
+      }
+    },
+    "chartCard": {
+      "container": "glass card",
+      "chartColors": {
+        "primarySeries": "accent.violet",
+        "secondarySeries": "accent.cyan",
+        "positive": "accent.green"
+      },
+      "gridLines": "rgba(255,255,255,0.08)",
+      "tooltip": "glassFillStrong + blur + thin border"
+    },
+    "modal": {
+      "backdrop": "rgba(6,11,13,0.72) + blur",
+      "surface": "glassFillStrong",
+      "border": "glassBorder",
+      "radius": "xl",
+      "shadow": "softLift",
+      "header": "title + close icon button",
+      "footer": "right-aligned actions with 12px gap"
+    },
+    "dropdown": {
+      "trigger": "chip or secondary button",
+      "menu": "glassFillStrong + blur + border",
+      "item": {
+        "default": "textSecondary",
+        "hover": "glassHover + textPrimary",
+        "active": "glassFillStrong + subtle cyan edge"
+      }
+    },
+    "tabs": {
+      "container": "glassFill (subtle)",
+      "tab": "pill",
+      "active": "glassFillStrong + textPrimary",
+      "inactive": "transparent + textSecondary"
+    },
+    "toast": {
+      "surface": "glassFillStrong",
+      "border": "glassBorder",
+      "radius": "lg",
+      "shadow": "softLift",
+      "accentBar": "cyan for info, green success, red danger"
+    },
+    "tooltip": {
+      "surface": "rgba(255,255,255,0.10)",
+      "border": "rgba(255,255,255,0.14)",
+      "blur": "md",
+      "text": "textPrimary",
+      "radius": "md"
+    },
+    "divider": {
+      "style": "1px line with strokeSubtle; use sparingly",
+      "rule": "Prefer spacing over dividers; dividers only when scanning is needed (tables, sidebars)."
+    },
+    "loading": {
+      "spinner": {
+        "style": "thin ring, cyan glow on dark",
+        "sizePx": 16
+      },
+      "skeleton": {
+        "fill": "rgba(255,255,255,0.06)",
+        "sheen": "rgba(255,255,255,0.10)",
+        "radius": "md"
+      }
+    }
+  },
+  "accessibility": {
+    "contrast": [
+      "Body text must be readable on glass surfaces; if background is brightened by glow, increase text opacity or add a subtle text shadow.",
+      "Never place small text directly on the brightest part of the horizon glow without a glass container."
+    ],
+    "focus": [
+      "All interactive elements must have a visible focus ring (cyan).",
+      "Do not rely on glow alone; include border/outline change too."
+    ],
+    "motion": [
+      "Respect reduced-motion: disable bloom animations and keep only opacity/border changes."
+    ]
+  },
+  "implementationNotes": {
+    "currentRepoMismatch": [
+      "Repo currently uses Inter and a different brand palette (electric blue/violet on graphite). This JSON defines the screenshot’s intended theme, not the repo’s current theme.",
+      "To fully match the screenshot in code, you’d swap the primary font to Helvetica (or Helvetica Neue) and adjust Tailwind/CSS variables toward the palette above."
+    ],
+    "aiReplicationChecklist": [
+      "Use dark ink background (#060B0D) with a horizon glow behind hero areas.",
+      "Use glass surfaces for all panels/inputs: translucent fill + blur + thin border + inner highlight.",
+      "Use pill shapes for nav, inputs, and buttons.",
+      "Primary CTA is light (near-white) with dark text; add subtle cyan bloom on hover/focus.",
+      "Use Helvetica with semibold for headlines; uppercase hero with tight tracking."
+    ]
+  }
+}
+

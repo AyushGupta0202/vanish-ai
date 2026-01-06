@@ -7,12 +7,34 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        helvetica: [
+          "Helvetica",
+          "Helvetica Neue",
+          "Arial",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "sans-serif",
+        ],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
+        // Aurora Glass (design.json)
+        ink: {
+          base: "#060B0D",
+          raised: "#0B1115",
+          overlay: "#0E151B",
+        },
+        aurora: {
+          cyan: "#3BD6FF",
+          violet: "#9B6DFF",
+          green: "#3FE264",
+        },
         // Vanish AI Brand Colors
         void: {
           black: "#0B0B0D",

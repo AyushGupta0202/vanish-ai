@@ -1,0 +1,409 @@
+{
+  "meta": {
+    "name": "vanish-ai Design System (App-Exact)",
+    "purpose": "A comprehensive, AI-readable guide to build new features in this repo with consistent styling. This document reflects the ACTUAL Tailwind classes, tokens, and component patterns in the codebase (not a hypothetical system).",
+    "lastUpdated": "2026-01-06",
+    "scope": [
+      "frontend (Vite + React + Tailwind v3)",
+      "Landing (Vanish theme)",
+      "Editor (Vanish theme)",
+      "Dashboard (Aurora Glass theme)"
+    ],
+    "sourceOfTruthFiles": [
+      "design.json (high-level Aurora Glass intent)",
+      "frontend/tailwind.config.js (Tailwind tokens)",
+      "frontend/src/index.css (global CSS + shadcn variables + base font)",
+      "frontend/src/components/**/* (component class recipes)",
+      "frontend/src/pages/Dashboard.tsx (Aurora dashboard implementation)"
+    ],
+    "routing": {
+      "type": "hash-router (no external deps)",
+      "entry": "frontend/src/main.tsx renders frontend/src/Router.tsx",
+      "routes": {
+        "#/": "Vanish app (landing/editor) via frontend/src/App.tsx",
+        "#/dashboard": "Creator analytics dashboard via frontend/src/pages/Dashboard.tsx"
+      }
+    }
+  },
+  "highLevelGuidelines": {
+    "nonNegotiables": [
+      "Use Tailwind utility classes (no new CSS frameworks).",
+      "Default UI (Vanish) remains dark, high-contrast, tool-first.",
+      "Dashboard UI (Aurora) is glassmorphism: translucent surfaces + blur + thin borders + restrained glow.",
+      "Prefer spacing over dividers. Dividers only for tables/lists.",
+      "Every interactive element must have a visible hover + disabled + focus state."
+    ],
+    "informationHierarchy": [
+      "1) Scale/size establishes hierarchy (hero headline, card titles).",
+      "2) Contrast/opacity establishes secondary levels (muted copy, helper text).",
+      "3) Accent color is used sparingly for the primary action and key states."
+    ],
+    "layoutAndSpacing": {
+      "containers": [
+        "Marketing: container mx-auto max-w-7xl / max-w-6xl / max-w-4xl",
+        "App/editor: max-w-7xl mx-auto px-4 (grid with sidebar 220px)",
+        "Dashboard: max-w-7xl mx-auto px-5 md:px-8"
+      ],
+      "sectionRhythm": [
+        "Default marketing sections: py-20 px-4",
+        "Dense editor surfaces: p-4 to p-6 with gap-6",
+        "Dashboard: gap-6, cards p-4 to p-6, tables inside rounded containers"
+      ]
+    },
+    "shapeLanguage": {
+      "vanish": {
+        "primaryRadii": [
+          "rounded-xl (panels, cards, image containers)",
+          "rounded-lg (secondary containers, images)",
+          "rounded-md (shadcn button sizing defaults)"
+        ],
+        "borders": "graphite borders and electric-blue borders at low opacity (border-electric-blue/20)"
+      },
+      "aurora": {
+        "primaryRadii": [
+          "rounded-2xl (glass cards, table shells, sidebar containers)",
+          "rounded-full (pills, nav items, CTAs)",
+          "rounded-xl (chart bars)"
+        ],
+        "borders": "thin white borders at low opacity (border-white/10 to border-white/16)"
+      }
+    }
+  },
+  "techAndStylingStack": {
+    "framework": "React 18 + Vite 5",
+    "styling": "Tailwind CSS v3.3.x",
+    "utilityHelper": "cn() via clsx + tailwind-merge in frontend/src/lib/utils.ts",
+    "uiPrimitives": [
+      "frontend/src/components/ui/button.tsx",
+      "frontend/src/components/ui/card.tsx",
+      "frontend/src/components/ui/slider.tsx"
+    ]
+  },
+  "tokens": {
+    "typography": {
+      "globalFont": {
+        "default": "Inter (imported in frontend/src/index.css)",
+        "fallbacks": [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica Neue",
+          "sans-serif"
+        ]
+      },
+      "auroraFont": {
+        "tailwindFamily": "font-helvetica",
+        "stack": [
+          "Helvetica",
+          "Helvetica Neue",
+          "Arial",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "sans-serif"
+        ],
+        "usage": "Applied at page root in Dashboard: className includes font-helvetica"
+      },
+      "commonTypePatterns": {
+        "marketingHero": {
+          "headline": "text-5xl md:text-6xl font-bold leading-tight",
+          "subcopy": "text-xl text-muted-gray leading-relaxed"
+        },
+        "sectionTitle": "text-4xl font-bold text-center mb-12 text-white",
+        "cardTitle": "text-xl (or text-2xl in CardTitle) font-semibold text-white",
+        "helperText": "text-xs text-white/80 or text-muted-gray"
+      }
+    },
+    "colors": {
+      "tailwindTheme": {
+        "vanish": {
+          "void.black": "#0B0B0D",
+          "graphite": "#1E1E22",
+          "electric.blue": "#2F80FF",
+          "neon.violet": "#7C4DFF",
+          "muted.gray": "#8A8A8F"
+        },
+        "aurora": {
+          "ink.base": "#060B0D",
+          "ink.raised": "#0B1115",
+          "ink.overlay": "#0E151B",
+          "aurora.cyan": "#3BD6FF",
+          "aurora.violet": "#9B6DFF",
+          "aurora.green": "#3FE264"
+        }
+      },
+      "opacityConventions": {
+        "vanish": [
+          "Primary text: text-white",
+          "Muted text: text-muted-gray or text-white/80",
+          "Borders: border-graphite or border-electric-blue/20"
+        ],
+        "aurora": [
+          "Primary text: text-white/92",
+          "Secondary text: text-white/72, /62, /56, /52",
+          "Borders: border-white/10 to border-white/16",
+          "Glass fill: bg-white/5 to bg-white/12",
+          "Glow: shadow-[0_0_XXpx_rgba(...)] sparingly"
+        ]
+      }
+    },
+    "radii": {
+      "cssVar": "--radius = 0.5rem (used by shadcn-compatible tailwind radius tokens)",
+      "tailwindExtended": {
+        "rounded-sm": "calc(var(--radius) - 4px)",
+        "rounded-md": "calc(var(--radius) - 2px)",
+        "rounded-lg": "var(--radius)"
+      }
+    },
+    "spacing": {
+      "marketing": {
+        "section": "py-20 px-4",
+        "gridGaps": ["gap-6", "gap-8", "gap-12"]
+      },
+      "editor": {
+        "outer": "py-8",
+        "grid": "gap-6",
+        "panels": "p-4 to p-6"
+      },
+      "dashboard": {
+        "outer": "pb-16",
+        "grid": "gap-6",
+        "cards": "p-4 to p-6",
+        "tableRow": "px-5 py-4"
+      }
+    },
+    "effects": {
+      "vanish": {
+        "shadows": [
+          "shadow-lg (used on editor panels)",
+          "shadow-lg on result panel"
+        ],
+        "hoverMotion": [
+          "transition-all hover:scale-105 active:scale-95 (used on certain CTAs)"
+        ]
+      },
+      "aurora": {
+        "glassRecipe": {
+          "base": "rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl ring-1 ring-white/8 shadow-[0_24px_80px_rgba(0,0,0,0.55)]",
+          "hover": "hover:bg-white/10 (optional), hover:border-white/16 (optional)"
+        },
+        "glowRecipe": {
+          "cyanDot": "bg-aurora-cyan shadow-[0_0_28px_rgba(59,214,255,0.35)]",
+          "greenDot": "bg-aurora-green shadow-[0_0_18px_rgba(63,226,100,0.25)]",
+          "violetBarGlow": "shadow-[0_0_32px_rgba(155,109,255,0.16)]"
+        }
+      }
+    }
+  },
+  "globalStyles": {
+    "indexCss": {
+      "file": "frontend/src/index.css",
+      "notes": [
+        "Inter font imported via @fontsource/inter",
+        "CSS variables set for shadcn compatibility (background, foreground, card, border, ring, radius)",
+        "body overflow-x hidden; root min-height 100vh"
+      ]
+    }
+  },
+  "componentRecipes": {
+    "primitives": {
+      "Button": {
+        "file": "frontend/src/components/ui/button.tsx",
+        "baseClass": "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        "variants": {
+          "default": "bg-primary text-primary-foreground hover:bg-primary/90",
+          "outline": "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "ghost": "hover:bg-accent hover:text-accent-foreground",
+          "secondary": "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+          "destructive": "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+          "link": "text-primary underline-offset-4 hover:underline"
+        },
+        "sizes": {
+          "default": "h-10 px-4 py-2",
+          "sm": "h-9 rounded-md px-3",
+          "lg": "h-11 rounded-md px-8",
+          "icon": "h-10 w-10"
+        },
+        "appOverrides": {
+          "pattern": "App-level components frequently pass explicit className overrides to enforce dark surfaces and brand colors (electric blue, graphite)."
+        }
+      },
+      "Card": {
+        "file": "frontend/src/components/ui/card.tsx",
+        "base": "rounded-lg border bg-card text-card-foreground shadow-sm",
+        "slots": {
+          "CardHeader": "flex flex-col space-y-1.5 p-6",
+          "CardTitle": "text-2xl font-semibold leading-none tracking-tight",
+          "CardDescription": "text-sm text-muted-foreground",
+          "CardContent": "p-6 pt-0",
+          "CardFooter": "flex items-center p-6 pt-0"
+        },
+        "appOverrides": {
+          "commonUse": "Settings panels pass className=\"bg-graphite border-graphite\" and set title/description text colors explicitly."
+        }
+      },
+      "Slider": {
+        "file": "frontend/src/components/ui/slider.tsx",
+        "base": "w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer",
+        "thumb": "slider-thumb:appearance-none slider-thumb:w-4 slider-thumb:h-4 slider-thumb:rounded-full slider-thumb:bg-blue-600 slider-thumb:cursor-pointer",
+        "notes": [
+          "This is an <input type=range> styled via utility-like classes; app-level panels often pass className=\"w-full\"."
+        ]
+      }
+    },
+    "vanishComponents": {
+      "Header": {
+        "file": "frontend/src/components/Header.tsx",
+        "container": "border-b border-graphite bg-void-black sticky top-0 z-50",
+        "inner": "w-full max-w-7xl mx-auto px-4 py-4 flex items-center justify-between",
+        "buttons": {
+          "outline": "border-graphite bg-transparent text-white hover:bg-graphite hover:text-white",
+          "ghost": "text-white hover:bg-graphite/50 (sometimes hover:text-electric-blue)",
+          "primaryCTA": "bg-electric-blue hover:bg-electric-blue/90 active:bg-electric-blue/80 text-white transition-all active:scale-95"
+        }
+      },
+      "HeroSection": {
+        "file": "frontend/src/components/HeroSection.tsx",
+        "layout": "py-20 px-4; grid md:grid-cols-2 gap-12 items-center",
+        "headline": "text-5xl md:text-6xl font-bold leading-tight with accent span text-electric-blue",
+        "ctaPrimary": "bg-electric-blue hover:bg-electric-blue/90 text-white px-8 py-6 text-lg",
+        "ctaSecondary": "border-graphite bg-transparent text-white hover:bg-graphite hover:text-white px-8 py-6 text-lg"
+      },
+      "BeforeAfterSlider": {
+        "file": "frontend/src/components/BeforeAfterSlider.tsx",
+        "container": "relative w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden cursor-ew-resize select-none bg-graphite",
+        "handle": "line w-0.5 bg-white + circular knob bg-white with electric-blue bars",
+        "labels": [
+          "left label: bg-void-black/70 text-white px-3 py-1 rounded text-sm font-semibold",
+          "right label: bg-electric-blue/90 text-white px-3 py-1 rounded text-sm font-semibold"
+        ]
+      },
+      "LiveDemo": {
+        "file": "frontend/src/components/LiveDemo.tsx",
+        "section": "py-20 px-4 bg-graphite",
+        "cards": "bg-void-black rounded-xl p-4 border border-electric-blue/20",
+        "badge": "absolute top-2 left-2 bg-electric-blue/90 text-white px-2 py-1 rounded text-xs",
+        "cta": "bg-electric-blue hover:bg-electric-blue/90 text-white px-8 py-6 text-lg"
+      },
+      "ImageUploader": {
+        "file": "frontend/src/components/ImageUploader.tsx",
+        "dropzone": "border-2 border-dashed border-graphite rounded-xl p-12 text-center bg-graphite/50 hover:border-electric-blue transition-colors cursor-pointer",
+        "uploading": {
+          "icon": "text-6xl animate-pulse",
+          "progressTrack": "w-full bg-graphite rounded-full h-2.5 mt-4",
+          "progressBar": "bg-electric-blue h-2.5 rounded-full animate-pulse"
+        }
+      },
+      "CanvasEditor": {
+        "file": "frontend/src/components/CanvasEditor.tsx",
+        "canvasShell": "border-2 border-graphite rounded-xl overflow-auto max-w-full max-h-[80vh] relative bg-void-black flex justify-center items-center w-full min-w-0",
+        "hint": "bg-graphite p-3 text-sm text-white/80 rounded-lg text-center w-full"
+      },
+      "BrushControls": {
+        "file": "frontend/src/components/BrushControls.tsx",
+        "card": "Card className=\"mb-4 bg-graphite border-graphite\"",
+        "title": "CardTitle text-lg text-white",
+        "desc": "CardDescription text-white/80"
+      },
+      "DetectionSettings": {
+        "file": "frontend/src/components/DetectionSettings.tsx",
+        "card": "Card className=\"mb-4 bg-graphite border-graphite\"",
+        "labels": "text-sm font-medium text-white",
+        "helper": "text-xs text-white/80"
+      },
+      "HistoryControls": {
+        "file": "frontend/src/components/HistoryControls.tsx",
+        "container": "flex flex-col gap-2",
+        "button": "w-full justify-start text-white hover:bg-electric-blue/20"
+      },
+      "HowItWorks": {
+        "file": "frontend/src/components/HowItWorks.tsx",
+        "section": "py-20 px-4 bg-graphite",
+        "stepCard": "text-center space-y-4",
+        "icon": "text-6xl mb-4",
+        "title": "text-2xl font-semibold text-white",
+        "desc": "text-muted-gray"
+      },
+      "WhyVanish": {
+        "file": "frontend/src/components/WhyVanish.tsx",
+        "section": "py-20 px-4",
+        "grid": "grid md:grid-cols-3 gap-6",
+        "card": "Card className=\"bg-graphite border-graphite\"",
+        "desc": "text-white/80"
+      },
+      "CTASection": {
+        "file": "frontend/src/components/CTASection.tsx",
+        "section": "py-20 px-4",
+        "headline": "text-4xl font-bold mb-4 text-white",
+        "cta": "bg-electric-blue hover:bg-electric-blue/90 text-white px-12 py-6 text-xl mt-8"
+      },
+      "Footer": {
+        "file": "frontend/src/components/Footer.tsx",
+        "container": "border-t border-graphite bg-void-black py-12 px-4",
+        "grid": "grid md:grid-cols-4 gap-8",
+        "links": "text-muted-gray text-sm with hover:text-electric-blue"
+      }
+    },
+    "auroraDashboard": {
+      "DashboardPage": {
+        "file": "frontend/src/pages/Dashboard.tsx",
+        "pageRoot": "relative min-h-screen overflow-hidden bg-ink-base font-helvetica text-white",
+        "backgroundSystem": {
+          "atmosphere": "bg-gradient-to-b from-[#071018] via-[#060B0D] to-[#060B0D]",
+          "orbitalRings": "radial gradient rings overlay using white/12..white/05",
+          "horizonGlow": "radial-gradient(1200px_600px_at_50%_35%, rgba(59,214,255,0.40) → rgba(155,109,255,0.10) → transparent)",
+          "vignette": "radial gradient darkening edges"
+        },
+        "glassCardRecipe": "rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl ring-1 ring-white/8 shadow-[0_24px_80px_rgba(0,0,0,0.55)]",
+        "pillRecipe": {
+          "active": "bg-white/12 text-white ring-1 ring-white/16",
+          "inactive": "text-white/72 hover:text-white/90"
+        },
+        "topBar": {
+          "container": "mx-auto flex max-w-7xl items-center justify-between px-5 py-5 md:px-8",
+          "search": "flex h-11 items-center rounded-full border border-white/14 bg-white/6 px-4 backdrop-blur-xl",
+          "primaryCTA": "h-11 rounded-full px-5 bg-white text-ink-base shadow-[0_24px_80px_rgba(0,0,0,0.55)] hover:bg-white/95"
+        },
+        "sidebar": {
+          "width": "md:grid-cols-[280px_1fr]",
+          "navItemActive": "bg-white/12 text-white ring-1 ring-white/16 shadow-[0_0_32px_rgba(59,214,255,0.12)]",
+          "navItemHover": "hover:bg-white/8 hover:text-white/90"
+        },
+        "stats": {
+          "grid": "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4",
+          "statTitle": "text-xs font-semibold tracking-[0.10em] text-white/52",
+          "statValue": "text-2xl font-semibold tracking-[-0.01em] text-white/92",
+          "delta": "text-xs text-white/56"
+        },
+        "chartBars": {
+          "bar": "rounded-xl bg-gradient-to-t from-aurora-violet/55 via-aurora-violet/22 to-white/0 ring-1 ring-white/8"
+        },
+        "table": {
+          "shell": "overflow-hidden rounded-2xl border border-white/10",
+          "headerRow": "bg-white/5 px-5 py-3 text-xs font-semibold tracking-[0.10em] text-white/52",
+          "row": "px-5 py-4 text-sm text-white/72 hover:bg-white/6",
+          "pillCell": "rounded-full border border-white/12 bg-white/6 px-3 py-1 text-xs text-white/70"
+        }
+      }
+    }
+  },
+  "implementationRulesForAI": {
+    "whenAddingNewComponents": [
+      "Pick the theme first: Vanish (void/graphite/electric-blue) or Aurora (ink/white glass/aurora accents). Do not blend them unless explicitly requested.",
+      "Use existing primitives (`Button`, `Card`, `Slider`) unless there is a clear reason not to.",
+      "Match existing spacing patterns: py-20 sections, p-4..p-6 panels, gap-6 grids.",
+      "Define all interaction states (hover, focus-visible, disabled) using opacity and border changes; keep motion subtle."
+    ],
+    "copyTone": {
+      "vanish": "Direct, tool-like, action-forward. Avoid cute language in errors.",
+      "aurora": "Concise, premium, confidence. Minimal words, high signal."
+    },
+    "antiPatterns": [
+      "Do not introduce random new grays; use graphite/muted-gray or white opacities as established.",
+      "Do not add heavy drop shadows to Vanish surfaces; rely on borders and subtle elevation.",
+      "Do not introduce new component libraries without instruction."
+    ]
+  }
+}
+
