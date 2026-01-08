@@ -13,7 +13,7 @@ export default function VanishLogo({ className, size = 'md', variant = 'dark' }:
     lg: 'text-4xl',
   }
 
-  const textColor = variant === 'dark' ? 'text-void-black' : 'text-white'
+  const textColor = variant === 'dark' ? 'text-ink-base' : 'text-white'
 
   return (
     <div className={cn('font-bold tracking-tight flex items-center', sizes[size], textColor, className)}>
@@ -32,7 +32,7 @@ export default function VanishLogo({ className, size = 'md', variant = 'dark' }:
         />
       </span>
       <span className="font-semibold">SH</span>
-      <span className="ml-2 text-electric-blue font-semibold">AI</span>
+      <span className="ml-2 text-aurora-cyan font-semibold">AI</span>
     </div>
   )
 }
@@ -45,7 +45,7 @@ export function VanishLogoWithEffect({ className, size = 'md', variant = 'dark' 
     lg: 'text-4xl',
   }
 
-  const textColor = variant === 'dark' ? 'text-void-black' : 'text-white'
+  const textColor = variant === 'dark' ? 'text-ink-base' : 'text-white'
 
   return (
     <div className={cn('font-bold tracking-tight flex items-center', sizes[size], textColor, className)}>
@@ -66,7 +66,7 @@ export function VanishLogoWithEffect({ className, size = 'md', variant = 'dark' 
         />
       </span>
       <span className="font-semibold">SH</span>
-      <span className="ml-2 text-electric-blue font-semibold">AI</span>
+      <span className="ml-2 text-aurora-cyan font-semibold">AI</span>
     </div>
   )
 }

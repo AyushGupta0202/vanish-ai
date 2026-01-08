@@ -11,7 +11,7 @@ export default function HistoryControls() {
         disabled={!canUndo()}
         variant="ghost"
         size="sm"
-        className="w-full justify-start text-white hover:bg-electric-blue/20"
+        className="w-full justify-start"
         title="Undo (Ctrl+Z)"
       >
         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -24,7 +24,7 @@ export default function HistoryControls() {
         disabled={!canRedo()}
         variant="ghost"
         size="sm"
-        className="w-full justify-start text-white hover:bg-electric-blue/20"
+        className="w-full justify-start"
         title="Redo (Ctrl+Shift+Z)"
       >
         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

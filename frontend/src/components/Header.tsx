@@ -1,5 +1,6 @@
 import VanishLogo from './VanishLogo'
 import { Button } from '@/components/ui/button'
+import { aurora } from '@/styles/aurora'
 
 interface HeaderProps {
   showEditorActions?: boolean
@@ -13,37 +14,37 @@ export default function Header({ showEditorActions = false, onExport }: HeaderPr
   }
 
   return (
-    <header className="border-b border-graphite bg-void-black sticky top-0 z-50">
-      <div className="w-full max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-ink-base/60 backdrop-blur-xl">
+      <div className="w-full max-w-7xl mx-auto px-4 py-3 md:px-6 flex items-center justify-between">
         <VanishLogo variant="light" size="md" />
         <nav className="flex items-center gap-4">
           {showEditorActions ? (
             <>
               <Button 
                 variant="outline" 
-                className="border-graphite bg-transparent text-white hover:bg-graphite hover:text-white"
+                className={aurora.buttonSecondary}
                 onClick={onExport}
               >
                 Export
               </Button>
-              <Button variant="ghost" className="text-white hover:text-white hover:bg-graphite/50">
+              <Button variant="ghost" className="rounded-full px-5 py-2.5 text-sm font-medium">
                 Account
               </Button>
             </>
           ) : (
             <>
-              <Button variant="ghost" className="text-white hover:text-electric-blue hover:bg-graphite/50 hidden md:inline-flex">
+              <Button variant="ghost" className="hidden md:inline-flex rounded-full px-5 py-2.5 text-sm font-medium">
                 Features
               </Button>
-              <Button variant="ghost" className="text-white hover:text-electric-blue hover:bg-graphite/50 hidden md:inline-flex">
+              <Button variant="ghost" className="hidden md:inline-flex rounded-full px-5 py-2.5 text-sm font-medium">
                 Pricing
               </Button>
-              <Button variant="outline" className="border-graphite bg-transparent text-white hover:bg-graphite hover:text-white">
+              <Button variant="outline" className={aurora.buttonSecondary}>
                 Login
               </Button>
               <Button 
                 onClick={scrollToDemo}
-                className="bg-electric-blue hover:bg-electric-blue/90 active:bg-electric-blue/80 text-white transition-all active:scale-95"
+                className={aurora.buttonPrimary}
               >
                 Try Vanish AI
               </Button>

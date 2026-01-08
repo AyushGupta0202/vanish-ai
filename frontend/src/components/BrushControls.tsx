@@ -8,15 +8,15 @@ interface BrushControlsProps {
 
 export default function BrushControls({ brushSize, onBrushSizeChange }: BrushControlsProps) {
   return (
-    <Card className="mb-4 bg-graphite border-graphite">
+    <Card className="mb-4">
       <CardHeader>
-        <CardTitle className="text-lg text-white">Brush Size</CardTitle>
-        <CardDescription className="text-white/80">Adjust the size of the eraser brush</CardDescription>
+        <CardTitle className="text-lg">Brush Size</CardTitle>
+        <CardDescription>Adjust the size of the eraser brush</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-white">Size: {brushSize}px</span>
+            <span className="text-sm font-medium text-white/86">Size: {brushSize}px</span>
           </div>
           <Slider
             value={[brushSize]}

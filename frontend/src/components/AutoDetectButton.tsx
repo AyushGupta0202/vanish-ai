@@ -12,7 +12,7 @@ export default function AutoDetectButton({ onDetect, isDetecting, disabled }: Au
       onClick={onDetect}
       disabled={disabled || isDetecting}
       variant="default"
-      className="px-6 py-3 bg-electric-blue hover:bg-electric-blue/90 disabled:bg-graphite text-white font-semibold"
+      className="h-11 px-6 font-semibold"
     >
       {isDetecting ? (
         <>

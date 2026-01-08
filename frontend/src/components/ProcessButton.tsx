@@ -12,7 +12,7 @@ export default function ProcessButton({ onClick, disabled, isProcessing }: Proce
       onClick={onClick}
       disabled={disabled || isProcessing}
       size="lg"
-      className="px-8 py-6 text-lg bg-electric-blue hover:bg-electric-blue/90"
+      className="h-14 px-8 text-base md:text-lg"
     >
       {isProcessing ? (
         <>

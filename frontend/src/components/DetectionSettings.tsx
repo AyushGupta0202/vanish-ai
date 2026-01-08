@@ -15,15 +15,15 @@ export default function DetectionSettings({
   onExpandChange
 }: DetectionSettingsProps) {
   return (
-    <Card className="mb-4 bg-graphite border-graphite">
+    <Card className="mb-4">
       <CardHeader>
-        <CardTitle className="text-lg text-white">Detection Settings</CardTitle>
-        <CardDescription className="text-white/80">Configure text detection parameters</CardDescription>
+        <CardTitle className="text-lg">Detection Settings</CardTitle>
+        <CardDescription>Configure text detection parameters</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-medium text-white">
+            <label className="text-sm font-medium text-white/86">
               Confidence Threshold: {Math.round(confidenceThreshold * 100)}%
             </label>
           </div>
@@ -35,14 +35,14 @@ export default function DetectionSettings({
             step={0.05}
             className="w-full"
           />
-          <p className="text-xs text-white/80">
+          <p className="text-xs text-white/56">
             Higher values = more confident detections only
           </p>
         </div>
 
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-medium text-white">
+            <label className="text-sm font-medium text-white/86">
               Mask Expansion: {expandPixels}px
             </label>
           </div>
@@ -54,7 +54,7 @@ export default function DetectionSettings({
             step={1}
             className="w-full"
           />
-          <p className="text-xs text-white/80">
+          <p className="text-xs text-white/56">
             Pixels to expand mask around detected text
           </p>
         </div>

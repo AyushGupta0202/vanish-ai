@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { Button } from '@/components/ui/button'
+import { aurora } from '@/styles/aurora'
 
 interface ImageUploaderProps {
   onUpload: (file: File) => void
@@ -32,7 +33,7 @@ export default function ImageUploader({ onUpload, isUploading = false }: ImageUp
     <div
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      className="border-2 border-dashed border-graphite rounded-xl p-12 text-center bg-graphite/50 hover:border-electric-blue transition-colors cursor-pointer"
+      className="rounded-2xl border border-white/12 bg-white/6 backdrop-blur-xl p-8 text-center ring-1 ring-white/8 hover:bg-white/8 transition-colors cursor-pointer"
       onClick={() => fileInputRef.current?.click()}
     >
       <input
@@ -46,26 +47,26 @@ export default function ImageUploader({ onUpload, isUploading = false }: ImageUp
         {isUploading ? (
           <>
             <div className="text-6xl animate-pulse">⏳</div>
-            <h3 className="text-2xl font-semibold text-white">
+            <h3 className="text-2xl font-semibold text-white/92">
               Uploading image...
             </h3>
-            <p className="text-muted-gray">
+            <p className="text-white/56">
               Please wait while we process your image
             </p>
-            <div className="w-full bg-graphite rounded-full h-2.5 mt-4">
-              <div className="bg-electric-blue h-2.5 rounded-full animate-pulse" style={{ width: '60%' }}></div>
+            <div className="w-full bg-white/10 rounded-full h-2.5 mt-4 overflow-hidden">
+              <div className="bg-aurora-cyan h-2.5 rounded-full animate-pulse shadow-[0_0_18px_rgba(59,214,255,0.25)]" style={{ width: '60%' }}></div>
             </div>
           </>
         ) : (
           <>
             <div className="text-6xl">📸</div>
-            <h3 className="text-2xl font-semibold text-white">
+            <h3 className="text-2xl font-semibold text-white/92">
               Upload an image
             </h3>
-            <p className="text-muted-gray">
+            <p className="text-white/56">
               Drag and drop or click to select (Max 50MB)
             </p>
-            <Button className="bg-electric-blue hover:bg-electric-blue/90 text-white mt-4" disabled={isUploading}>
+            <Button className={`${aurora.buttonPrimary} mt-4`} disabled={isUploading}>
               Select Image
             </Button>
           </>

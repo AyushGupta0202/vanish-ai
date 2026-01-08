@@ -18,8 +18,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
       <input
         type="range"
         className={cn(
-          "w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer",
-          "slider-thumb:appearance-none slider-thumb:w-4 slider-thumb:h-4 slider-thumb:rounded-full slider-thumb:bg-blue-600 slider-thumb:cursor-pointer",
+          "aurora-slider",
           className
         )}
         ref={ref}

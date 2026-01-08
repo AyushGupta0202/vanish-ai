@@ -18,15 +18,20 @@ export default function HowItWorks() {
   ]
 
   return (
-    <section className="py-20 px-4 bg-graphite">
-      <div className="container mx-auto max-w-6xl">
-        <h2 className="text-4xl font-bold text-center mb-12 text-white">How It Works</h2>
+    <section className="py-12 px-4 md:px-6">
+      <div className="mx-auto max-w-6xl">
+        <h2 className="text-4xl font-semibold tracking-[-0.015em] text-center mb-12 text-white/92">
+          How it works
+        </h2>
         <div className="grid md:grid-cols-3 gap-8">
           {steps.map((step, index) => (
-            <div key={index} className="text-center space-y-4">
-              <div className="text-6xl mb-4">{step.icon}</div>
-              <h3 className="text-2xl font-semibold text-white">{step.title}</h3>
-              <p className="text-muted-gray">{step.description}</p>
+            <div
+              key={index}
+              className="text-center space-y-4 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-xl p-6 ring-1 ring-white/6"
+            >
+              <div className="text-6xl mb-4 text-white/90">{step.icon}</div>
+              <h3 className="text-2xl font-semibold text-white/92">{step.title}</h3>
+              <p className="text-white/62">{step.description}</p>
             </div>
           ))}
         </div>

@@ -24,7 +24,7 @@ export default function BeforeAfterSlider({ beforeImage, afterImage }: BeforeAft
 
   return (
     <div
-      className="relative w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden cursor-ew-resize select-none bg-graphite hover:bg-graphite"
+      className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden cursor-ew-resize select-none border border-white/12 bg-white/6 backdrop-blur-xl ring-1 ring-white/8"
       onMouseMove={handleMouseMove}
       onTouchMove={handleTouchMove}
       onMouseLeave={() => setSliderPosition(50)}
@@ -50,22 +50,22 @@ export default function BeforeAfterSlider({ beforeImage, afterImage }: BeforeAft
 
       {/* Slider Line */}
       <div
-        className="absolute top-0 bottom-0 w-0.5 bg-white shadow-lg z-10"
+        className="absolute top-0 bottom-0 w-0.5 bg-white/70 shadow-[0_0_18px_rgba(255,255,255,0.25)] z-10"
         style={{ left: `${sliderPosition}%` }}
       >
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-[0_24px_80px_rgba(0,0,0,0.45)] flex items-center justify-center">
           <div className="flex gap-1">
-            <div className="w-1 h-4 bg-electric-blue rounded"></div>
-            <div className="w-1 h-4 bg-electric-blue rounded"></div>
+            <div className="w-1 h-4 bg-aurora-cyan rounded"></div>
+            <div className="w-1 h-4 bg-aurora-cyan rounded"></div>
           </div>
         </div>
       </div>
 
       {/* Labels */}
-      <div className="absolute top-4 left-4 bg-void-black/70 text-white px-3 py-1 rounded text-sm font-semibold">
+      <div className="absolute top-4 left-4 rounded-full border border-white/12 bg-white/8 backdrop-blur-xl text-white/86 px-3 py-1 text-sm font-semibold">
         Before
       </div>
-      <div className="absolute top-4 right-4 bg-electric-blue/90 text-white px-3 py-1 rounded text-sm font-semibold">
+      <div className="absolute top-4 right-4 rounded-full border border-white/12 bg-white/8 backdrop-blur-xl text-white/86 px-3 py-1 text-sm font-semibold">
         After
       </div>
     </div>
