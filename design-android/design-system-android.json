@@ -1,0 +1,820 @@
+{
+  "meta": {
+    "name": "Vanish AI Android Design System",
+    "purpose": "A comprehensive, AI-readable guide to build new features in the Android app with consistent styling. This document reflects the ACTUAL Compose components, colors, typography, and patterns in the codebase.",
+    "lastUpdated": "2026-01-08",
+    "scope": [
+      "Android app (Jetpack Compose + Material 3)",
+      "Aurora Glass theme (Dashboard)",
+      "All UI components and screens"
+    ],
+    "sourceOfTruthFiles": [
+      "app/src/main/java/spog/krsna/vanishai/ui/theme/Color.kt",
+      "app/src/main/java/spog/krsna/vanishai/ui/theme/Theme.kt",
+      "app/src/main/java/spog/krsna/vanishai/ui/theme/Type.kt",
+      "app/src/main/java/spog/krsna/vanishai/ui/components/GlassComponents.kt",
+      "app/src/main/java/spog/krsna/vanishai/ui/components/AuroraBackdrop.kt",
+      "app/src/main/java/spog/krsna/vanishai/ui/screens/DashboardScreen.kt",
+      "app/src/main/res/font/*.ttf (Helvetica font family)"
+    ],
+    "framework": {
+      "ui": "Jetpack Compose",
+      "material": "Material 3",
+      "minSdk": 31,
+      "targetSdk": 36,
+      "compileSdk": 36
+    }
+  },
+  "highLevelGuidelines": {
+    "nonNegotiables": [
+      "Use Jetpack Compose for all UI. No XML layouts for UI components.",
+      "All components must use Material 3 theme system via VanishAITheme.",
+      "Aurora Glass aesthetic: translucent surfaces with backdrop blur, thin white borders, restrained glow effects.",
+      "Prefer spacing over dividers. Dividers only for tables/lists.",
+      "Every interactive element must have visible hover/pressed/focused/disabled states.",
+      "Use Helvetica font family for all text (loaded from res/font/).",
+      "Edge-to-edge display enabled. System bars are transparent."
+    ],
+    "informationHierarchy": [
+      "1) Scale/size establishes hierarchy (display styles for hero headlines, headline styles for section titles).",
+      "2) Opacity/alpha establishes secondary levels (TextTertiary52 for labels, TextSecondary72 for secondary content).",
+      "3) Accent colors (AuroraCyan, AuroraViolet, AuroraGreen) used sparingly for primary actions and key states."
+    ],
+    "layoutAndSpacing": {
+      "containers": [
+        "All screens: fillMaxSize() with horizontal padding 20.dp",
+        "Cards: GlassCard with contentPadding of 16.dp (p-4), 20.dp (p-5), or 24.dp (p-6)",
+        "Grids: Arrangement.spacedBy(16.dp) for gap-4, Arrangement.spacedBy(24.dp) for gap-6"
+      ],
+      "sectionRhythm": [
+        "Vertical spacing: Spacer(modifier = Modifier.height(8.dp)) for small gaps, 16.dp for medium, 20-24.dp for large",
+        "Horizontal spacing: Arrangement.spacedBy(8.dp) for small, 12.dp for medium, 16.dp for large",
+        "Card padding: 16.dp (p-4) for compact, 20.dp (p-5) for standard, 24.dp (p-6) for spacious"
+      ]
+    },
+    "shapeLanguage": {
+      "primaryRadii": [
+        "RoundedCornerShape(24.dp) - rounded-2xl (glass cards, table shells, sidebar containers)",
+        "RoundedCornerShape(16.dp) - rounded-xl (table headers, secondary containers)",
+        "RoundedCornerShape(12.dp) - rounded-lg (chart bars, pills)",
+        "CircleShape - rounded-full (pills, nav items, status dots, CTAs)"
+      ],
+      "borders": "Thin white borders at low opacity (StrokeSubtle10, StrokeDefault12, StrokeDefault14, StrokeStrong16)"
+    }
+  },
+  "tokens": {
+    "colors": {
+      "ink": {
+        "base": {
+          "hex": "#060B0D",
+          "compose": "Color(0xFF060B0D)",
+          "variable": "InkBase",
+          "usage": "Background color for entire app, primary surface"
+        },
+        "raised": {
+          "hex": "#0B1115",
+          "compose": "Color(0xFF0B1115)",
+          "variable": "InkRaised",
+          "usage": "Elevated surfaces (not currently used but available)"
+        },
+        "overlay": {
+          "hex": "#0E151B",
+          "compose": "Color(0xFF0E151B)",
+          "variable": "InkOverlay",
+          "usage": "Overlay surfaces (not currently used but available)"
+        }
+      },
+      "aurora": {
+        "cyan": {
+          "hex": "#3BD6FF",
+          "compose": "Color(0xFF3BD6FF)",
+          "variable": "AuroraCyan",
+          "usage": "Primary accent color, active states, logo dot, navigation glow"
+        },
+        "violet": {
+          "hex": "#9B6DFF",
+          "compose": "Color(0xFF9B6DFF)",
+          "variable": "AuroraViolet",
+          "usage": "Secondary accent, chart colors, trend indicators"
+        },
+        "green": {
+          "hex": "#3FE264",
+          "compose": "Color(0xFF3FE264)",
+          "variable": "AuroraGreen",
+          "usage": "Success states, positive trends, status indicators"
+        }
+      },
+      "status": {
+        "danger": {
+          "hex": "#FF4D4D",
+          "compose": "Color(0xFFFF4D4D)",
+          "variable": "StatusDanger",
+          "usage": "Error states, danger indicators, negative actions"
+        }
+      },
+      "text": {
+        "primary": {
+          "hex": "#EBFFFFFF",
+          "rgba": "rgba(255,255,255,0.92)",
+          "compose": "Color(0xEBFFFFFF)",
+          "variable": "TextPrimary",
+          "usage": "Headlines, brand names, stat values, primary text (92% opacity)"
+        },
+        "secondary86": {
+          "hex": "#DBFFFFFF",
+          "rgba": "rgba(255,255,255,0.86)",
+          "compose": "Color(0xDBFFFFFF)",
+          "variable": "TextSecondary86",
+          "usage": "Card titles, table emphasis, important secondary text (86% opacity)"
+        },
+        "secondary72": {
+          "hex": "#B8FFFFFF",
+          "rgba": "rgba(255,255,255,0.72)",
+          "compose": "Color(0xB8FFFFFF)",
+          "variable": "TextSecondary72",
+          "usage": "Nav items, table cells, regular secondary text (72% opacity)"
+        },
+        "secondary70": {
+          "hex": "#B3FFFFFF",
+          "rgba": "rgba(255,255,255,0.70)",
+          "compose": "Color(0xB3FFFFFF)",
+          "variable": "TextSecondary70",
+          "usage": "Status text, badges, platform pills (70% opacity)"
+        },
+        "secondary62": {
+          "hex": "#9EFFFFFF",
+          "rgba": "rgba(255,255,255,0.62)",
+          "compose": "Color(0x9EFFFFFF)",
+          "variable": "TextSecondary62",
+          "usage": "Descriptions, body text (62% opacity)"
+        },
+        "secondary56": {
+          "hex": "#8FFFFFFF",
+          "rgba": "rgba(255,255,255,0.56)",
+          "compose": "Color(0x8FFFFFFF)",
+          "variable": "TextSecondary56",
+          "usage": "Subtitles, deltas, secondary metadata (56% opacity)"
+        },
+        "tertiary52": {
+          "hex": "#85FFFFFF",
+          "rgba": "rgba(255,255,255,0.52)",
+          "compose": "Color(0x85FFFFFF)",
+          "variable": "TextTertiary52",
+          "usage": "Labels, meta text, table headers, section labels (52% opacity)"
+        }
+      },
+      "glass": {
+        "fill6": {
+          "hex": "#0FFFFFFF",
+          "rgba": "rgba(255,255,255,0.06)",
+          "compose": "Color(0x0FFFFFFF)",
+          "variable": "GlassFill6",
+          "usage": "Search input, account card, pills, table header background (6% opacity)"
+        },
+        "fill7": {
+          "hex": "#12FFFFFF",
+          "rgba": "rgba(255,255,255,0.07)",
+          "compose": "Color(0x12FFFFFF)",
+          "variable": "GlassFill7",
+          "usage": "Cards, logo icon, primary glass surfaces (7% opacity)"
+        },
+        "fill9": {
+          "hex": "#17FFFFFF",
+          "rgba": "rgba(255,255,255,0.09)",
+          "compose": "Color(0x17FFFFFF)",
+          "variable": "GlassFill9",
+          "usage": "Available but not currently used (9% opacity)"
+        },
+        "hover10": {
+          "hex": "#1AFFFFFF",
+          "rgba": "rgba(255,255,255,0.10)",
+          "compose": "Color(0x1AFFFFFF)",
+          "variable": "GlassHover10",
+          "usage": "Hover states for interactive elements (10% opacity)"
+        },
+        "active12": {
+          "hex": "#1FFFFFFF",
+          "rgba": "rgba(255,255,255,0.12)",
+          "compose": "Color(0x1FFFFFFF)",
+          "variable": "GlassActive12",
+          "usage": "Active nav items, selected pills (12% opacity)"
+        },
+        "pressed5": {
+          "hex": "#0DFFFFFF",
+          "rgba": "rgba(255,255,255,0.05)",
+          "compose": "Color(0x0DFFFFFF)",
+          "variable": "GlassPressed5",
+          "usage": "Pressed states (5% opacity)"
+        },
+        "tableHeader5": {
+          "hex": "#0DFFFFFF",
+          "rgba": "rgba(255,255,255,0.05)",
+          "compose": "Color(0x0DFFFFFF)",
+          "variable": "GlassTableHeader5",
+          "usage": "Table header background (5% opacity)"
+        },
+        "hoverState8": {
+          "hex": "#14FFFFFF",
+          "rgba": "rgba(255,255,255,0.08)",
+          "compose": "Color(0x14FFFFFF)",
+          "variable": "GlassHoverState8",
+          "usage": "Hover states for table rows (8% opacity)"
+        }
+      },
+      "stroke": {
+        "subtle10": {
+          "hex": "#1AFFFFFF",
+          "rgba": "rgba(255,255,255,0.10)",
+          "compose": "Color(0x1AFFFFFF)",
+          "variable": "StrokeSubtle10",
+          "usage": "Subtle dividers, table shells, transaction cards (10% opacity)"
+        },
+        "default12": {
+          "hex": "#1FFFFFFF",
+          "rgba": "rgba(255,255,255,0.12)",
+          "compose": "Color(0x1FFFFFFF)",
+          "variable": "StrokeDefault12",
+          "usage": "Cards, pills, logo border (12% opacity)"
+        },
+        "default14": {
+          "hex": "#24FFFFFF",
+          "rgba": "rgba(255,255,255,0.14)",
+          "compose": "Color(0x24FFFFFF)",
+          "variable": "StrokeDefault14",
+          "usage": "Search input border (14% opacity)"
+        },
+        "strong16": {
+          "hex": "#29FFFFFF",
+          "rgba": "rgba(255,255,255,0.16)",
+          "compose": "Color(0x29FFFFFF)",
+          "variable": "StrokeStrong16",
+          "usage": "Active nav items, secondary buttons (16% opacity)"
+        },
+        "strong22": {
+          "hex": "#38FFFFFF",
+          "rgba": "rgba(255,255,255,0.22)",
+          "compose": "Color(0x38FFFFFF)",
+          "variable": "StrokeStrong22",
+          "usage": "Available but not currently used (22% opacity)"
+        }
+      },
+      "button": {
+        "primaryFill": {
+          "hex": "#FFFFFFFF",
+          "compose": "Color(0xFFFFFFFF)",
+          "variable": "ButtonPrimaryFill",
+          "usage": "Primary button background (white)"
+        },
+        "primaryText": {
+          "hex": "#060B0D",
+          "compose": "Color(0xFF060B0D)",
+          "variable": "ButtonPrimaryText",
+          "usage": "Primary button text (InkBase)"
+        }
+      }
+    },
+    "typography": {
+      "fontFamily": {
+        "name": "Helvetica",
+        "compose": "HelveticaFamily",
+        "files": [
+          "res/font/helvetica_light.ttf (FontWeight.Light)",
+          "res/font/helvetica.ttf (FontWeight.Normal)",
+          "res/font/helvetica_oblique.ttf (FontWeight.Normal, FontStyle.Italic)",
+          "res/font/helvetica_bold.ttf (FontWeight.Bold)",
+          "res/font/helvetica_boldoblique.ttf (FontWeight.Bold, FontStyle.Italic)"
+        ],
+        "usage": "Applied globally via MaterialTheme.typography"
+      },
+      "textStyles": {
+        "displayLarge": {
+          "fontSize": "56.sp",
+          "lineHeight": "58.8.sp",
+          "fontWeight": "FontWeight.SemiBold",
+          "letterSpacing": "-0.03.em",
+          "usage": "Hero headlines, major display text"
+        },
+        "displayMedium": {
+          "fontSize": "44.sp",
+          "lineHeight": "50.6.sp",
+          "fontWeight": "FontWeight.SemiBold",
+          "letterSpacing": "-0.015.em",
+          "usage": "Large section headlines"
+        },
+        "displaySmall": {
+          "fontSize": "32.sp",
+          "lineHeight": "36.8.sp",
+          "fontWeight": "FontWeight.SemiBold",
+          "letterSpacing": "-0.015.em",
+          "usage": "Dashboard hero headline, major section titles"
+        },
+        "headlineLarge": {
+          "fontSize": "32.sp",
+          "lineHeight": "36.8.sp",
+          "fontWeight": "FontWeight.SemiBold",
+          "letterSpacing": "-0.015.em",
+          "usage": "Section headlines (same as displaySmall)"
+        },
+        "headlineMedium": {
+          "fontSize": "24.sp",
+          "lineHeight": "27.6.sp",
+          "fontWeight": "FontWeight.SemiBold",
+          "letterSpacing": "-0.015.em",
+          "usage": "Stat card values, card titles"
+        },
+        "headlineSmall": {
+          "fontSize": "18.sp",
+          "lineHeight": "21.6.sp",
+          "fontWeight": "FontWeight.SemiBold",
+          "letterSpacing": "0.em",
+          "usage": "Subsection titles"
+        },
+        "bodyLarge": {
+          "fontSize": "18.sp",
+          "lineHeight": "27.sp",
+          "fontWeight": "FontWeight.Normal",
+          "letterSpacing": "0.em",
+          "usage": "Large body text"
+        },
+        "bodyMedium": {
+          "fontSize": "16.sp",
+          "lineHeight": "24.sp",
+          "fontWeight": "FontWeight.Normal",
+          "letterSpacing": "0.em",
+          "usage": "Standard body text, button text, card titles"
+        },
+        "bodySmall": {
+          "fontSize": "14.sp",
+          "lineHeight": "21.sp",
+          "fontWeight": "FontWeight.Normal",
+          "letterSpacing": "0.em",
+          "usage": "Small body text, table cells, transaction titles"
+        },
+        "labelLarge": {
+          "fontSize": "14.sp",
+          "lineHeight": "16.8.sp",
+          "fontWeight": "FontWeight.Medium",
+          "letterSpacing": "0.08.em",
+          "usage": "Large labels, section headers"
+        },
+        "labelMedium": {
+          "fontSize": "12.sp",
+          "lineHeight": "14.4.sp",
+          "fontWeight": "FontWeight.Medium",
+          "letterSpacing": "0.08.em",
+          "usage": "Medium labels, stat labels, card subtitles"
+        },
+        "labelSmall": {
+          "fontSize": "11.sp",
+          "lineHeight": "13.2.sp",
+          "fontWeight": "FontWeight.Medium",
+          "letterSpacing": "0.08.em",
+          "usage": "Small labels, badges, table headers, section labels"
+        }
+      },
+      "commonPatterns": {
+        "sectionLabel": {
+          "style": "MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.2.sp)",
+          "color": "TextTertiary52",
+          "usage": "Section labels like 'CREATOR DASHBOARD'"
+        },
+        "brandName": {
+          "style": "MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold)",
+          "color": "TextPrimary",
+          "usage": "Brand name in header"
+        },
+        "brandSubtitle": {
+          "style": "MaterialTheme.typography.labelSmall",
+          "color": "TextTertiary52",
+          "usage": "Brand subtitle in header"
+        },
+        "heroHeadline": {
+          "style": "MaterialTheme.typography.displaySmall.copy(fontSize = 32.sp, fontWeight = FontWeight.SemiBold)",
+          "color": "TextPrimary",
+          "usage": "Dashboard hero headline"
+        },
+        "heroDescription": {
+          "style": "MaterialTheme.typography.bodySmall",
+          "color": "TextSecondary62",
+          "usage": "Hero section description"
+        },
+        "statLabel": {
+          "style": "MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.sp)",
+          "color": "TextTertiary52",
+          "usage": "Stat card labels like 'FOLLOWERS'"
+        },
+        "statValue": {
+          "style": "MaterialTheme.typography.headlineMedium.copy(fontSize = 24.sp, fontWeight = FontWeight.SemiBold)",
+          "color": "TextPrimary",
+          "usage": "Stat card values"
+        },
+        "statDelta": {
+          "style": "MaterialTheme.typography.labelSmall",
+          "color": "TextSecondary56",
+          "usage": "Stat card delta text"
+        },
+        "cardTitle": {
+          "style": "MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold)",
+          "color": "TextPrimary",
+          "usage": "Card titles"
+        },
+        "cardSubtitle": {
+          "style": "MaterialTheme.typography.labelSmall",
+          "color": "TextSecondary56",
+          "usage": "Card subtitles"
+        },
+        "tableHeader": {
+          "style": "MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.sp)",
+          "color": "TextTertiary52",
+          "usage": "Table column headers"
+        },
+        "tableCell": {
+          "style": "MaterialTheme.typography.bodySmall",
+          "color": "TextSecondary72",
+          "usage": "Regular table cells"
+        },
+        "tableCellEmphasis": {
+          "style": "MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium)",
+          "color": "TextSecondary86",
+          "usage": "Emphasized table cells (numeric values)"
+        },
+        "pillText": {
+          "style": "MaterialTheme.typography.bodySmall",
+          "color": "TextSecondary72 (inactive) or TextPrimary (active)",
+          "usage": "Pill component text"
+        },
+        "badgeText": {
+          "style": "MaterialTheme.typography.labelSmall",
+          "color": "TextSecondary70",
+          "usage": "Badge text"
+        }
+      }
+    },
+    "spacing": {
+      "values": {
+        "xs": "4.dp",
+        "sm": "8.dp",
+        "md": "12.dp",
+        "lg": "16.dp",
+        "xl": "20.dp",
+        "xxl": "24.dp",
+        "xxxl": "32.dp"
+      },
+      "patterns": {
+        "screenPadding": {
+          "horizontal": "20.dp",
+          "usage": "Horizontal padding for screen content"
+        },
+        "cardPadding": {
+          "compact": "16.dp (p-4)",
+          "standard": "20.dp (p-5)",
+          "spacious": "24.dp (p-6)",
+          "usage": "Content padding inside GlassCard"
+        },
+        "verticalGaps": {
+          "small": "8.dp",
+          "medium": "12.dp",
+          "large": "16.dp",
+          "xlarge": "20.dp",
+          "xxlarge": "24.dp",
+          "usage": "Vertical spacing between elements"
+        },
+        "horizontalGaps": {
+          "small": "8.dp",
+          "medium": "12.dp",
+          "large": "16.dp",
+          "usage": "Horizontal spacing between elements"
+        },
+        "gridGaps": {
+          "gap4": "16.dp",
+          "gap6": "24.dp",
+          "usage": "Grid spacing using Arrangement.spacedBy()"
+        }
+      }
+    },
+    "effects": {
+      "shadows": {
+        "cardShadow": {
+          "elevation": "24.dp",
+          "ambientColor": "Color.Black.copy(alpha = 0.55f)",
+          "spotColor": "Color.Black.copy(alpha = 0.55f)",
+          "shape": "RoundedCornerShape(24.dp)",
+          "usage": "GlassCard shadow - shadow-[0_24px_80px_rgba(0,0,0,0.55)]"
+        },
+        "buttonShadow": {
+          "elevation": "24.dp",
+          "ambientColor": "Color.Black.copy(alpha = 0.55f)",
+          "usage": "Primary button shadow"
+        }
+      },
+      "glows": {
+        "cyanDot": {
+          "color": "AuroraCyan",
+          "shadow": "shadow-[0_0_28px_rgba(59,214,255,0.35)]",
+          "usage": "Logo dot, active nav indicator"
+        },
+        "cyanDotSmall": {
+          "color": "AuroraCyan",
+          "shadow": "shadow-[0_0_20px_rgba(59,214,255,0.35)]",
+          "usage": "Small cyan status dots"
+        },
+        "cyanStatusDot": {
+          "color": "AuroraCyan",
+          "shadow": "shadow-[0_0_18px_rgba(59,214,255,0.22)]",
+          "usage": "Info status dots"
+        },
+        "greenDot": {
+          "color": "AuroraGreen",
+          "shadow": "shadow-[0_0_18px_rgba(63,226,100,0.25)]",
+          "usage": "Success status dots"
+        },
+        "greenStatusDot": {
+          "color": "AuroraGreen",
+          "shadow": "shadow-[0_0_18px_rgba(63,226,100,0.22)]",
+          "usage": "Success status indicators"
+        },
+        "dangerDot": {
+          "color": "StatusDanger",
+          "shadow": "shadow-[0_0_18px_rgba(255,77,77,0.18)]",
+          "usage": "Danger/error status dots"
+        },
+        "cyanNavGlow": {
+          "shadow": "shadow-[0_0_32px_rgba(59,214,255,0.12)]",
+          "usage": "Active navigation item glow"
+        },
+        "violetBarGlow": {
+          "shadow": "shadow-[0_0_32px_rgba(155,109,255,0.16)]",
+          "usage": "Chart bar highlight glow"
+        }
+      },
+      "backdropBlur": {
+        "note": "Backdrop blur is handled by system via GlassCard background. Compose doesn't have direct backdrop blur modifier, but glass effect is achieved through translucent backgrounds.",
+        "implementation": "Use GlassFill7, GlassFill6 with appropriate opacity for glass effect"
+      }
+    }
+  },
+  "theme": {
+    "name": "VanishAITheme",
+    "composeFunction": "@Composable fun VanishAITheme(content: @Composable () -> Unit)",
+    "colorScheme": {
+      "primary": "AuroraCyan",
+      "secondary": "AuroraViolet",
+      "tertiary": "AuroraGreen",
+      "background": "InkBase",
+      "surface": "GlassFill7",
+      "surfaceVariant": "GlassFill6",
+      "onPrimary": "InkBase",
+      "onSecondary": "TextPrimary",
+      "onTertiary": "InkBase",
+      "onBackground": "TextPrimary",
+      "onSurface": "TextPrimary",
+      "onSurfaceVariant": "TextSecondary72",
+      "outline": "StrokeDefault14",
+      "outlineVariant": "StrokeSubtle10",
+      "error": "StatusDanger",
+      "onError": "TextPrimary"
+    },
+    "typography": "Typography (HelveticaFamily)",
+    "usage": "Wrap all screens with VanishAITheme { ... }"
+  },
+  "components": {
+    "AuroraBackdrop": {
+      "file": "app/src/main/java/spog/krsna/vanishai/ui/components/AuroraBackdrop.kt",
+      "description": "Atmospheric background with gradient and horizon glow",
+      "implementation": {
+        "baseLayer": {
+          "type": "Box with fillMaxSize()",
+          "gradient": "Brush.verticalGradient(colors = [Color(0xFF071018), InkBase, InkBase])",
+          "usage": "Base gradient layer"
+        },
+        "horizonGlow": {
+          "type": "Box with fillMaxSize()",
+          "gradient": "Brush.radialGradient(colors = [AuroraCyan.copy(alpha = 0.40f), AuroraCyan.copy(alpha = 0.18f), AuroraViolet.copy(alpha = 0.10f), InkBase.copy(alpha = 0.00f)], radius = 1200f)",
+          "usage": "Horizon glow layer centered at 50% horizontal, 35% vertical"
+        },
+        "usage": "Render once at screen root level, before Scaffold or main content"
+      },
+      "modifier": "Modifier.fillMaxSize()"
+    },
+    "GlassCard": {
+      "file": "app/src/main/java/spog/krsna/vanishai/ui/components/GlassComponents.kt",
+      "description": "Primary glass surface component - exact from design-system.json",
+      "signature": "@Composable fun GlassCard(modifier: Modifier = Modifier, contentPadding: PaddingValues = PaddingValues(20.dp), content: @Composable () -> Unit)",
+      "specification": {
+        "shape": "RoundedCornerShape(24.dp) - rounded-2xl",
+        "background": "GlassFill7 - bg-white/7",
+        "border": "1.dp border with StrokeDefault12 - border-white/12",
+        "shadow": "shadow(elevation = 24.dp, shape = RoundedCornerShape(24.dp), ambientColor = Color.Black.copy(alpha = 0.55f), spotColor = Color.Black.copy(alpha = 0.55f))",
+        "padding": "contentPadding parameter (default 20.dp)"
+      },
+      "usage": "All glass surfaces: sidebar container, stat cards, chart cards, transaction feed, table container",
+      "paddingVariants": {
+        "compact": "PaddingValues(16.dp) - p-4 (sidebar)",
+        "standard": "PaddingValues(20.dp) - p-5 (stat cards)",
+        "spacious": "PaddingValues(24.dp) - p-6 (chart cards, table container)"
+      }
+    },
+    "Pill": {
+      "file": "app/src/main/java/spog/krsna/vanishai/ui/components/GlassComponents.kt",
+      "description": "Pill-shaped button/badge component",
+      "signature": "@Composable fun Pill(text: String, active: Boolean = false, modifier: Modifier = Modifier, textStyle: TextStyle = MaterialTheme.typography.bodySmall, onClick: (() -> Unit)? = null)",
+      "specification": {
+        "shape": "CircleShape - rounded-full",
+        "padding": "horizontal = 12.dp, vertical = 6.dp",
+        "activeState": {
+          "background": "GlassActive12 - bg-white/12",
+          "textColor": "TextPrimary - text-white",
+          "border": "1.dp border with StrokeStrong16 - ring-1 ring-white/16"
+        },
+        "inactiveState": {
+          "background": "Color.Transparent",
+          "textColor": "TextSecondary72 - text-white/72",
+          "border": "None"
+        },
+        "textStyle": "MaterialTheme.typography.bodySmall by default"
+      },
+      "usage": "Header navigation pills, time period filters, chart legend items, status badges",
+      "hoverState": "Not implemented in current version (Compose handles interaction states differently)"
+    },
+    "GlassButton": {
+      "file": "app/src/main/java/spog/krsna/vanishai/ui/components/GlassComponents.kt",
+      "description": "Button component with glass aesthetic",
+      "signature": "@Composable fun GlassButton(text: String, modifier: Modifier = Modifier, variant: ButtonVariant = ButtonVariant.Secondary, onClick: () -> Unit)",
+      "variants": {
+        "primary": {
+          "background": "ButtonPrimaryFill - Color.White",
+          "textColor": "ButtonPrimaryText - InkBase",
+          "border": "None",
+          "shadow": "shadow(elevation = 24.dp, shape = CircleShape, ambientColor = Color.Black.copy(alpha = 0.55f))",
+          "usage": "Primary CTA buttons"
+        },
+        "secondary": {
+          "background": "GlassFill7 - bg-white/7",
+          "textColor": "Color.White.copy(alpha = 0.86f) - text-white/86",
+          "border": "1.dp border with StrokeStrong16 - border-white/16",
+          "shadow": "None",
+          "usage": "Secondary actions, export buttons"
+        }
+      },
+      "specification": {
+        "shape": "CircleShape - rounded-full",
+        "padding": "horizontal = 20.dp, vertical = 11.dp",
+        "textStyle": "MaterialTheme.typography.bodyMedium"
+      }
+    },
+    "StatusDot": {
+      "file": "app/src/main/java/spog/krsna/vanishai/ui/components/GlassComponents.kt",
+      "description": "Simple circular status indicator",
+      "signature": "@Composable fun StatusDot(color: Color, modifier: Modifier = Modifier, size: Dp = 8.dp)",
+      "specification": {
+        "shape": "CircleShape",
+        "size": "8.dp default, 10.dp for transaction items",
+        "background": "color parameter"
+      },
+      "usage": "Transaction status indicators, navigation active indicators",
+      "colors": {
+        "success": "AuroraGreen",
+        "danger": "StatusDanger",
+        "info": "AuroraCyan"
+      },
+      "note": "Glow effects are applied via shadow modifier in usage, not in component itself"
+    }
+  },
+  "screenPatterns": {
+    "DashboardScreen": {
+      "file": "app/src/main/java/spog/krsna/vanishai/ui/screens/DashboardScreen.kt",
+      "layout": {
+        "root": "Box(modifier = Modifier.fillMaxSize())",
+        "backdrop": "AuroraBackdrop() - rendered first",
+        "content": "Scaffold with containerColor = Color.Transparent",
+        "scrollable": "LazyColumn with horizontal padding 20.dp"
+      },
+      "sections": {
+        "topBar": {
+          "component": "TopBar()",
+          "layout": "Row with SpaceBetween arrangement",
+          "spacing": "Spacer(height = 20.dp) after"
+        },
+        "header": {
+          "component": "DashboardHeader()",
+          "layout": "Column",
+          "spacing": "Spacer(height = 24.dp) after"
+        },
+        "stats": {
+          "component": "StatsGrid()",
+          "layout": "Column with spacedBy(16.dp), rows chunked by 2",
+          "spacing": "Spacer(height = 24.dp) after"
+        },
+        "charts": {
+          "component": "ChartsRow()",
+          "layout": "Column with spacedBy(24.dp)",
+          "spacing": "Spacer(height = 24.dp) after"
+        },
+        "table": {
+          "component": "TableSection()",
+          "layout": "GlassCard with horizontal scroll",
+          "spacing": "Spacer(height = 32.dp) after"
+        }
+      }
+    },
+    "commonLayouts": {
+      "statCard": {
+        "container": "GlassCard with PaddingValues(20.dp)",
+        "layout": "Column",
+        "content": "Row with SpaceBetween for label/value, trend badge, delta text",
+        "spacing": "Spacer(height = 8.dp) between label and value, Spacer(height = 12.dp) before delta"
+      },
+      "chartCard": {
+        "container": "GlassCard with PaddingValues(24.dp)",
+        "layout": "Column",
+        "header": "Row with SpaceBetween for title/subtitle and legend",
+        "spacing": "Spacer(height = 20.dp) before chart, Spacer(height = 12.dp) before axis"
+      },
+      "transactionCard": {
+        "container": "GlassCard with PaddingValues(24.dp)",
+        "layout": "Column",
+        "items": "Box with RoundedCornerShape(24.dp), GlassFill6 background, StrokeSubtle10 border",
+        "spacing": "Spacer(height = 20.dp) before items, Spacer(height = 12.dp) between items"
+      },
+      "table": {
+        "container": "GlassCard with PaddingValues(24.dp)",
+        "header": "Box with RoundedCornerShape(16.dp), GlassTableHeader5 background",
+        "rows": "Box with padding, Row with spacedBy(16.dp)",
+        "spacing": "Spacer(height = 20.dp) before table, Spacer(height = 8.dp) before rows, Spacer(height = 4.dp) between rows"
+      }
+    }
+  },
+  "implementationRulesForAI": {
+    "whenAddingNewComponents": [
+      "Always use Jetpack Compose. Never create XML layouts for UI components.",
+      "Wrap all screens with VanishAITheme { ... } to ensure theme consistency.",
+      "Use existing components (GlassCard, Pill, GlassButton, StatusDot) unless there's a clear reason not to.",
+      "Match existing spacing patterns: 8.dp small, 16.dp medium, 20-24.dp large. Use Spacer or Arrangement.spacedBy().",
+      "Define all interaction states (hover via Modifier.clickable, pressed, focused, disabled) using opacity and border changes.",
+      "Use MaterialTheme.typography for all text styles. Never hardcode font sizes unless overriding a specific style.",
+      "Use color variables from Color.kt. Never hardcode hex values.",
+      "Apply glass effect using GlassFill7, GlassFill6 with appropriate opacity and StrokeDefault12 borders.",
+      "Use RoundedCornerShape(24.dp) for cards, CircleShape for pills/buttons, RoundedCornerShape(16.dp) for table headers.",
+      "Apply shadows using shadow() modifier with elevation 24.dp and Color.Black.copy(alpha = 0.55f) for cards.",
+      "Render AuroraBackdrop once at screen root level before other content."
+    ],
+    "colorUsage": {
+      "backgrounds": "Use InkBase for screen background, GlassFill7 for cards, GlassFill6 for secondary surfaces",
+      "text": "Use TextPrimary for headlines/important text, TextSecondary72 for regular text, TextTertiary52 for labels",
+      "borders": "Use StrokeDefault12 for cards, StrokeSubtle10 for dividers, StrokeStrong16 for active states",
+      "accents": "Use AuroraCyan for primary actions, AuroraViolet for secondary/charts, AuroraGreen for success",
+      "status": "Use StatusDanger for errors, AuroraGreen for success, AuroraCyan for info"
+    },
+    "typographyUsage": {
+      "headlines": "Use displaySmall (32.sp) for hero headlines, headlineMedium (24.sp) for stat values",
+      "body": "Use bodyMedium (16.sp) for standard text, bodySmall (14.sp) for compact text",
+      "labels": "Use labelSmall (11.sp) with letterSpacing = 1.sp or 1.2.sp for section labels and table headers",
+      "emphasis": "Add FontWeight.SemiBold for card titles, FontWeight.Medium for emphasized table cells"
+    },
+    "spacingUsage": {
+      "screenPadding": "Always use 20.dp horizontal padding for screen content",
+      "cardPadding": "Use 16.dp for compact (sidebar), 20.dp for standard (stat cards), 24.dp for spacious (chart cards)",
+      "verticalSpacing": "Use 8.dp for small gaps, 16.dp for medium, 20-24.dp for large sections",
+      "horizontalSpacing": "Use Arrangement.spacedBy(8.dp) for small, 12.dp for medium, 16.dp for large"
+    },
+    "antiPatterns": [
+      "Do not use XML layouts for UI components - use Compose only.",
+      "Do not hardcode colors - always use variables from Color.kt.",
+      "Do not hardcode font sizes - use MaterialTheme.typography styles.",
+      "Do not introduce new component libraries without instruction.",
+      "Do not use heavy drop shadows - stick to elevation 24.dp with 0.55 alpha.",
+      "Do not use excessive spacing - keep it tight and efficient (max 24.dp for large gaps).",
+      "Do not create new glass colors - use existing GlassFill6, GlassFill7 variants.",
+      "Do not use different border colors - stick to white with opacity (StrokeDefault12, etc.).",
+      "Do not forget to render AuroraBackdrop at screen root for Dashboard screens.",
+      "Do not use Material 2 components - use Material 3 only."
+    ],
+    "accessibility": {
+      "textContrast": "Ensure text meets WCAG contrast requirements (TextPrimary on InkBase meets AAA)",
+      "touchTargets": "Minimum 48.dp touch target size for interactive elements",
+      "semantics": "Use appropriate semantics modifiers for screen readers",
+      "focusStates": "Ensure all interactive elements have visible focus indicators"
+    },
+    "performance": {
+      "lazyLists": "Use LazyColumn/LazyRow for scrollable lists with many items",
+      "recomposition": "Avoid unnecessary recomposition by using remember and derivedStateOf",
+      "modifiers": "Chain modifiers efficiently, avoid creating new modifier instances in recomposition"
+    }
+  },
+  "materialThemeMapping": {
+    "note": "Material 3 theme is configured via VanishAITheme. Components can access theme values via MaterialTheme.colorScheme and MaterialTheme.typography.",
+    "colorScheme": {
+      "primary": "AuroraCyan - used for primary actions",
+      "secondary": "AuroraViolet - used for secondary actions",
+      "tertiary": "AuroraGreen - used for success states",
+      "background": "InkBase - screen background",
+      "surface": "GlassFill7 - card backgrounds",
+      "surfaceVariant": "GlassFill6 - secondary surfaces",
+      "onPrimary": "InkBase - text on primary",
+      "onBackground": "TextPrimary - text on background",
+      "onSurface": "TextPrimary - text on surface"
+    },
+    "typography": "All MaterialTheme.typography styles use HelveticaFamily with specified sizes, weights, and letter spacing"
+  }
+}
+

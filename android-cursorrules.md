@@ -154,6 +154,7 @@ encryptedBackupId = encryptData(backup.backupId.toString()) ?: return null,
 - **Null Safety**: Handle null values appropriately in mappers
 
 ### Network
+- **Ktor client**: Use ktor network client to make API calls.
 - **Error Handling**: Implement proper error handling for network calls
 
 ## UI Patterns

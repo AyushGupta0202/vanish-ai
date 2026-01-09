@@ -1,0 +1,9 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Rounded square background - Pure Black -->
+  <rect width="64" height="64" rx="12" fill="#0B0B0D"/>
+  <!-- White Void Mark - Vertical cut derived from "I" -->
+  <rect x="30" y="12" width="4" height="40" fill="#FFFFFF"/>
+  <!-- Fading bottom portion for disappearing effect -->
+  <rect x="30" y="40" width="4" height="12" fill="#FFFFFF" opacity="0.3"/>
+</svg>
+

@@ -23,18 +23,11 @@ from app.services.smart_mask import SmartMaskService
 
 app = FastAPI(title="Vanish AI API", version="2.0.0")
 
-# CORS middleware for frontend
+# CORS middleware for frontend and mobile apps
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://localhost:5174",
-        "http://localhost:3000",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:5174",
-        "http://127.0.0.1:3000",
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],  # Allow all origins for mobile apps and web
+    allow_credentials=False,  # Must be False when allow_origins=["*"]
     allow_methods=["*"],
     allow_headers=["*"],
 )
