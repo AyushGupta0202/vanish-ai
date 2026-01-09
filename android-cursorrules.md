@@ -73,6 +73,14 @@ val themeMode: ThemeMode = ThemeMode.System
 ```
 - **ViewModel State**: Expose state through `StateFlow` in ViewModels
 
+### Compilation and execution
+- Always compile kotlin to validate the changes.
+```bash
+./gradlew :app:compileDebugKotlin \
+  --build-cache \
+  --parallel
+```
+
 ## Build Configuration
 
 ### Version Catalogs

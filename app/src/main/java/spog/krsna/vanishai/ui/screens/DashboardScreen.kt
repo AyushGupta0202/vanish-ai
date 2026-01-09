@@ -107,50 +107,42 @@ private val viewsSeries = listOf(12, 18, 14, 22, 26, 20, 28, 34, 30, 38, 44, 40)
 
 @Composable
 fun DashboardScreen(modifier: Modifier = Modifier) {
-    Scaffold(
-        modifier = modifier.fillMaxSize(),
-        containerColor = InkBase, // #060B0D from design.json
-        topBar = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 20.dp) // px-5 py-5 mobile
-            ) {
-                TopBar()
-            }
-        }
-    ) { paddingValues ->
-        Box(
+    Box(modifier = modifier.fillMaxSize()) {
+        // Backdrop renders once at root level
+        AuroraBackdrop()
+        
+        Scaffold(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(top = paddingValues.calculateTopPadding())
-        ) {
-            AuroraBackdrop()
-
+                .fillMaxSize(),
+            containerColor = Color.Transparent // Transparent to show backdrop
+        ) { paddingValues ->
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(
-                    start = 20.dp, // px-5 mobile
-                    end = 20.dp,
-                    bottom = 64.dp // pb-16
-                )
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 20.dp),
+                contentPadding = paddingValues
             ) {
-                item {
+                item(key = "topbar") {
+                    TopBar()
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
+                
+                item(key = "header") {
                     DashboardHeader()
-                    Spacer(modifier = Modifier.height(24.dp)) // gap-6
+                    Spacer(modifier = Modifier.height(24.dp))
                 }
 
-                item {
+                item(key = "stats") {
                     StatsGrid()
-                    Spacer(modifier = Modifier.height(24.dp)) // gap-6
+                    Spacer(modifier = Modifier.height(24.dp))
                 }
 
-                item {
+                item(key = "charts") {
                     ChartsRow()
-                    Spacer(modifier = Modifier.height(24.dp)) // gap-6
+                    Spacer(modifier = Modifier.height(24.dp))
                 }
 
-                item {
+                item(key = "table") {
                     TableSection()
                     Spacer(modifier = Modifier.height(32.dp))
                 }
