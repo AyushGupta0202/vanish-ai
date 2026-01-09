@@ -2,7 +2,7 @@
   "meta": {
     "name": "vanish-ai Design System (App-Exact)",
     "purpose": "A comprehensive, AI-readable guide to build new features in this repo with consistent styling. This document reflects the ACTUAL Tailwind classes, tokens, and component patterns in the codebase (not a hypothetical system).",
-    "lastUpdated": "2026-01-06",
+    "lastUpdated": "2026-01-08",
     "scope": [
       "frontend (Vite + React + Tailwind v3)",
       "Landing (Vanish theme)",
@@ -113,6 +113,28 @@
         "sectionTitle": "text-4xl font-bold text-center mb-12 text-white",
         "cardTitle": "text-xl (or text-2xl in CardTitle) font-semibold text-white",
         "helperText": "text-xs text-white/80 or text-muted-gray"
+      },
+      "auroraTypePatterns": {
+        "sectionLabel": "text-xs font-semibold tracking-[0.10em] text-white/52",
+        "brandName": "text-sm font-semibold tracking-[-0.01em] text-white/92",
+        "brandSubtitle": "text-xs text-white/52",
+        "heroHeadline": "text-3xl font-semibold tracking-[-0.015em] text-white/92 md:text-4xl",
+        "heroDescription": "text-sm text-white/62",
+        "statLabel": "text-xs font-semibold tracking-[0.10em] text-white/52",
+        "statValue": "text-2xl font-semibold tracking-[-0.01em] text-white/92",
+        "statDelta": "text-xs text-white/56",
+        "cardTitle": "text-sm font-semibold text-white/92",
+        "cardSubtitle": "text-xs text-white/56",
+        "tableHeader": "text-xs font-semibold tracking-[0.10em] text-white/52",
+        "tableCell": "text-sm text-white/72",
+        "tableCellEmphasis": "text-sm font-medium text-white/86",
+        "accountName": "text-sm font-semibold text-white/92",
+        "accountEmail": "text-xs text-white/52",
+        "accountStatus": "text-xs text-white/70",
+        "transactionTitle": "text-sm font-semibold text-white/86",
+        "transactionMeta": "text-xs text-white/52",
+        "pillText": "text-xs font-medium",
+        "badgeText": "text-[11px] text-white/70"
       }
     },
     "colors": {
@@ -140,11 +162,12 @@
           "Borders: border-graphite or border-electric-blue/20"
         ],
         "aurora": [
-          "Primary text: text-white/92",
-          "Secondary text: text-white/72, /62, /56, /52",
-          "Borders: border-white/10 to border-white/16",
-          "Glass fill: bg-white/5 to bg-white/12",
-          "Glow: shadow-[0_0_XXpx_rgba(...)] sparingly"
+          "Primary text: text-white/92 (headlines, brand names, stat values)",
+          "Secondary text: text-white/86 (card titles, table emphasis), text-white/72 (nav items, table cells), text-white/70 (status text, badges), text-white/62 (descriptions), text-white/56 (subtitles, deltas), text-white/52 (labels, meta text)",
+          "Borders: border-white/16 (strong emphasis), border-white/14 (search input), border-white/12 (cards, pills), border-white/10 (subtle dividers, table shells)",
+          "Glass fill: bg-white/7 (cards, logo icon), bg-white/6 (search, account card, pills, table header), bg-white/12 (active nav items), bg-white/8 (hover states), bg-white/5 (table header background)",
+          "Ring: ring-white/8 (card inner ring), ring-white/16 (active nav items)",
+          "Glow: shadow-[0_0_XXpx_rgba(...)] sparingly, specific recipes documented in effects.aurora.glowRecipe"
         ]
       }
     },
@@ -166,12 +189,108 @@
         "grid": "gap-6",
         "panels": "p-4 to p-6"
       },
-      "dashboard": {
-        "outer": "pb-16",
-        "grid": "gap-6",
-        "cards": "p-4 to p-6",
-        "tableRow": "px-5 py-4"
-      }
+        "dashboard": {
+          "pageRoot": "relative min-h-screen overflow-hidden",
+          "containerMaxWidth": "max-w-7xl",
+          "header": {
+            "container": "mx-auto flex max-w-7xl items-center justify-between px-5 py-5 md:px-8",
+            "logo": {
+              "container": "gap-3",
+              "icon": "h-10 w-10",
+              "iconDot": "h-2.5 w-2.5"
+            },
+            "navigation": {
+              "container": "gap-2"
+            },
+            "actions": {
+              "container": "gap-3",
+              "search": {
+                "wrapper": "h-11 px-4",
+                "icon": "mr-2",
+                "input": "w-64"
+              },
+              "backButton": "px-4 py-2",
+              "primaryCTA": "h-11 px-5"
+            }
+          },
+          "body": {
+            "container": "relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-6 px-5 pb-16 md:grid-cols-[280px_1fr] md:px-8",
+            "sidebar": {
+              "width": "280px",
+              "sticky": "md:top-6",
+              "card": "p-4",
+              "sectionHeader": "mb-3",
+              "navigation": {
+                "container": "space-y-2",
+                "item": "px-4 py-2",
+                "activeIndicator": "h-2 w-2"
+              },
+              "divider": "my-4 h-px",
+              "account": {
+                "section": "space-y-2",
+                "badge": "px-2 py-0.5",
+                "card": "p-3",
+                "status": {
+                  "container": "mt-3 gap-2",
+                  "dot": "h-2 w-2"
+                }
+              }
+            },
+            "main": {
+              "container": "space-y-6",
+              "hero": {
+                "container": "gap-4",
+                "headline": "mt-2",
+                "description": "mt-2 max-w-2xl"
+              },
+              "timeFilters": {
+                "container": "gap-2",
+                "filter": "h-11 px-4"
+              },
+              "stats": {
+                "grid": "grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4",
+                "card": "p-5",
+                "value": "mt-2",
+                "trendBadge": "px-3 py-1",
+                "delta": "mt-3"
+              },
+              "chartsAndFeed": {
+                "grid": "grid grid-cols-1 gap-6 xl:grid-cols-[1.6fr_1fr]",
+                "chartCard": {
+                  "card": "p-6",
+                  "legend": {
+                    "container": "gap-2",
+                    "item": "px-3 py-1.5 gap-2",
+                    "dot": "h-2 w-2"
+                  },
+                  "chart": {
+                    "container": "mt-6 h-56 gap-2"
+                  },
+                  "axis": {
+                    "container": "mt-4"
+                  }
+                },
+                "transactionFeed": {
+                  "card": "p-6",
+                  "items": {
+                    "container": "mt-5 space-y-3",
+                    "item": "p-4",
+                    "content": "gap-4",
+                    "meta": "mt-1",
+                    "statusDot": "h-2.5 w-2.5"
+                  }
+                }
+              },
+              "table": {
+                "card": "p-6",
+                "tableContainer": "mt-5",
+                "headerRow": "grid grid-cols-[1.6fr_0.7fr_0.6fr_0.6fr_0.6fr] gap-3 px-5 py-3",
+                "dataRow": "grid grid-cols-[1.6fr_0.7fr_0.6fr_0.6fr_0.6fr] gap-3 px-5 py-4",
+                "platformPill": "px-3 py-1"
+              }
+            }
+          }
+        }
     },
     "effects": {
       "vanish": {
@@ -190,8 +309,14 @@
         },
         "glowRecipe": {
           "cyanDot": "bg-aurora-cyan shadow-[0_0_28px_rgba(59,214,255,0.35)]",
+          "cyanDotSmall": "bg-aurora-cyan shadow-[0_0_20px_rgba(59,214,255,0.35)]",
+          "cyanStatusDot": "bg-aurora-cyan shadow-[0_0_18px_rgba(59,214,255,0.22)]",
           "greenDot": "bg-aurora-green shadow-[0_0_18px_rgba(63,226,100,0.25)]",
-          "violetBarGlow": "shadow-[0_0_32px_rgba(155,109,255,0.16)]"
+          "greenStatusDot": "bg-aurora-green shadow-[0_0_18px_rgba(63,226,100,0.22)]",
+          "violetBarGlow": "shadow-[0_0_32px_rgba(155,109,255,0.16)]",
+          "cyanNavGlow": "shadow-[0_0_32px_rgba(59,214,255,0.12)]",
+          "dangerDot": "bg-[#FF4D4D] shadow-[0_0_18px_rgba(255,77,77,0.18)]",
+          "cardShadow": "shadow-[0_24px_80px_rgba(0,0,0,0.55)]"
         }
       }
     }
@@ -207,6 +332,36 @@
     }
   },
   "componentRecipes": {
+    "auroraComponents": {
+      "AuroraBackdrop": {
+        "file": "frontend/src/components/AuroraBackdrop.tsx",
+        "definition": "export default function AuroraBackdrop({ className }: { className?: string })",
+        "container": "pointer-events-none absolute inset-0",
+        "layers": [
+          "Base gradient: bg-gradient-to-b from-[#071018] via-[#060B0D] to-[#060B0D]",
+          "Orbital rings: absolute inset-0 opacity-60 with radial-gradient creating concentric rings at 180px, 270px, 370px, 520px radii",
+          "Horizon glow: radial-gradient(1200px_600px_at_50%_35%, rgba(59,214,255,0.40)_0%, rgba(59,214,255,0.18)_28%, rgba(155,109,255,0.10)_48%, rgba(6,11,13,0.00)_72%)",
+          "Vignette: radial-gradient(circle_at_50%_50%, rgba(0,0,0,0.00)_0%, rgba(0,0,0,0.25)_55%, rgba(0,0,0,0.55)_100%)"
+        ],
+        "usage": "Rendered at Dashboard page root, provides atmospheric background"
+      },
+      "GlassCard": {
+        "file": "frontend/src/pages/Dashboard.tsx (inline component)",
+        "definition": "function GlassCard({ className, children }: { className?: string; children: ReactNode })",
+        "baseClasses": "rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl ring-1 ring-white/8 shadow-[0_24px_80px_rgba(0,0,0,0.55)]",
+        "usage": "All glass surfaces in Dashboard: sidebar container, stat cards, chart cards, transaction feed, table container",
+        "paddingVariants": ["p-4 (sidebar)", "p-5 (stat cards)", "p-6 (chart cards, table container)"]
+      },
+      "Pill": {
+        "file": "frontend/src/pages/Dashboard.tsx (inline component)",
+        "definition": "function Pill({ active, children, className }: { active?: boolean; children: React.ReactNode; className?: string })",
+        "baseClasses": "inline-flex items-center rounded-full px-3 py-1.5 text-xs font-medium",
+        "activeState": "bg-white/12 text-white ring-1 ring-white/16",
+        "inactiveState": "text-white/72 hover:text-white/90",
+        "usage": "Header navigation pills, time period filters, chart legend items, status badges",
+        "classNameOverride": "Can accept className prop for custom styling (e.g., border border-white/12 bg-white/6 text-white/70)"
+      }
+    },
     "primitives": {
       "Button": {
         "file": "frontend/src/components/ui/button.tsx",
@@ -350,40 +505,194 @@
         "file": "frontend/src/pages/Dashboard.tsx",
         "pageRoot": "relative min-h-screen overflow-hidden bg-ink-base font-helvetica text-white",
         "backgroundSystem": {
-          "atmosphere": "bg-gradient-to-b from-[#071018] via-[#060B0D] to-[#060B0D]",
-          "orbitalRings": "radial gradient rings overlay using white/12..white/05",
-          "horizonGlow": "radial-gradient(1200px_600px_at_50%_35%, rgba(59,214,255,0.40) → rgba(155,109,255,0.10) → transparent)",
-          "vignette": "radial gradient darkening edges"
+          "component": "AuroraBackdrop (frontend/src/components/AuroraBackdrop.tsx)",
+          "layers": [
+            "Base gradient: bg-gradient-to-b from-[#071018] via-[#060B0D] to-[#060B0D]",
+            "Orbital rings: radial-gradient with white/12, white/09, white/07, white/05 at 180px, 270px, 370px, 520px radii (opacity-60)",
+            "Horizon glow: radial-gradient(1200px_600px_at_50%_35%, rgba(59,214,255,0.40)_0%, rgba(59,214,255,0.18)_28%, rgba(155,109,255,0.10)_48%, rgba(6,11,13,0.00)_72%)",
+            "Vignette: radial-gradient(circle_at_50%_50%, rgba(0,0,0,0.00)_0%, rgba(0,0,0,0.25)_55%, rgba(0,0,0,0.55)_100%)"
+          ],
+          "container": "pointer-events-none absolute inset-0"
         },
-        "glassCardRecipe": "rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl ring-1 ring-white/8 shadow-[0_24px_80px_rgba(0,0,0,0.55)]",
-        "pillRecipe": {
-          "active": "bg-white/12 text-white ring-1 ring-white/16",
-          "inactive": "text-white/72 hover:text-white/90"
+        "components": {
+          "GlassCard": {
+            "base": "rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl ring-1 ring-white/8 shadow-[0_24px_80px_rgba(0,0,0,0.55)]",
+            "usage": "Wrapper component for all glass surfaces (sidebar, stat cards, chart cards, table container)",
+            "paddingVariants": ["p-4 (sidebar)", "p-5 (stat cards)", "p-6 (chart cards, table container)"]
+          },
+          "Pill": {
+            "base": "inline-flex items-center rounded-full px-3 py-1.5 text-xs font-medium",
+            "active": "bg-white/12 text-white ring-1 ring-white/16",
+            "inactive": "text-white/72 hover:text-white/90",
+            "usage": "Navigation pills in header, time period filters, chart legends, status badges"
+          }
         },
-        "topBar": {
-          "container": "mx-auto flex max-w-7xl items-center justify-between px-5 py-5 md:px-8",
-          "search": "flex h-11 items-center rounded-full border border-white/14 bg-white/6 px-4 backdrop-blur-xl",
-          "primaryCTA": "h-11 rounded-full px-5 bg-white text-ink-base shadow-[0_24px_80px_rgba(0,0,0,0.55)] hover:bg-white/95"
+        "header": {
+          "container": "relative z-10",
+          "inner": "mx-auto flex max-w-7xl items-center justify-between px-5 py-5 md:px-8",
+          "logo": {
+            "container": "flex items-center gap-3",
+            "icon": "grid h-10 w-10 place-items-center rounded-full bg-white/7 ring-1 ring-white/12 backdrop-blur-xl",
+            "iconDot": "h-2.5 w-2.5 rounded-full bg-aurora-cyan shadow-[0_0_28px_rgba(59,214,255,0.35)]",
+            "text": {
+              "brand": "text-sm font-semibold tracking-[-0.01em] text-white/92 leading-tight",
+              "subtitle": "text-xs text-white/52"
+            }
+          },
+          "navigation": {
+            "container": "hidden items-center gap-2 md:flex",
+            "items": "Uses Pill component with active prop"
+          },
+          "actions": {
+            "container": "flex items-center gap-3",
+            "search": {
+              "container": "hidden md:block",
+              "inputWrapper": "flex h-11 items-center rounded-full border border-white/14 bg-white/6 px-4 backdrop-blur-xl",
+              "icon": "mr-2 text-white/52",
+              "input": "w-64 bg-transparent text-sm text-white/90 placeholder:text-white/45 focus:outline-none"
+            },
+            "backButton": "hidden rounded-full border border-white/16 bg-white/7 px-4 py-2 text-sm font-medium text-white/90 backdrop-blur-xl hover:bg-white/10 md:inline-flex",
+            "primaryCTA": {
+              "base": "inline-flex h-11 items-center justify-center rounded-full px-5 text-sm font-semibold bg-white text-ink-base shadow-[0_24px_80px_rgba(0,0,0,0.55)] hover:bg-white/95",
+              "focus": "focus:outline-none focus-visible:ring-2 focus-visible:ring-aurora-cyan/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-base"
+            }
+          }
         },
-        "sidebar": {
-          "width": "md:grid-cols-[280px_1fr]",
-          "navItemActive": "bg-white/12 text-white ring-1 ring-white/16 shadow-[0_0_32px_rgba(59,214,255,0.12)]",
-          "navItemHover": "hover:bg-white/8 hover:text-white/90"
-        },
-        "stats": {
-          "grid": "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4",
-          "statTitle": "text-xs font-semibold tracking-[0.10em] text-white/52",
-          "statValue": "text-2xl font-semibold tracking-[-0.01em] text-white/92",
-          "delta": "text-xs text-white/56"
-        },
-        "chartBars": {
-          "bar": "rounded-xl bg-gradient-to-t from-aurora-violet/55 via-aurora-violet/22 to-white/0 ring-1 ring-white/8"
-        },
-        "table": {
-          "shell": "overflow-hidden rounded-2xl border border-white/10",
-          "headerRow": "bg-white/5 px-5 py-3 text-xs font-semibold tracking-[0.10em] text-white/52",
-          "row": "px-5 py-4 text-sm text-white/72 hover:bg-white/6",
-          "pillCell": "rounded-full border border-white/12 bg-white/6 px-3 py-1 text-xs text-white/70"
+        "body": {
+          "container": "relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-6 px-5 pb-16 md:grid-cols-[280px_1fr] md:px-8",
+          "sidebar": {
+            "container": "md:sticky md:top-6 md:self-start",
+            "card": "GlassCard with p-4",
+            "sectionHeader": "text-xs font-semibold tracking-[0.10em] text-white/52 mb-3",
+            "navigation": {
+              "container": "space-y-2",
+              "item": {
+                "base": "flex items-center justify-between rounded-full px-4 py-2 text-sm",
+                "active": "bg-white/12 text-white ring-1 ring-white/16 shadow-[0_0_32px_rgba(59,214,255,0.12)]",
+                "inactive": "text-white/72 hover:bg-white/8 hover:text-white/90",
+                "activeIndicator": "h-2 w-2 rounded-full bg-aurora-cyan shadow-[0_0_20px_rgba(59,214,255,0.35)]"
+              }
+            },
+            "divider": "my-4 h-px bg-white/8",
+            "account": {
+              "sectionHeader": "flex items-center justify-between",
+              "badge": "rounded-full border border-white/12 bg-white/6 px-2 py-0.5 text-[11px] text-white/70",
+              "card": "rounded-2xl border border-white/10 bg-white/6 p-3",
+              "name": "text-sm font-semibold text-white/92",
+              "email": "text-xs text-white/52",
+              "status": {
+                "container": "mt-3 flex items-center gap-2",
+                "dot": "h-2 w-2 rounded-full bg-aurora-green shadow-[0_0_18px_rgba(63,226,100,0.25)]",
+                "text": "text-xs text-white/70"
+              }
+            }
+          },
+          "main": {
+            "container": "space-y-6",
+            "hero": {
+              "container": "flex flex-col justify-between gap-4 md:flex-row md:items-end",
+              "content": {
+                "sectionLabel": "text-xs font-semibold tracking-[0.10em] text-white/52",
+                "headline": "mt-2 text-3xl font-semibold tracking-[-0.015em] text-white/92 md:text-4xl",
+                "description": "mt-2 max-w-2xl text-sm text-white/62"
+              },
+              "timeFilters": {
+                "container": "flex items-center gap-2",
+                "active": "inline-flex h-11 items-center rounded-full border border-white/14 bg-white/6 px-4 text-sm text-white/72 backdrop-blur-xl",
+                "inactive": "inline-flex h-11 items-center rounded-full border border-white/10 bg-transparent px-4 text-sm text-white/52 hover:bg-white/6"
+              }
+            },
+            "stats": {
+              "grid": "grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4",
+              "card": "GlassCard with p-5",
+              "content": {
+                "container": "flex items-start justify-between",
+                "label": "text-xs font-semibold tracking-[0.10em] text-white/52",
+                "value": "mt-2 text-2xl font-semibold tracking-[-0.01em] text-white/92",
+                "trend": {
+                  "container": "rounded-full border px-3 py-1 text-xs font-medium",
+                  "up": "border-aurora-green/30 bg-aurora-green/12 text-white/86",
+                  "down": "border-aurora-violet/30 bg-aurora-violet/12 text-white/86",
+                  "icon": "↗ (up) or ↘ (down)"
+                },
+                "delta": "mt-3 text-xs text-white/56"
+              }
+            },
+            "chartsAndFeed": {
+              "grid": "grid grid-cols-1 gap-6 xl:grid-cols-[1.6fr_1fr]",
+              "chartCard": {
+                "card": "GlassCard with p-6",
+                "header": {
+                  "container": "flex items-center justify-between",
+                  "title": "text-sm font-semibold text-white/92",
+                  "subtitle": "text-xs text-white/56",
+                  "legend": {
+                    "container": "flex items-center gap-2",
+                    "item": "inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/6 px-3 py-1.5 text-xs text-white/70",
+                    "dot": "h-2 w-2 rounded-full",
+                    "dotViolet": "bg-aurora-violet",
+                    "dotCyan": "bg-aurora-cyan"
+                  }
+                },
+                "chart": {
+                  "container": "mt-6 flex h-56 items-end gap-2",
+                  "bar": {
+                    "base": "flex-1 w-full rounded-xl bg-gradient-to-t from-aurora-violet/55 via-aurora-violet/22 to-white/0 ring-1 ring-white/8",
+                    "highlight": "shadow-[0_0_32px_rgba(155,109,255,0.16)] (applied to second-to-last bar)"
+                  }
+                },
+                "axis": {
+                  "container": "mt-4 flex items-center justify-between text-xs text-white/52",
+                  "labels": "Week 1 and Week 12"
+                }
+              },
+              "transactionFeed": {
+                "card": "GlassCard with p-6",
+                "header": {
+                  "container": "flex items-center justify-between",
+                  "title": "text-sm font-semibold text-white/92",
+                  "subtitle": "text-xs text-white/56",
+                  "badge": "Uses Pill component with className override: border border-white/12 bg-white/6 text-white/70"
+                },
+                "items": {
+                  "container": "mt-5 space-y-3",
+                  "item": "rounded-2xl border border-white/10 bg-white/6 p-4",
+                  "content": {
+                    "container": "flex items-start justify-between gap-4",
+                    "title": "text-sm font-semibold text-white/86",
+                    "meta": "mt-1 text-xs text-white/52",
+                    "statusDot": {
+                      "base": "h-2.5 w-2.5 rounded-full",
+                      "success": "bg-aurora-green shadow-[0_0_18px_rgba(63,226,100,0.22)]",
+                      "danger": "bg-[#FF4D4D] shadow-[0_0_18px_rgba(255,77,77,0.18)]",
+                      "info": "bg-aurora-cyan shadow-[0_0_18px_rgba(59,214,255,0.22)]"
+                    }
+                  }
+                }
+              }
+            },
+            "table": {
+              "card": "GlassCard with p-6",
+              "header": {
+                "container": "flex items-center justify-between",
+                "title": "text-sm font-semibold text-white/92",
+                "subtitle": "text-xs text-white/56",
+                "exportButton": "rounded-full border border-white/16 bg-white/7 px-4 py-2 text-sm font-medium text-white/86 hover:bg-white/10"
+              },
+              "table": {
+                "shell": "mt-5 overflow-hidden rounded-2xl border border-white/10",
+                "headerRow": "grid grid-cols-[1.6fr_0.7fr_0.6fr_0.6fr_0.6fr] gap-3 bg-white/5 px-5 py-3 text-xs font-semibold tracking-[0.10em] text-white/52",
+                "rows": {
+                  "container": "divide-y divide-white/8",
+                  "row": "grid grid-cols-[1.6fr_0.7fr_0.6fr_0.6fr_0.6fr] gap-3 px-5 py-4 text-sm text-white/72 hover:bg-white/6",
+                  "title": "text-white/86",
+                  "platform": "inline-flex items-center rounded-full border border-white/12 bg-white/6 px-3 py-1 text-xs text-white/70",
+                  "numeric": "text-right font-medium text-white/86",
+                  "numericRegular": "text-right"
+                }
+              }
+            }
+          }
         }
       }
     }
