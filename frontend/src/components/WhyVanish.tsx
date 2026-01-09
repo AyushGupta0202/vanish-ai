@@ -17,7 +17,7 @@ export default function WhyVanish() {
   ]
 
   return (
-    <section className="py-12 px-4 md:px-6">
+    <section className="py-12 px-4">
       <div className="mx-auto max-w-6xl">
         <h2 className="text-4xl font-semibold tracking-[-0.015em] text-center mb-12 text-white/92">
           Why Vanish

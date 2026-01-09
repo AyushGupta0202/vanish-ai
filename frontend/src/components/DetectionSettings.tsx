@@ -15,7 +15,7 @@ export default function DetectionSettings({
   onExpandChange
 }: DetectionSettingsProps) {
   return (
-    <Card className="mb-4">
+    <Card className="">
       <CardHeader>
         <CardTitle className="text-lg">Detection Settings</CardTitle>
         <CardDescription>Configure text detection parameters</CardDescription>

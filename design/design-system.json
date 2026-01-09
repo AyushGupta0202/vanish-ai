@@ -40,13 +40,13 @@
     ],
     "layoutAndSpacing": {
       "containers": [
-        "Marketing: container mx-auto max-w-7xl / max-w-6xl / max-w-4xl",
+        "All sections: container mx-auto max-w-7xl / max-w-6xl / max-w-4xl",
         "App/editor: max-w-7xl mx-auto px-4 (grid with sidebar 220px)",
         "Dashboard: max-w-7xl mx-auto px-5 md:px-8"
       ],
       "sectionRhythm": [
-        "Default marketing sections: py-20 px-4",
-        "Dense editor surfaces: p-4 to p-6 with gap-6",
+        "All sections: py-12 px-4 (clinical spacing, no bloat)",
+        "Editor surfaces: p-4 to p-6 with gap-6",
         "Dashboard: gap-6, cards p-4 to p-6, tables inside rounded containers"
       ]
     },
@@ -180,9 +180,10 @@
       }
     },
     "spacing": {
-      "marketing": {
-        "section": "py-20 px-4",
-        "gridGaps": ["gap-6", "gap-8", "gap-12"]
+      "sections": {
+        "vertical": "py-12 px-4",
+        "note": "Clinical spacing throughout - no marketing bloat. All sections use py-12 or less.",
+        "gridGaps": "gap-6"
       },
       "editor": {
         "outer": "py-8",
@@ -330,6 +331,11 @@
         "body overflow-x hidden; root min-height 100vh"
       ]
     }
+  },
+  "spacingPhilosophy": {
+    "principle": "Clinical efficiency throughout. No traditional marketing bloat.",
+    "verticalRhythm": "py-12 for sections, py-8 for editor, gap-6 everywhere",
+    "antiPattern": "Never use py-20 or larger spacing - contradicts Dashboard's tight, professional aesthetic"
   },
   "componentRecipes": {
     "auroraComponents": {
@@ -701,7 +707,7 @@
     "whenAddingNewComponents": [
       "Pick the theme first: Vanish (void/graphite/electric-blue) or Aurora (ink/white glass/aurora accents). Do not blend them unless explicitly requested.",
       "Use existing primitives (`Button`, `Card`, `Slider`) unless there is a clear reason not to.",
-      "Match existing spacing patterns: py-20 sections, p-4..p-6 panels, gap-6 grids.",
+      "Match existing spacing patterns: py-12 sections, p-4..p-6 panels, gap-6 grids. NEVER use py-20 or larger.",
       "Define all interaction states (hover, focus-visible, disabled) using opacity and border changes; keep motion subtle."
     ],
     "copyTone": {
@@ -711,7 +717,9 @@
     "antiPatterns": [
       "Do not introduce random new grays; use graphite/muted-gray or white opacities as established.",
       "Do not add heavy drop shadows to Vanish surfaces; rely on borders and subtle elevation.",
-      "Do not introduce new component libraries without instruction."
+      "Do not introduce new component libraries without instruction.",
+      "NEVER use py-20 or excessive spacing - this contradicts the clinical Dashboard aesthetic.",
+      "Do not assume 'marketing' sections need different spacing - everything is tight and efficient."
     ]
   }
 }

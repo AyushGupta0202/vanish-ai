@@ -8,7 +8,7 @@ interface BrushControlsProps {
 
 export default function BrushControls({ brushSize, onBrushSizeChange }: BrushControlsProps) {
   return (
-    <Card className="mb-4">
+    <Card className="">
       <CardHeader>
         <CardTitle className="text-lg">Brush Size</CardTitle>
         <CardDescription>Adjust the size of the eraser brush</CardDescription>

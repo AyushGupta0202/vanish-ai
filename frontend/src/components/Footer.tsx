@@ -3,9 +3,9 @@ import { aurora } from '@/styles/aurora'
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-ink-base/40 backdrop-blur-xl py-8 px-4 md:px-6">
+    <footer className="border-t border-white/10 bg-ink-base/40 backdrop-blur-xl py-8 px-4">
       <div className="mx-auto max-w-6xl">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-4 gap-6">
           <div>
             <VanishLogo variant="light" size="sm" />
             <p className="text-white/56 text-sm mt-4">
@@ -36,7 +36,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="border-t border-white/10 mt-8 pt-8 text-center text-white/52 text-sm">
+        <div className="border-t border-white/10 mt-8 pt-6 text-center text-white/52 text-sm">
           © {new Date().getFullYear()} Vanish AI. All rights reserved.
         </div>
       </div>

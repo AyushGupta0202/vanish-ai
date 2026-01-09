@@ -8,7 +8,7 @@ export default function HeroSection({ onTryClick }: { onTryClick: () => void }) 
   const afterImage = "/images/after-example.svg"
 
   return (
-    <section className="py-12 px-4 md:px-6">
+    <section className="py-12 px-4">
       <div className="mx-auto max-w-7xl">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left Side - Copy */}

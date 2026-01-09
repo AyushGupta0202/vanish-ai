@@ -15,7 +15,7 @@ export default function Header({ showEditorActions = false, onExport }: HeaderPr
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-ink-base/60 backdrop-blur-xl">
-      <div className="w-full max-w-7xl mx-auto px-4 py-3 md:px-6 flex items-center justify-between">
+      <div className="w-full max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <VanishLogo variant="light" size="md" />
         <nav className="flex items-center gap-4">
           {showEditorActions ? (
@@ -27,16 +27,16 @@ export default function Header({ showEditorActions = false, onExport }: HeaderPr
               >
                 Export
               </Button>
-              <Button variant="ghost" className="rounded-full px-5 py-2.5 text-sm font-medium">
+              <Button variant="ghost" className="rounded-full px-4 py-2 text-sm font-medium">
                 Account
               </Button>
             </>
           ) : (
             <>
-              <Button variant="ghost" className="hidden md:inline-flex rounded-full px-5 py-2.5 text-sm font-medium">
+              <Button variant="ghost" className="hidden md:inline-flex rounded-full px-4 py-2 text-sm font-medium">
                 Features
               </Button>
-              <Button variant="ghost" className="hidden md:inline-flex rounded-full px-5 py-2.5 text-sm font-medium">
+              <Button variant="ghost" className="hidden md:inline-flex rounded-full px-4 py-2 text-sm font-medium">
                 Pricing
               </Button>
               <Button variant="outline" className={aurora.buttonSecondary}>

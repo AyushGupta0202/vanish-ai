@@ -62,10 +62,10 @@ export default function BeforeAfterSlider({ beforeImage, afterImage }: BeforeAft
       </div>
 
       {/* Labels */}
-      <div className="absolute top-4 left-4 rounded-full border border-white/12 bg-white/8 backdrop-blur-xl text-white/86 px-3 py-1 text-sm font-semibold">
+      <div className="absolute top-4 left-4 rounded-full border border-white/12 bg-white/8 backdrop-blur-xl text-white/86 px-4 py-2 text-sm font-semibold">
         Before
       </div>
-      <div className="absolute top-4 right-4 rounded-full border border-white/12 bg-white/8 backdrop-blur-xl text-white/86 px-3 py-1 text-sm font-semibold">
+      <div className="absolute top-4 right-4 rounded-full border border-white/12 bg-white/8 backdrop-blur-xl text-white/86 px-4 py-2 text-sm font-semibold">
         After
       </div>
     </div>

@@ -13,7 +13,7 @@ interface LiveDemoProps {
 
 export default function LiveDemo({ onUpload, image, processedImage, onProcess, isProcessing, isUploading = false }: LiveDemoProps) {
   return (
-    <section id="live-demo" className="py-12 px-4 md:px-6">
+    <section id="live-demo" className="py-12 px-4">
       <div className="mx-auto max-w-6xl">
         <h2 className="text-4xl font-semibold tracking-[-0.015em] text-center mb-12 text-white/92">
           Live demo
@@ -27,23 +27,23 @@ export default function LiveDemo({ onUpload, image, processedImage, onProcess, i
           <div className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               {/* Original Image */}
-              <div className="rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl p-4 ring-1 ring-white/8">
-                <h3 className="text-white/92 font-semibold mb-2">Original Image</h3>
+              <div className="rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl p-6 ring-1 ring-white/8">
+                <h3 className="text-white/92 font-semibold mb-4">Original Image</h3>
                 <div className="relative rounded-lg overflow-hidden">
                   <img
                     src={image}
                     alt="Original"
                     className="w-full h-auto"
                   />
-                  <div className="absolute top-2 left-2 rounded-full border border-white/12 bg-white/8 backdrop-blur-xl text-white/86 px-3 py-1 text-xs">
+                  <div className="absolute top-2 left-2 rounded-full border border-white/12 bg-white/8 backdrop-blur-xl text-white/86 px-4 py-2 text-xs">
                     Selection
                   </div>
                 </div>
               </div>
 
               {/* Result Preview */}
-              <div className="rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl p-4 ring-1 ring-white/8">
-                <h3 className="text-white/92 font-semibold mb-2">Result (Preview)</h3>
+              <div className="rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl p-6 ring-1 ring-white/8">
+                <h3 className="text-white/92 font-semibold mb-4">Result (Preview)</h3>
                 <div className="relative rounded-lg overflow-hidden bg-white/5 min-h-[200px] flex items-center justify-center">
                   {processedImage ? (
                     <img
@@ -58,7 +58,7 @@ export default function LiveDemo({ onUpload, image, processedImage, onProcess, i
                     </div>
                   )}
                   {processedImage && (
-                    <div className="absolute top-2 left-2 rounded-full border border-white/12 bg-aurora-green/12 text-white/86 px-3 py-1 text-xs">
+                    <div className="absolute top-2 left-2 rounded-full border border-white/12 bg-aurora-green/12 text-white/86 px-4 py-2 text-xs">
                       Vanished
                     </div>
                   )}

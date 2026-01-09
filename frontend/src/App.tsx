@@ -1355,12 +1355,12 @@ function App() {
       ) : (
         <>
           {/* Editor View */}
-          <div className="w-full min-h-[calc(100vh-64px)] py-4">
+          <div className="w-full min-h-[calc(100vh-64px)] py-8">
             <div className={aurora.container}>
               <div className="grid md:grid-cols-[220px_1fr] gap-6 items-start w-full">
               {/* Tools Sidebar */}
-              <div className="space-y-4">
-                <div className="rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl ring-1 ring-white/8 p-3">
+              <div className="space-y-6">
+                <div className="rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl ring-1 ring-white/8 p-4">
                   <h3 className="text-white/92 font-semibold mb-4 tracking-[0.10em] text-xs">TOOLS</h3>
                   <div className="space-y-2">
                     <Button
@@ -1423,8 +1423,8 @@ function App() {
 
               {/* Main Canvas Area */}
               <div className="space-y-6 flex flex-col min-w-0 w-full">
-                <div className="rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl ring-1 ring-white/8 p-4 w-full min-w-0">
-                  <div className="flex justify-between items-center mb-4">
+                <div className="rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl ring-1 ring-white/8 p-6 w-full min-w-0">
+                  <div className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-semibold text-white/92">Select. Vanish.</h2>
                     <div className="flex gap-2 items-center">
                       <AutoDetectButton
@@ -1482,7 +1482,7 @@ function App() {
                     />
                   )}
                   
-                  <div className="mt-4 flex justify-center">
+                  <div className="mt-6 flex justify-center">
                     <CanvasEditor canvasRef={canvasRef} />
                   </div>
                   
@@ -1496,9 +1496,9 @@ function App() {
                 </div>
 
                 {processedImage && (
-                  <div className="rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl ring-1 ring-white/8 p-4">
-                    <h2 className="text-xl font-semibold mb-4 text-white/92 text-center">Result</h2>
-                    <p className="text-white/56 text-sm mb-4 text-center">Gone. Clean. Done.</p>
+                  <div className="rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl ring-1 ring-white/8 p-6">
+                    <h2 className="text-xl font-semibold mb-6 text-white/92 text-center">Result</h2>
+                    <p className="text-white/56 text-sm mb-6 text-center">Gone. Clean. Done.</p>
                     <div className="flex justify-center">
                       <img
                         src={processedImage}
@@ -1506,7 +1506,7 @@ function App() {
                         className="max-w-full h-auto rounded-lg"
                       />
                     </div>
-                    <div className="mt-4 flex justify-center">
+                    <div className="mt-6 flex justify-center">
                       <DownloadButton onClick={handleDownload} />
                     </div>
                   </div>

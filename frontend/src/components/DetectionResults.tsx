@@ -14,8 +14,8 @@ export default function DetectionResults({ regions, onClear }: DetectionResultsP
   if (regions.length === 0) return null
 
   return (
-    <div className="rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl ring-1 ring-white/8 p-4 mb-4">
-      <div className="flex justify-between items-center mb-2">
+    <div className="rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl ring-1 ring-white/8 p-4 mb-6">
+      <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold text-white/92">
           Detected {regions.length} text region{regions.length !== 1 ? 's' : ''}
         </h3>
@@ -26,9 +26,9 @@ export default function DetectionResults({ regions, onClear }: DetectionResultsP
           Clear
         </button>
       </div>
-      <div className="max-h-40 overflow-y-auto space-y-2">
+      <div className="max-h-40 overflow-y-auto space-y-3">
         {regions.map((region, idx) => (
-          <div key={idx} className="text-sm text-white/86 bg-white/6 border border-white/10 p-3 rounded-2xl">
+          <div key={idx} className="text-sm text-white/86 bg-white/6 border border-white/10 p-4 rounded-2xl">
             <span className="font-medium">"{region.text}"</span>
             <span className="text-white/52 ml-2">
               ({Math.round(region.confidence * 100)}% confidence)

@@ -5,7 +5,7 @@ export default function HistoryControls() {
   const { undo, redo, canUndo, canRedo } = useHistoryStore()
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 mt-6">
       <Button
         onClick={undo}
         disabled={!canUndo()}
