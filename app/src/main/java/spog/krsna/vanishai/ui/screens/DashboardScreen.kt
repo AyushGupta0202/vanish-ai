@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -106,40 +107,53 @@ private val viewsSeries = listOf(12, 18, 14, 22, 26, 20, 28, 34, 30, 38, 44, 40)
 
 @Composable
 fun DashboardScreen(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(InkBase) // #060B0D from design.json
-    ) {
-        AuroraBackdrop()
-
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 20.dp)
-        ) {
-            item {
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+        containerColor = InkBase, // #060B0D from design.json
+        topBar = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 20.dp) // px-5 py-5 mobile
+            ) {
                 TopBar()
-                Spacer(modifier = Modifier.height(20.dp))
             }
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = paddingValues.calculateTopPadding())
+        ) {
+            AuroraBackdrop()
 
-            item {
-                DashboardHeader()
-                Spacer(modifier = Modifier.height(20.dp))
-            }
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(
+                    start = 20.dp, // px-5 mobile
+                    end = 20.dp,
+                    bottom = 64.dp // pb-16
+                )
+            ) {
+                item {
+                    DashboardHeader()
+                    Spacer(modifier = Modifier.height(24.dp)) // gap-6
+                }
 
-            item {
-                StatsGrid()
-                Spacer(modifier = Modifier.height(20.dp))
-            }
+                item {
+                    StatsGrid()
+                    Spacer(modifier = Modifier.height(24.dp)) // gap-6
+                }
 
-            item {
-                ChartsRow()
-                Spacer(modifier = Modifier.height(20.dp))
-            }
+                item {
+                    ChartsRow()
+                    Spacer(modifier = Modifier.height(24.dp)) // gap-6
+                }
 
-            item {
-                TableSection()
-                Spacer(modifier = Modifier.height(32.dp))
+                item {
+                    TableSection()
+                    Spacer(modifier = Modifier.height(32.dp))
+                }
             }
         }
     }
@@ -228,12 +242,12 @@ private fun DashboardHeader() {
 private fun StatsGrid() {
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp) // gap-4
     ) {
         stats.chunked(2).forEach { rowStats ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                horizontalArrangement = Arrangement.spacedBy(16.dp) // gap-4
             ) {
                 rowStats.forEach { stat ->
                     StatCard(stat = stat, modifier = Modifier.weight(1f))
@@ -247,7 +261,7 @@ private fun StatsGrid() {
 private fun StatCard(stat: Stat, modifier: Modifier = Modifier) {
     GlassCard(
         modifier = modifier,
-        contentPadding = PaddingValues(16.dp)
+        contentPadding = PaddingValues(20.dp) // p-5
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Row(
@@ -309,7 +323,7 @@ private fun StatCard(stat: Stat, modifier: Modifier = Modifier) {
 
 @Composable
 private fun ChartsRow() {
-    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(24.dp)) { // gap-6
         ViewsChart()
         TransactionsCard()
     }
@@ -317,7 +331,7 @@ private fun ChartsRow() {
 
 @Composable
 private fun ViewsChart() {
-    GlassCard(contentPadding = PaddingValues(20.dp)) {
+    GlassCard(contentPadding = PaddingValues(24.dp)) { // p-6
         Column {
             Row(
                 modifier = Modifier.fillMaxWidth(),
