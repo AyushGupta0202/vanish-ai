@@ -2,6 +2,7 @@ package spog.krsna.vanishai.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -497,20 +499,22 @@ private fun TableSection() {
         Column {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Column {
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = "Top content",
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
-                        color = TextPrimary // text-white/92
+                        color = TextPrimary
                     )
                     Text(
                         text = "Best performing posts across platforms",
                         style = MaterialTheme.typography.labelSmall,
-                        color = TextSecondary56 // text-white/56
+                        color = TextSecondary56
                     )
                 }
+                Spacer(modifier = Modifier.width(12.dp))
                 GlassButton(
                     text = "Export",
                     variant = ButtonVariant.Secondary,
@@ -519,21 +523,25 @@ private fun TableSection() {
             }
             Spacer(modifier = Modifier.height(20.dp))
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(GlassTableHeader5) // bg-white/5
-                    .padding(horizontal = 20.dp, vertical = 12.dp)
-            ) {
-                TableHeader()
-            }
+            // Horizontally scrollable table
+            Column(modifier = Modifier.horizontalScroll(rememberScrollState())) {
+                // Header
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(GlassTableHeader5)
+                        .padding(horizontal = 20.dp, vertical = 12.dp)
+                ) {
+                    TableHeader()
+                }
 
-            Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
-            topContent.forEach { row ->
-                TableRow(row)
-                Spacer(modifier = Modifier.height(4.dp))
+                // Rows
+                topContent.forEach { row ->
+                    TableRow(row)
+                    Spacer(modifier = Modifier.height(4.dp))
+                }
             }
         }
     }
@@ -542,41 +550,42 @@ private fun TableSection() {
 @Composable
 private fun TableHeader() {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        modifier = Modifier.width(600.dp), // Fixed width for horizontal scroll
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = "TITLE",
             style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.sp),
-            color = TextTertiary52, // text-white/52
-            modifier = Modifier.weight(2.2f)
+            color = TextTertiary52,
+            modifier = Modifier.width(200.dp)
         )
         Text(
             text = "PLATFORM",
             style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.sp),
             color = TextTertiary52,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.width(100.dp)
         )
         Text(
             text = "VIEWS",
             style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.sp),
             color = TextTertiary52,
             textAlign = TextAlign.End,
-            modifier = Modifier.weight(0.7f)
+            modifier = Modifier.width(80.dp)
         )
         Text(
             text = "ENG.",
             style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.sp),
             color = TextTertiary52,
             textAlign = TextAlign.End,
-            modifier = Modifier.weight(0.6f)
+            modifier = Modifier.width(70.dp)
         )
         Text(
             text = "REV.",
             style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.sp),
             color = TextTertiary52,
             textAlign = TextAlign.End,
-            modifier = Modifier.weight(0.7f)
+            modifier = Modifier.width(80.dp)
         )
     }
 }
@@ -585,55 +594,56 @@ private fun TableHeader() {
 private fun TableRow(row: ContentRow) {
     Box(
         modifier = Modifier
-            .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 16.dp)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.width(600.dp), // Match header width
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = row.title,
                 style = MaterialTheme.typography.bodySmall,
-                color = TextSecondary86, // text-white/86
-                modifier = Modifier.weight(2.2f)
+                color = TextSecondary86,
+                modifier = Modifier.width(200.dp),
+                maxLines = 2
             )
             Box(
                 modifier = Modifier
-                    .weight(1f)
+                    .width(100.dp)
                     .clip(CircleShape)
-                    .background(GlassFill6) // bg-white/6
-                    .border(1.dp, StrokeDefault12, CircleShape) // border-white/12
+                    .background(GlassFill6)
+                    .border(1.dp, StrokeDefault12, CircleShape)
                     .padding(horizontal = 12.dp, vertical = 4.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = row.platform,
                     style = MaterialTheme.typography.labelSmall,
-                    color = TextSecondary70 // text-white/70
+                    color = TextSecondary70,
+                    maxLines = 1
                 )
             }
             Text(
                 text = row.views,
                 style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
-                color = TextSecondary86, // text-white/86
+                color = TextSecondary86,
                 textAlign = TextAlign.End,
-                modifier = Modifier.weight(0.7f)
+                modifier = Modifier.width(80.dp)
             )
             Text(
                 text = row.engagement,
                 style = MaterialTheme.typography.bodySmall,
-                color = TextSecondary72, // text-white/72
+                color = TextSecondary72,
                 textAlign = TextAlign.End,
-                modifier = Modifier.weight(0.6f)
+                modifier = Modifier.width(70.dp)
             )
             Text(
                 text = row.revenue,
                 style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
-                color = TextSecondary86, // text-white/86
+                color = TextSecondary86,
                 textAlign = TextAlign.End,
-                modifier = Modifier.weight(0.7f)
+                modifier = Modifier.width(80.dp)
             )
         }
     }
