@@ -1,0 +1,7 @@
+# Data Gateways
+# Gateway interfaces to abstract SDK/API access
+# Example:
+# interface ApiGateway {
+#     suspend fun fetchAccountData(): AccountDataDto
+# }
+

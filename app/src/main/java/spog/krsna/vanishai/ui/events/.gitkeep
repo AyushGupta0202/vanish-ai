@@ -1,0 +1,8 @@
+# UI Events (MVI Pattern)
+# Sealed classes for UI events using Kotlin Channel
+# Example:
+# sealed class DashboardUiEvent {
+#     object LoadStats : DashboardUiEvent()
+#     data class FilterChanged(val filter: String) : DashboardUiEvent()
+# }
+

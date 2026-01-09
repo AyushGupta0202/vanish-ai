@@ -1,0 +1,9 @@
+# Data Repository Implementations
+# Implement repository interfaces here
+# Example:
+# class DefaultAccountRepository(
+#     private val apiGateway: ApiGateway
+# ) : AccountRepository {
+#     override suspend fun getAccountInfo(): AccountInfo = ...
+# }
+

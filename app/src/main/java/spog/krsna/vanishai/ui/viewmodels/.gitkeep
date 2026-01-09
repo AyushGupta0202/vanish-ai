@@ -1,0 +1,11 @@
+# UI ViewModels
+# ViewModels using KoinViewModel with StateFlow
+# Example:
+# class GlobalStateViewModel(
+#     private val monitorThemeModeUseCase: MonitorThemeModeUseCase,
+#     private val monitorUserCredentialsUseCase: MonitorUserCredentialsUseCase
+# ) : ViewModel() {
+#     private val _state = MutableStateFlow(BaseState())
+#     val state: StateFlow<BaseState> = _state
+# }
+

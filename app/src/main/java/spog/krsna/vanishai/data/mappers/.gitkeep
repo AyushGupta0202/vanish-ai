@@ -1,0 +1,10 @@
+# Data Mappers
+# Convert between domain entities and data entities
+# Example:
+# internal class TransferMapper(
+#     private val transferAppDataMapper: TransferAppDataMapper,
+#     private val transferTypeMapper: TransferTypeMapper
+# ) {
+#     operator fun invoke(transfer: MegaTransfer): Transfer = Transfer(...)
+# }
+

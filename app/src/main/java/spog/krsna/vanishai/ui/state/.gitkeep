@@ -1,0 +1,9 @@
+# UI State Classes
+# State data classes for ViewModels
+# Example:
+# data class GlobalState(
+#     val isLoading: Boolean = false,
+#     val session: String? = null,
+#     val themeMode: ThemeMode = ThemeMode.System
+# )
+

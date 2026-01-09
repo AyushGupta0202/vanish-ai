@@ -1,0 +1,8 @@
+# Domain Repository Interfaces
+# Define repository interfaces here (domain layer contracts)
+# Example:
+# interface AccountRepository {
+#     suspend fun getAccountInfo(): AccountInfo
+#     fun monitorAccountBlocked(): Flow<AccountBlocked>
+# }
+

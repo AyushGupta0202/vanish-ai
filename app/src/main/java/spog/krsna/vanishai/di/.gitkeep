@@ -1,0 +1,9 @@
+# Dependency Injection (Koin)
+# Koin modules for dependency injection
+# Example:
+# val appModule = module {
+#     viewModel { GlobalStateViewModel(get(), get()) }
+#     single<AccountRepository> { DefaultAccountRepository(get()) }
+#     single { ApiGateway() }
+# }
+

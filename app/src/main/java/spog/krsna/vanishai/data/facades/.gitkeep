@@ -1,0 +1,4 @@
+# Data Facades
+# Facades for complex SDK interactions
+# Use when SDK interactions are complex and need abstraction
+
