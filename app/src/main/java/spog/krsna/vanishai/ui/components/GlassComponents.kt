@@ -27,9 +27,16 @@ import spog.krsna.vanishai.ui.theme.StrokeStrong16
 import spog.krsna.vanishai.ui.theme.TextPrimary
 import spog.krsna.vanishai.ui.theme.TextSecondary72
 
+// Extra token for the Ring effect (white/8)
+val RingWhite8 = Color(0x14FFFFFF)
+
 /**
- * Glass Card - Exact from design-system.json
+ * Glass Card - Exact from design-system.json + Web Match
  * Base: rounded-2xl border border-white/12 bg-white/7 backdrop-blur-xl ring-1 ring-white/8 shadow-[0_24px_80px_rgba(0,0,0,0.55)]
+ * 
+ * Updates:
+ * - Added "Middle" border to simulate ring-1 (White/8)
+ * - Explicit shadow color
  */
 @Composable
 fun GlassCard(
@@ -39,14 +46,23 @@ fun GlassCard(
 ) {
     Box(
         modifier = modifier
+            // Shadow: 0 24px 80px rgba(0,0,0,0.55)
+            // Android elevation 24.dp is close, but we ensure color is correct.
             .shadow(
                 elevation = 24.dp,
                 shape = RoundedCornerShape(24.dp),
-                ambientColor = Color.Black.copy(alpha = 0.55f),
-                spotColor = Color.Black.copy(alpha = 0.55f)
+                ambientColor = Color(0x8C000000), // 0.55 Alpha Black
+                spotColor = Color(0x8C000000)     // 0.55 Alpha Black
             )
             .clip(RoundedCornerShape(24.dp))
             .background(GlassFill7) // bg-white/7
+            // Ring-1 (White/8) - Outer effect
+            .border(
+                width = 2.dp, // Combine ring and border visual width slightly or stack them
+                color = RingWhite8, 
+                shape = RoundedCornerShape(24.dp)
+            )
+            // Main Border (White/12) - Inner effect
             .border(
                 width = 1.dp,
                 color = StrokeDefault12, // border-white/12
@@ -60,7 +76,7 @@ fun GlassCard(
 
 /**
  * Pill Component - Exact from design-system.json
- * Base: inline-flex items-center rounded-full px-3 py-1.5 text-xs font-medium
+ * Base: inline-flex items-center rounded-full px-3 py-1.5 (12dp x 6dp)
  * Active: bg-white/12 text-white ring-1 ring-white/16
  * Inactive: text-white/72 hover:text-white/90
  */
@@ -83,7 +99,7 @@ fun Pill(
             .then(
                 if (active) Modifier.border(
                     width = 1.dp,
-                    color = borderColor,
+                    color = borderColor, // ring-white/16
                     shape = CircleShape
                 ) else Modifier
             )
@@ -101,8 +117,6 @@ fun Pill(
 
 /**
  * Button Component - Exact from design-system.json
- * Primary: bg-white text-ink-base
- * Secondary: bg-white/7 border-white/16
  */
 @Composable
 fun GlassButton(
@@ -123,13 +137,15 @@ fun GlassButton(
         ButtonVariant.Primary -> Color.Transparent
         ButtonVariant.Secondary -> StrokeStrong16
     }
+    val shadowElevation = if (variant == ButtonVariant.Primary) 24.dp else 0.dp
 
     Box(
         modifier = modifier
             .shadow(
-                elevation = if (variant == ButtonVariant.Primary) 24.dp else 0.dp,
+                elevation = shadowElevation,
                 shape = CircleShape,
-                ambientColor = Color.Black.copy(alpha = 0.55f)
+                ambientColor = Color(0x8C000000),
+                spotColor = Color(0x8C000000)
             )
             .clip(CircleShape)
             .background(backgroundColor)
@@ -158,7 +174,8 @@ enum class ButtonVariant {
 }
 
 /**
- * Status Dot - Simple circle with color
+ * Status Dot - Simple circle with color + Glow Shadow
+ * Web: shadow-[0_0_18px_rgba(63,226,100,0.25)] (for green)
  */
 @Composable
 fun StatusDot(
@@ -169,7 +186,13 @@ fun StatusDot(
     Box(
         modifier = modifier
             .size(size)
+            // Glow effect: Shadow with same color
+            .shadow(
+                elevation = 8.dp, // Simulate 18px blur roughly
+                shape = CircleShape,
+                spotColor = color, 
+                ambientColor = color
+            )
             .background(color, shape = CircleShape)
     )
 }
-
