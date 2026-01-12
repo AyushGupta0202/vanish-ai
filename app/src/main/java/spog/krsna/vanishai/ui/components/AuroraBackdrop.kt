@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import spog.krsna.vanishai.ui.theme.AuroraCyan
 import spog.krsna.vanishai.ui.theme.AuroraViolet
 import spog.krsna.vanishai.ui.theme.InkBase
+import spog.krsna.vanishai.ui.theme.InkGradientStart
 
 /**
  * Aurora Glass Design System - Backdrop Component
@@ -32,7 +33,7 @@ fun AuroraBackdrop(
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(
-                            Color(0xFF071018),
+                            InkGradientStart,
                             InkBase,
                             InkBase
                         )

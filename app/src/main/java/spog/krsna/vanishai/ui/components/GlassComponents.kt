@@ -112,12 +112,12 @@ fun GlassButton(
     onClick: () -> Unit
 ) {
     val backgroundColor = when (variant) {
-        ButtonVariant.Primary -> Color.White
+        ButtonVariant.Primary -> spog.krsna.vanishai.ui.theme.ButtonPrimaryFill
         ButtonVariant.Secondary -> GlassFill7
     }
     val textColor = when (variant) {
-        ButtonVariant.Primary -> Color(0xFF060B0D)
-        ButtonVariant.Secondary -> Color.White.copy(alpha = 0.86f)
+        ButtonVariant.Primary -> spog.krsna.vanishai.ui.theme.ButtonPrimaryText
+        ButtonVariant.Secondary -> spog.krsna.vanishai.ui.theme.TextSecondary90
     }
     val borderColor = when (variant) {
         ButtonVariant.Primary -> Color.Transparent

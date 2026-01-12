@@ -36,9 +36,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import org.koin.androidx.compose.koinViewModel
+import spog.krsna.vanishai.R
 import spog.krsna.vanishai.ui.components.AuroraBackdrop
 import spog.krsna.vanishai.ui.components.GlassButton
 import spog.krsna.vanishai.ui.components.GlassCard
@@ -163,7 +165,7 @@ fun EditorScreen(
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Text(
-                                            text = "Select. Vanish.",
+                                            text = stringResource(R.string.editor_select_vanish),
                                             style = MaterialTheme.typography.headlineMedium,
                                             color = TextPrimary
                                         )
@@ -171,12 +173,12 @@ fun EditorScreen(
                                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                                         ) {
                                             GlassButton(
-                                                text = if (state.isDetecting) "Detecting..." else "Auto Detect",
+                                                text = if (state.isDetecting) stringResource(R.string.editor_detecting) else stringResource(R.string.editor_auto_detect),
                                                 variant = ButtonVariant.Secondary,
                                                 onClick = { viewModel.handleEvent(VanishEvent.AutoDetect) }
                                             )
                                             GlassButton(
-                                                text = "New Image",
+                                                text = stringResource(R.string.editor_new_image),
                                                 variant = ButtonVariant.Secondary,
                                                 onClick = { imagePickerLauncher.launch("image/*") }
                                             )
@@ -213,13 +215,13 @@ fun EditorScreen(
                                     }
 
                                     Text(
-                                        text = "Tip: Draw on areas you want to remove. Pinch to zoom on all devices.",
+                                        text = stringResource(R.string.editor_tip),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = TextSecondary62
                                     )
 
                                     GlassButton(
-                                        text = if (state.isProcessing) "Processing..." else "Process Image",
+                                        text = if (state.isProcessing) stringResource(R.string.editor_processing) else stringResource(R.string.editor_process),
                                         variant = ButtonVariant.Primary,
                                         onClick = { viewModel.handleEvent(VanishEvent.ProcessImage) },
                                         modifier = Modifier.fillMaxWidth()
@@ -227,7 +229,7 @@ fun EditorScreen(
 
                                     if (state.detectedRegions.isNotEmpty()) {
                                         Text(
-                                            text = "Detected ${state.detectedRegions.size} text regions",
+                                            text = stringResource(R.string.editor_detected_regions, state.detectedRegions.size),
                                             style = MaterialTheme.typography.bodySmall,
                                             color = TextSecondary72
                                         )
@@ -240,12 +242,12 @@ fun EditorScreen(
                                 GlassCard(contentPadding = PaddingValues(24.dp)) {
                                     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                                         Text(
-                                            text = "Result",
+                                            text = stringResource(R.string.editor_result),
                                             style = MaterialTheme.typography.headlineMedium,
                                             color = TextPrimary
                                         )
                                         Text(
-                                            text = "Gone. Clean. Done.",
+                                            text = stringResource(R.string.editor_result_subtitle),
                                             style = MaterialTheme.typography.bodySmall,
                                             color = TextSecondary56
                                         )
@@ -312,7 +314,7 @@ fun EditorScreen(
                             color = StatusDanger
                         )
                         Text(
-                            text = "✕",
+                            text = stringResource(R.string.error_close),
                             style = MaterialTheme.typography.bodyMedium,
                             color = TextSecondary72,
                             modifier = Modifier.clickable {
@@ -338,7 +340,7 @@ private fun EditorHeader(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "VANISH AI",
+            text = stringResource(R.string.editor_brand),
             style = MaterialTheme.typography.headlineMedium.copy(
                 fontWeight = FontWeight.SemiBold
             ),
@@ -348,12 +350,12 @@ private fun EditorHeader(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             GlassButton(
-                text = "Export",
+                text = stringResource(R.string.editor_export),
                 variant = ButtonVariant.Secondary,
                 onClick = onExportClick
             )
             GlassButton(
-                text = "Account",
+                text = stringResource(R.string.editor_account),
                 variant = ButtonVariant.Secondary,
                 onClick = { /* TODO */ }
             )
@@ -371,29 +373,29 @@ private fun ToolsPanel(
     GlassCard(contentPadding = PaddingValues(16.dp)) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Text(
-                text = "TOOLS",
+                text = stringResource(R.string.editor_tools),
                 style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.sp),
                 color = TextTertiary52
             )
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 ToolButton(
-                    text = "Brush",
+                    text = stringResource(R.string.editor_tool_brush),
                     active = toolMode == ToolMode.Brush,
                     onClick = { onToolModeChange(ToolMode.Brush) }
                 )
                 ToolButton(
-                    text = "Hand",
+                    text = stringResource(R.string.editor_tool_hand),
                     active = toolMode == ToolMode.Hand,
                     onClick = { onToolModeChange(ToolMode.Hand) }
                 )
                 ToolButton(
-                    text = "Rectangle",
+                    text = stringResource(R.string.editor_tool_rectangle),
                     active = false,
                     enabled = false,
                     onClick = {}
                 )
                 ToolButton(
-                    text = "Lasso",
+                    text = stringResource(R.string.editor_tool_lasso),
                     active = false,
                     enabled = false,
                     onClick = {}
@@ -401,20 +403,20 @@ private fun ToolsPanel(
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Undo",
+                text = stringResource(R.string.editor_undo),
                 style = MaterialTheme.typography.bodySmall,
                 color = TextSecondary72,
                 modifier = Modifier.clickable { /* TODO */ }
             )
             Text(
-                text = "Redo",
+                text = stringResource(R.string.editor_redo),
                 style = MaterialTheme.typography.bodySmall,
                 color = TextSecondary72,
                 modifier = Modifier.clickable { /* TODO */ }
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Brush Size: $brushSize",
+                text = stringResource(R.string.editor_brush_size, brushSize),
                 style = MaterialTheme.typography.bodySmall,
                 color = TextSecondary72
             )
@@ -470,7 +472,7 @@ private fun ToolButton(
             )
             if (!enabled) {
                 Text(
-                    text = "Coming Soon",
+                    text = stringResource(R.string.editor_coming_soon),
                     style = MaterialTheme.typography.labelSmall,
                     color = TextTertiary52
                 )
@@ -489,30 +491,30 @@ private fun DetectionSettingsPanel(
     GlassCard(contentPadding = PaddingValues(16.dp)) {
         Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
             Text(
-                text = "DETECTION SETTINGS",
+                text = stringResource(R.string.editor_detection_settings),
                 style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.sp),
                 color = TextTertiary52
             )
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
-                    text = "Confidence Threshold: ${(confidenceThreshold * 100).toInt()}%",
+                    text = stringResource(R.string.editor_confidence_threshold, (confidenceThreshold * 100).toInt()),
                     style = MaterialTheme.typography.bodySmall,
                     color = TextSecondary72
                 )
                 Text(
-                    text = "Higher values = more confident detections only",
+                    text = stringResource(R.string.editor_confidence_hint),
                     style = MaterialTheme.typography.labelSmall,
                     color = TextTertiary52
                 )
             }
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
-                    text = "Mask Expansion: ${expandPixels}px",
+                    text = stringResource(R.string.editor_mask_expansion, expandPixels),
                     style = MaterialTheme.typography.bodySmall,
                     color = TextSecondary72
                 )
                 Text(
-                    text = "Pixels to expand mask around detected text",
+                    text = stringResource(R.string.editor_mask_expansion_hint),
                     style = MaterialTheme.typography.labelSmall,
                     color = TextTertiary52
                 )
@@ -540,41 +542,41 @@ private fun HistoryBar(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "History:",
+                    text = stringResource(R.string.editor_history),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.SemiBold
                     ),
                     color = TextPrimary
                 )
                 Text(
-                    text = "Original",
+                    text = stringResource(R.string.editor_history_original),
                     style = MaterialTheme.typography.bodySmall,
                     color = TextSecondary72
                 )
                 Text(
-                    text = "→",
+                    text = stringResource(R.string.editor_history_arrow),
                     style = MaterialTheme.typography.bodySmall,
                     color = TextSecondary72
                 )
                 Text(
-                    text = "Selection",
+                    text = stringResource(R.string.editor_history_selection),
                     style = MaterialTheme.typography.bodySmall,
                     color = TextSecondary72
                 )
                 Text(
-                    text = "→",
+                    text = stringResource(R.string.editor_history_arrow),
                     style = MaterialTheme.typography.bodySmall,
                     color = TextSecondary72
                 )
                 Text(
-                    text = if (hasProcessedImage) "Vanished" else "Ready",
+                    text = if (hasProcessedImage) stringResource(R.string.editor_history_vanished) else stringResource(R.string.editor_history_ready),
                     style = MaterialTheme.typography.bodySmall,
                     color = if (hasProcessedImage) AuroraCyan else TextSecondary72
                 )
             }
             if (hasProcessedImage) {
                 GlassButton(
-                    text = "Download Result",
+                    text = stringResource(R.string.editor_download_result),
                     variant = ButtonVariant.Primary,
                     onClick = onDownloadClick
                 )

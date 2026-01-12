@@ -1,3 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Vanish AI</string>
+    
+    <!-- Landing Screen -->
+    <string name="landing_brand">VANISH AI</string>
+    <string name="landing_nav_features">Features</string>
+    <string name="landing_nav_pricing">Pricing</string>
+    <string name="landing_nav_login">Login</string>
+    <string name="landing_cta_try">Try Vanish AI</string>
+    <string name="landing_hero_title">MAKE ANYTHING VANISH.</string>
+    <string name="landing_hero_title_accent">INSTANTLY.</string>
+    <string name="landing_hero_subtitle">AI-powered object removal with zero residue, zero effort, zero compromise.</string>
+    <string name="landing_cta_see_action">See it in action</string>
+    <string name="landing_before_after">Before / After</string>
+    <string name="landing_comparison">Comparison</string>
+    <string name="landing_how_it_works">How it works</string>
+    <string name="landing_step_select">Select</string>
+    <string name="landing_step_select_desc">Draw on areas to remove.</string>
+    <string name="landing_step_vanish">Vanish</string>
+    <string name="landing_step_vanish_desc">AI removes instantly.</string>
+    <string name="landing_step_download">Download</string>
+    <string name="landing_step_download_desc">Get your clean image.</string>
+    <string name="landing_why_vanish">Why Vanish</string>
+    <string name="landing_feature_zero_artifacts">Zero Artifacts</string>
+    <string name="landing_feature_zero_artifacts_desc">Clean removal with no visible traces.</string>
+    <string name="landing_feature_no_cleanup">No Manual Cleanup</string>
+    <string name="landing_feature_no_cleanup_desc">AI handles everything automatically.</string>
+    <string name="landing_feature_realistic_fill">Realistic Fill</string>
+    <string name="landing_feature_realistic_fill_desc">Intelligent background reconstruction.</string>
+    <string name="landing_live_demo">Live demo</string>
+    <string name="landing_upload_title">Upload an image</string>
+    <string name="landing_upload_hint">Drag and drop or click to select (Max 50MB)</string>
+    <string name="landing_select_image">Select Image</string>
+    <string name="landing_uploading">Uploading…</string>
+    <string name="landing_cta_ready">Ready to remove the unnecessary?</string>
+    <string name="landing_cta_start">Start Vanish AI</string>
+    <string name="landing_footer_tagline">AI-powered object removal with zero residue.</string>
+    <string name="landing_footer_product">Product</string>
+    <string name="landing_footer_company">Company</string>
+    <string name="landing_footer_legal">Legal</string>
+    <string name="landing_footer_features">Features</string>
+    <string name="landing_footer_pricing">Pricing</string>
+    <string name="landing_footer_api">API</string>
+    <string name="landing_footer_about">About</string>
+    <string name="landing_footer_blog">Blog</string>
+    <string name="landing_footer_contact">Contact</string>
+    <string name="landing_footer_privacy">Privacy</string>
+    <string name="landing_footer_terms">Terms</string>
+    <string name="landing_footer_copyright">© 2026 Vanish AI. All rights reserved.</string>
+    
+    <!-- Editor Screen -->
+    <string name="editor_brand">VANISH AI</string>
+    <string name="editor_select_vanish">Select. Vanish.</string>
+    <string name="editor_auto_detect">Auto Detect</string>
+    <string name="editor_detecting">Detecting…</string>
+    <string name="editor_new_image">New Image</string>
+    <string name="editor_tip">Tip: Draw on areas you want to remove. Pinch to zoom on all devices.</string>
+    <string name="editor_process">Process Image</string>
+    <string name="editor_processing">Processing…</string>
+    <string name="editor_detected_regions">Detected %1$d text regions</string>
+    <string name="editor_result">Result</string>
+    <string name="editor_result_subtitle">Gone. Clean. Done.</string>
+    <string name="editor_export">Export</string>
+    <string name="editor_account">Account</string>
+    <string name="editor_tools">TOOLS</string>
+    <string name="editor_tool_brush">Brush</string>
+    <string name="editor_tool_hand">Hand</string>
+    <string name="editor_tool_rectangle">Rectangle</string>
+    <string name="editor_tool_lasso">Lasso</string>
+    <string name="editor_coming_soon">Coming Soon</string>
+    <string name="editor_undo">Undo</string>
+    <string name="editor_redo">Redo</string>
+    <string name="editor_brush_size">Brush Size: %1$d</string>
+    <string name="editor_detection_settings">DETECTION SETTINGS</string>
+    <string name="editor_confidence_threshold">Confidence Threshold: %1$d%%</string>
+    <string name="editor_confidence_hint">Higher values = more confident detections only</string>
+    <string name="editor_mask_expansion">Mask Expansion: %1$dpx</string>
+    <string name="editor_mask_expansion_hint">Pixels to expand mask around detected text</string>
+    <string name="editor_history">History:</string>
+    <string name="editor_history_original">Original</string>
+    <string name="editor_history_arrow">→</string>
+    <string name="editor_history_selection">Selection</string>
+    <string name="editor_history_vanished">Vanished</string>
+    <string name="editor_history_ready">Ready</string>
+    <string name="editor_download_result">Download Result</string>
+    
+    <!-- Common -->
+    <string name="error_close">✕</string>
 </resources>

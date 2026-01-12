@@ -31,6 +31,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import spog.krsna.vanishai.R
 import spog.krsna.vanishai.ui.components.AuroraBackdrop
 import spog.krsna.vanishai.ui.components.GlassButton
 import spog.krsna.vanishai.ui.components.GlassCard
@@ -123,7 +125,7 @@ private fun LandingHeader(onTryClick: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "VANISH AI",
+            text = stringResource(R.string.landing_brand),
             style = MaterialTheme.typography.headlineMedium.copy(
                 fontWeight = FontWeight.SemiBold
             ),
@@ -135,22 +137,22 @@ private fun LandingHeader(onTryClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Features",
+                text = stringResource(R.string.landing_nav_features),
                 style = MaterialTheme.typography.bodyMedium,
                 color = TextSecondary72
             )
             Text(
-                text = "Pricing",
+                text = stringResource(R.string.landing_nav_pricing),
                 style = MaterialTheme.typography.bodyMedium,
                 color = TextSecondary72
             )
             Text(
-                text = "Login",
+                text = stringResource(R.string.landing_nav_login),
                 style = MaterialTheme.typography.bodyMedium,
                 color = TextSecondary72
             )
             GlassButton(
-                text = "Try Vanish AI",
+                text = stringResource(R.string.landing_cta_try),
                 variant = ButtonVariant.Secondary,
                 onClick = onTryClick
             )
@@ -169,7 +171,7 @@ private fun HeroSection(onTryClick: () -> Unit, isLoading: Boolean) {
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             Text(
-                text = "MAKE ANYTHING VANISH.",
+                text = stringResource(R.string.landing_hero_title),
                 style = MaterialTheme.typography.displaySmall.copy(
                     fontSize = 48.sp,
                     fontWeight = FontWeight.SemiBold
@@ -177,7 +179,7 @@ private fun HeroSection(onTryClick: () -> Unit, isLoading: Boolean) {
                 color = TextPrimary
             )
             Text(
-                text = "INSTANTLY.",
+                text = stringResource(R.string.landing_hero_title_accent),
                 style = MaterialTheme.typography.displaySmall.copy(
                     fontSize = 48.sp,
                     fontWeight = FontWeight.SemiBold
@@ -186,7 +188,7 @@ private fun HeroSection(onTryClick: () -> Unit, isLoading: Boolean) {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "AI-powered object removal with zero residue, zero effort, zero compromise.",
+                text = stringResource(R.string.landing_hero_subtitle),
                 style = MaterialTheme.typography.bodyLarge,
                 color = TextSecondary62
             )
@@ -195,12 +197,12 @@ private fun HeroSection(onTryClick: () -> Unit, isLoading: Boolean) {
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 GlassButton(
-                    text = "Try Vanish AI",
+                    text = stringResource(R.string.landing_cta_try),
                     variant = ButtonVariant.Primary,
                     onClick = onTryClick
                 )
                 GlassButton(
-                    text = "See it in action",
+                    text = stringResource(R.string.landing_cta_see_action),
                     variant = ButtonVariant.Secondary,
                     onClick = onTryClick
                 )
@@ -221,12 +223,12 @@ private fun HeroSection(onTryClick: () -> Unit, isLoading: Boolean) {
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Before / After",
+                    text = stringResource(R.string.landing_before_after),
                     style = MaterialTheme.typography.bodyMedium,
                     color = TextSecondary72
                 )
                 Text(
-                    text = "Comparison",
+                    text = stringResource(R.string.landing_comparison),
                     style = MaterialTheme.typography.bodySmall,
                     color = TextTertiary52
                 )
@@ -243,7 +245,7 @@ private fun HowItWorksSection() {
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
         Text(
-            text = "How it works",
+            text = stringResource(R.string.landing_how_it_works),
             style = MaterialTheme.typography.headlineLarge,
             color = TextPrimary
         )
@@ -252,18 +254,18 @@ private fun HowItWorksSection() {
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             HowItWorksCard(
-                title = "Select",
-                description = "Draw on areas to remove.",
+                title = stringResource(R.string.landing_step_select),
+                description = stringResource(R.string.landing_step_select_desc),
                 modifier = Modifier.weight(1f)
             )
             HowItWorksCard(
-                title = "Vanish",
-                description = "AI removes instantly.",
+                title = stringResource(R.string.landing_step_vanish),
+                description = stringResource(R.string.landing_step_vanish_desc),
                 modifier = Modifier.weight(1f)
             )
             HowItWorksCard(
-                title = "Download",
-                description = "Get your clean image.",
+                title = stringResource(R.string.landing_step_download),
+                description = stringResource(R.string.landing_step_download_desc),
                 modifier = Modifier.weight(1f)
             )
         }
@@ -320,7 +322,7 @@ private fun WhyVanishSection() {
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
         Text(
-            text = "Why Vanish",
+            text = stringResource(R.string.landing_why_vanish),
             style = MaterialTheme.typography.headlineLarge,
             color = TextPrimary
         )
@@ -329,18 +331,18 @@ private fun WhyVanishSection() {
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             WhyVanishCard(
-                title = "Zero Artifacts",
-                description = "Clean removal with no visible traces.",
+                title = stringResource(R.string.landing_feature_zero_artifacts),
+                description = stringResource(R.string.landing_feature_zero_artifacts_desc),
                 modifier = Modifier.weight(1f)
             )
             WhyVanishCard(
-                title = "No Manual Cleanup",
-                description = "AI handles everything automatically.",
+                title = stringResource(R.string.landing_feature_no_cleanup),
+                description = stringResource(R.string.landing_feature_no_cleanup_desc),
                 modifier = Modifier.weight(1f)
             )
             WhyVanishCard(
-                title = "Realistic Fill",
-                description = "Intelligent background reconstruction.",
+                title = stringResource(R.string.landing_feature_realistic_fill),
+                description = stringResource(R.string.landing_feature_realistic_fill_desc),
                 modifier = Modifier.weight(1f)
             )
         }
@@ -380,7 +382,7 @@ private fun LiveDemoSection(onUploadClick: () -> Unit, isLoading: Boolean) {
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Text(
-            text = "Live demo",
+            text = stringResource(R.string.landing_live_demo),
             style = MaterialTheme.typography.headlineLarge,
             color = TextPrimary
         )
@@ -406,18 +408,18 @@ private fun LiveDemoSection(onUploadClick: () -> Unit, isLoading: Boolean) {
                     )
                 }
                 Text(
-                    text = "Upload an image",
+                    text = stringResource(R.string.landing_upload_title),
                     style = MaterialTheme.typography.headlineSmall,
                     color = TextPrimary
                 )
                 Text(
-                    text = "Drag and drop or click to select (Max 50MB)",
+                    text = stringResource(R.string.landing_upload_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = TextSecondary62
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 GlassButton(
-                    text = if (isLoading) "Uploading..." else "Select Image",
+                    text = if (isLoading) stringResource(R.string.landing_uploading) else stringResource(R.string.landing_select_image),
                     variant = ButtonVariant.Primary,
                     onClick = onUploadClick
                 )
@@ -438,12 +440,12 @@ private fun CTASection(onStartClick: () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Text(
-            text = "Ready to remove the unnecessary?",
+            text = stringResource(R.string.landing_cta_ready),
             style = MaterialTheme.typography.headlineMedium,
             color = TextPrimary
         )
         GlassButton(
-            text = "Start Vanish AI",
+            text = stringResource(R.string.landing_cta_start),
             variant = ButtonVariant.Primary,
             onClick = onStartClick
         )
@@ -462,12 +464,12 @@ private fun Footer() {
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
-                    text = "VANISH AI",
+                    text = stringResource(R.string.landing_brand),
                     style = MaterialTheme.typography.headlineSmall,
                     color = TextPrimary
                 )
                 Text(
-                    text = "AI-powered object removal with zero residue.",
+                    text = stringResource(R.string.landing_footer_tagline),
                     style = MaterialTheme.typography.bodySmall,
                     color = TextSecondary62
                 )
@@ -477,61 +479,61 @@ private fun Footer() {
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
-                        text = "Product",
+                        text = stringResource(R.string.landing_footer_product),
                         style = MaterialTheme.typography.labelMedium,
                         color = TextTertiary52
                     )
                     Text(
-                        text = "Features",
+                        text = stringResource(R.string.landing_footer_features),
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary72
                     )
                     Text(
-                        text = "Pricing",
+                        text = stringResource(R.string.landing_footer_pricing),
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary72
                     )
                     Text(
-                        text = "API",
+                        text = stringResource(R.string.landing_footer_api),
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary72
                     )
                 }
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
-                        text = "Company",
+                        text = stringResource(R.string.landing_footer_company),
                         style = MaterialTheme.typography.labelMedium,
                         color = TextTertiary52
                     )
                     Text(
-                        text = "About",
+                        text = stringResource(R.string.landing_footer_about),
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary72
                     )
                     Text(
-                        text = "Blog",
+                        text = stringResource(R.string.landing_footer_blog),
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary72
                     )
                     Text(
-                        text = "Contact",
+                        text = stringResource(R.string.landing_footer_contact),
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary72
                     )
                 }
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
-                        text = "Legal",
+                        text = stringResource(R.string.landing_footer_legal),
                         style = MaterialTheme.typography.labelMedium,
                         color = TextTertiary52
                     )
                     Text(
-                        text = "Privacy",
+                        text = stringResource(R.string.landing_footer_privacy),
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary72
                     )
                     Text(
-                        text = "Terms",
+                        text = stringResource(R.string.landing_footer_terms),
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary72
                     )
@@ -539,7 +541,7 @@ private fun Footer() {
             }
         }
         Text(
-            text = "© 2026 Vanish AI. All rights reserved.",
+            text = stringResource(R.string.landing_footer_copyright),
             style = MaterialTheme.typography.bodySmall,
             color = TextTertiary52,
             modifier = Modifier.fillMaxWidth()
