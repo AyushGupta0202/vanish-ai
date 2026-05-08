@@ -26,7 +26,7 @@ COPY backend/ .
 EXPOSE 8000
 
 # Stage 2: Frontend
-FROM node:18-alpine as frontend
+FROM node:26-alpine as frontend
 
 WORKDIR /app
 
