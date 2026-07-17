@@ -20,7 +20,7 @@
     "react-dom": "^18.2.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss-animate": "^1.0.7",
-    "zustand": "^5.0.9"
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
     "@types/fabric": "^5.3.10",
