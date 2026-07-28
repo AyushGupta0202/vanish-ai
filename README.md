@@ -31,7 +31,9 @@
 - 🎨 **Professional Quality** - High-resolution output maintaining original image quality
 - 🖱️ **Intuitive Interface** - Interactive canvas with brush, hand, and auto-detection tools
 - 🚀 **Production Ready** - Docker support, CI/CD pipelines, automated releases
-- 📱 **Modern Stack** - TypeScript, React 18, FastAPI, Tailwind CSS
+- 📱 **Two clients, one API** - React web dashboard **and** a native Kotlin/Compose Android app
+- 🎯 **Shared design system** - "Aurora Glass" tokens in `design.json` drive both web and Android
+- 🧱 **Modern Stack** - FastAPI, PyTorch, React 18, TypeScript, Kotlin, Jetpack Compose
 
 ---
 
@@ -149,6 +151,46 @@ Full API documentation available at `http://localhost:8000/docs`
 
 ---
 
+## 📱 Android client
+
+A native Android app talks to the same FastAPI backend as the web frontend — one API, two clients.
+
+Built with **Clean Architecture** and a unidirectional state flow:
+
+```
+domain/
+  entities/      ImageUploadResult, ProcessResult, TextDetectionResult
+  repositories/  VanishRepository                        (interface)
+
+data/
+  gateways/      ApiGateway  →  KtorApiGateway
+  mappers/       VanishMapper                            (DTO ⇄ domain)
+  repositories/  DefaultVanishRepository
+
+ui/
+  state/         VanishState        ← single immutable screen state
+  events/        VanishEvent        ← every user action, as a sealed type
+  viewmodels/    VanishViewModel    ← StateFlow<VanishState>
+  screens/       LandingScreen, DashboardScreen, EditorScreen
+  components/    AuroraBackdrop, GlassComponents
+```
+
+The `ApiGateway` interface sits between the repository and Ktor, so the network client is swappable and the domain layer never sees an HTTP type.
+
+### Shared design system
+
+`design.json` / `design-system.json` define the **"Aurora Glass"** tokens — colour, spacing, typography — consumed by *both* the React dashboard and the Compose theme. The design language is specified once in data, not reimplemented per platform.
+
+### Build
+
+```bash
+./gradlew :app:assembleDebug
+```
+
+Point the app at your backend host before running.
+
+---
+
 ## 🔧 Tech Stack
 
 ### Backend
@@ -159,7 +201,7 @@ Full API documentation available at `http://localhost:8000/docs`
 - **[Pillow](https://python-pillow.org/)** - Image I/O and manipulation
 - **[PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)** - OCR for text detection
 
-### Frontend
+### Frontend (Web)
 - **[React 18](https://react.dev/)** - UI framework with hooks
 - **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript
 - **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
@@ -167,6 +209,12 @@ Full API documentation available at `http://localhost:8000/docs`
 - **[Vite](https://vitejs.dev/)** - Next-generation build tool
 - **[Zustand](https://github.com/pmndrs/zustand)** - Lightweight state management
 - **[Axios](https://axios-http.com/)** - HTTP client
+
+### Android Client
+- **[Kotlin](https://kotlinlang.org/)** + **[Jetpack Compose](https://developer.android.com/compose)** - native UI (minSdk 31, targetSdk 36)
+- **[Ktor Client](https://ktor.io/)** - HTTP against the same FastAPI backend
+- **[Koin](https://insert-koin.io/)** - dependency injection
+- **[Coil](https://coil-kt.github.io/coil/)** - image loading
 
 ### DevOps & Automation
 - **[GitHub Actions](https://github.com/features/actions)** - CI/CD pipelines
