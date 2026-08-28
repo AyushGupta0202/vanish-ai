@@ -80,7 +80,7 @@ jobs:
       - name: Generate Changelog
         id: changelog
         if: steps.draft.outputs.has_draft != 'true'
-        uses: metcalfc/changelog-generator@v4.3.1
+        uses: metcalfc/changelog-generator@v5.0.1
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
           excludeTypes: 'build,ci,docs,style,test,chore'
